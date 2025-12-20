@@ -1,5 +1,9 @@
+import HeroServices from "../components/HeroServices";
+import HeroIntroduction from "../components/HeroIntroduction";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import Process from "../components/Process";
+import Sponsors from "../components/Sponsors";
+import FeaturedWorks from "../components/FeaturedWorks";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +13,13 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <div>
+      <HeroIntroduction />
+      <HeroServices />
+      <Process />
+      <Sponsors />
+      <FeaturedWorks />
+    </div>
+  );
 }
