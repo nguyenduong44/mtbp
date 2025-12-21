@@ -18,7 +18,7 @@ const FeaturedWorks = () => {
         </div>
 
         <div className="text-center">
-          <Link to="/works" className="relative inline-block group">
+          <Link to="/du-an" className="relative inline-block group">
             <button className="inline-flex items-center text-gray-800 font-bold text-lg cursor-pointer">
               Xem tất cả dự án
               <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />

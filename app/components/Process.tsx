@@ -2,12 +2,25 @@ import { processes } from "../data/processes";
 import Container from "./Container";
 import Section from "./Section";
 import { motion } from "framer-motion";
-
-const Process = () => {
+type ProcessProps = {
+  hText?: string;
+};
+const Process = ({ hText }: ProcessProps) => {
   return (
     <Section padding="lg" background="gray">
       <Container>
-        <h1 className="font-bold text-[45px] mb-4">Quy trình làm việc</h1>
+        {hText ? (
+          <>
+            <h2 className="text-3xl font-semibold text-gray-900">
+              Cách tiếp cận
+            </h2>
+            <p className="mt-4 text-gray-600">
+              Quy trình 5 bước minh bạch và hiệu quả
+            </p>
+          </>
+        ) : (
+          <h1 className="font-bold text-[45px] mb-4">Quy trình làm việc</h1>
+        )}
         <div className="mt-20">
           <ul className="">
             {processes.map((item) => (

@@ -7,7 +7,14 @@ import type {
 } from "../types";
 import Section from "./Section";
 import Container from "./Container";
-import { CheckCircle, Loader2, Mail, MapPin, Phone } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle,
+  Loader2,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 
 const SCRIPT_APP =
   "https://script.google.com/macros/s/AKfycbyvqyH4YMfm_Axw4sG_FL0SgZKRJGQ-RnjKEshnMLI6w51YnfgmZ3msXy9DIegbk_HQ/exec";
@@ -37,7 +44,7 @@ const ContactComponent = () => {
   });
 
   const [errorData, setErrorData] = useState<FormErrors>({});
-  const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [status, setStatus] = useState<SubmissionStatus>("success");
 
   const handleOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -114,9 +121,9 @@ const ContactComponent = () => {
   };
 
   return (
-    <Section padding="lg" background="gray">
+    <Section padding="sm" background="gray">
       <Container>
-        <div className="flex flex-col lg:flex-row overflow-hidden shadow-2xl rounded-3xl">
+        <div className="flex flex-col lg:flex-row overflow-hidden shadow-2xl rounded-xl">
           <div className="lg:w-2/5 p-10 lg:p-16 bg-primary text-white relative overflow-hidden">
             <div className="relative z-10">
               <h2 className="text-3xl font-display font-bold mb-6">
@@ -193,9 +200,9 @@ const ContactComponent = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-                <div>
+                <div className="mb-6">
                   <label className="block text-gray-900 font-semibold mb-2">
-                    Họ tên *
+                    Họ tên <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="text"
@@ -218,10 +225,10 @@ const ContactComponent = () => {
                 </div>
 
                 {/* Email & Phone */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div>
                     <label className="block text-gray-900 font-semibold mb-2">
-                      Email *
+                      Email <span className="text-red-600">*</span>
                     </label>
                     <input
                       type="email"
@@ -245,7 +252,7 @@ const ContactComponent = () => {
 
                   <div>
                     <label className="block text-gray-900 font-semibold mb-2">
-                      Số điện thoại *
+                      Số điện thoại <span className="text-red-600">*</span>
                     </label>
                     <input
                       type="tel"
@@ -269,9 +276,9 @@ const ContactComponent = () => {
                 </div>
 
                 {/* Service */}
-                <div>
+                <div className="mb-6">
                   <label className="block text-gray-900 font-semibold mb-2">
-                    Dịch vụ quan tâm *
+                    Dịch vụ quan tâm <span className="text-red-600">*</span>
                   </label>
                   <select
                     name="service"
@@ -285,17 +292,9 @@ const ContactComponent = () => {
                     disabled={status === "submitting"}
                   >
                     <option value="">-- Chọn dịch vụ --</option>
-                    <option value="Social Media Marketing">
-                      Social Media Marketing
-                    </option>
-                    <option value="Branding & Design">Branding & Design</option>
-                    <option value="Content Production">
-                      Content Production
-                    </option>
-                    <option value="KOL Marketing">KOL Marketing</option>
-                    <option value="Full Service Package">
-                      Full Service Package
-                    </option>
+                    {categories.slice(1).map((cat, index) => (
+                      <option value={cat.value}>{cat.label}</option>
+                    ))}
                   </select>
                   {errorData.service && (
                     <p className="text-red-500 text-sm mt-1">
@@ -305,7 +304,7 @@ const ContactComponent = () => {
                 </div>
 
                 {/* Company */}
-                <div>
+                <div className="mb-6">
                   <label className="block text-gray-900 font-semibold mb-2">
                     Thông tin doanh nghiệp
                   </label>
@@ -321,9 +320,9 @@ const ContactComponent = () => {
                 </div>
 
                 {/* Message */}
-                <div>
+                <div className="mb-6">
                   <label className="block text-gray-900 font-semibold mb-2">
-                    Nội dung *
+                    Nội dung <span className="text-red-600">*</span>
                   </label>
                   <textarea
                     name="message"
@@ -344,11 +343,18 @@ const ContactComponent = () => {
                     </p>
                   )}
                 </div>
-
+                {status === "error" && (
+                  <div className="flex items-center gap-2 text-red-600 bg-red-50 p-4 rounded-lg">
+                    <AlertCircle size={20} />
+                    <span className="text-sm font-medium">
+                      Có lỗi xảy ra khi gửi. Vui lòng thử lại hoặc gọi Hotline.
+                    </span>
+                  </div>
+                )}
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={status === "submitting"}
+                  disabled={status === "submitting" || status === "error"}
                   className="w-full border-1 border-primary cursor-pointer hover:bg-primary hover:text-white text-primary font-bold py-4 rounded-lg transition-all transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed mt-2"
                 >
                   {status === "submitting" ? (

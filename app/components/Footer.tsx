@@ -1,72 +1,57 @@
 import { Link } from "react-router";
+import Section from "./Section";
+import Container from "./Container";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 py-12 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">M</span>
-              </div>
-              <span className="text-white font-bold">MTBP Agency</span>
+    <>
+      <Section padding="sm" background="gray">
+        <Container>
+          <div className="flex flex-col md:flex-row items-start justify-center md:justify-between gap-10 py-10 border-b border-gray-500/30">
+            <div className="max-w-96">
+              <Link
+                to={"/"}
+                className="flex-shrink-0 flex items-center gap-2 cursor-pointer text-primary text-lg font-bold"
+              >
+                MTBP
+              </Link>
+
+              <p className="mt-6 text-sm text-gray-500">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been.
+              </p>
             </div>
-            <p className="text-sm">
-              Full-service marketing agency tại Tây Ninh
-            </p>
-          </div>
 
-          <div>
-            <h4 className="text-white font-semibold mb-3">Services</h4>
-            <ul className="space-y-2 text-sm">
-              <li>Social Media Marketing</li>
-              <li>Branding & Design</li>
-              <li>Content Production</li>
-              <li>KOL Marketing</li>
-            </ul>
+            <div>
+              <h2 className="font-semibold text-gray-900 mb-5">MTBP</h2>
+              <div className="text-sm text-gray-500 space-y-2 list-none">
+                <li>
+                  <a href="#">Về chúng tôi</a>
+                </li>
+                <li>
+                  <a href="#">Dự án</a>
+                </li>
+                <li>
+                  <a href="#">Giải pháp</a>
+                </li>
+                <li>
+                  <a href="#">Tuyển dụng</a>
+                </li>
+              </div>
+            </div>
+            <div>
+              <h2 className="font-semibold mb-5">Liên hệ</h2>
+              <div className="text-sm space-y-2">
+                <p>09213123123123</p>
+                <p>contact@mtbp.talent</p>
+              </div>
+            </div>
           </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Company</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/work" className="hover:text-white transition">
-                  Work
-                </Link>
-              </li>
-              <li>
-                <Link to="/solutions" className="hover:text-white transition">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link to="/career" className="hover:text-white transition">
-                  Career
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-white transition">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Connect</h4>
-            <ul className="space-y-2 text-sm">
-              <li>📍 Tây Ninh, Vietnam</li>
-              <li>📧 hello@mtbp.vn</li>
-              <li>📱 +84 901 234 567</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-800 pt-8 text-center text-sm">
-          <p>© 2024 MTBP Agency. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
+          <p className="py-4 text-center text-xs md:text-sm text-gray-500">
+            Copyright 2024 ©. All Right Reserved.
+          </p>
+        </Container>
+      </Section>
+    </>
   );
 }

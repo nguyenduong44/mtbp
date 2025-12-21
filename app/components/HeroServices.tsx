@@ -14,6 +14,7 @@ import Container from "./Container";
 import { heroServices } from "../data/heroServices";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { ArrowDown } from "lucide-react";
+import { Link } from "react-router";
 
 const HeroServices = () => {
   return (
@@ -48,9 +49,12 @@ const HeroServices = () => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="mt-8 flex justify-center"
         >
-          <a className="text-gray-500 hover:text-primary transition-transform hover:-translate-y-1 duration-300 linear text-lg font-medium inline-flex items-center gap-2 transition-colors cursor-pointer">
+          <Link
+            to={"/du-an"}
+            className="cursor-pointer text-gray-500 hover:text-primary transition-transform hover:-translate-y-1 duration-300 linear text-lg font-medium inline-flex items-center gap-2 transition-colors cursor-pointer"
+          >
             Xem các Case Studies <ArrowDown size={18} />
-          </a>
+          </Link>
         </motion.div>
       </Container>
     </Section>

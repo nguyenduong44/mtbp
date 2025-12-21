@@ -18,7 +18,7 @@ const WorkCard = ({ work, index = 0 }: WorkCardProps) => {
       className="group relative cursor-pointer"
     >
       <Link to={`/du-an/${work.slug}`} className="block h-full">
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-200 mb-4">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-gray-200 mb-4">
           <img
             src={work.thumbnail}
             alt={work.client.name}

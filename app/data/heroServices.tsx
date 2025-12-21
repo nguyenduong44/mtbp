@@ -1,5 +1,5 @@
+import { Activity, Paintbrush, PersonStanding } from "lucide-react";
 import type { ServiceFeature } from "../types.js";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export const heroServices: ServiceFeature[] = [
   {
@@ -15,6 +15,7 @@ export const heroServices: ServiceFeature[] = [
       "Tối ưu hiệu suất",
     ],
     icon: "https://lottie.host/ad0c7e1c-5c24-484c-a241-8b8a787d4ebe/0oJNLLzUsk.lottie",
+    lucideIcon: <Activity />,
   },
   {
     id: "brand-identity",
@@ -29,6 +30,7 @@ export const heroServices: ServiceFeature[] = [
       "Bảng hiệu & ấn phẩm",
     ],
     icon: "https://lottie.host/b1e97d42-72fd-4313-b647-d85a32f88bb3/cXHUJ4sV5X.lottie",
+    lucideIcon: <Paintbrush />,
   },
   {
     id: "personal-brand",
@@ -43,5 +45,6 @@ export const heroServices: ServiceFeature[] = [
       "Media production",
     ],
     icon: "https://lottie.host/bcbcbfd0-f800-442e-849e-8d53a9991f5b/qGjxILcN3P.lottie",
+    lucideIcon: <PersonStanding />,
   },
 ];

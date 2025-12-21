@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 //HEADER TYPE
 export type NavItem = {
   label: string;
@@ -64,6 +66,7 @@ export type ServiceFeature = {
   description: string;
   bullets: string[];
   icon?: string;
+  lucideIcon: ReactNode;
 };
 
 //PROCESS

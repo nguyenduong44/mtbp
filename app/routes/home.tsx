@@ -4,6 +4,7 @@ import type { Route } from "./+types/home";
 import Process from "../components/Process";
 import Sponsors from "../components/Sponsors";
 import FeaturedWorks from "../components/FeaturedWorks";
+import ContactComponent from "../components/ContactComponent";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -20,6 +21,7 @@ export default function Home() {
       <Process />
       <Sponsors />
       <FeaturedWorks />
+      <ContactComponent />
     </div>
   );
 }

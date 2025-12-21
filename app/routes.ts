@@ -10,6 +10,7 @@ export default [
     index("./routes/home.tsx"),
     route("du-an", "./routes/works.tsx"),
     route("lien-he", "./routes/contact.tsx"),
+    route("giai-phap", "./routes/solution.tsx"),
     route("du-an/:slug", "./routes/works.$slug.tsx"),
   ]),
 ] satisfies RouteConfig;
