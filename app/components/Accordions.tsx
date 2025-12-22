@@ -55,7 +55,7 @@ const Accordions = () => {
           type="single"
           collapsible
           className="w-full mt-4"
-          defaultValue="item-1"
+          defaultValue="item-0"
         >
           {qna.map((item: qnaProps, index) => (
             <AccordionItem key={index} value={`item-${index}`}>

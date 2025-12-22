@@ -11,6 +11,7 @@ export default [
     route("du-an", "./routes/works.tsx"),
     route("lien-he", "./routes/contact.tsx"),
     route("giai-phap", "./routes/solution.tsx"),
+    route("tuyen-dung", "./routes/career.tsx"),
     route("du-an/:slug", "./routes/works.$slug.tsx"),
   ]),
 ] satisfies RouteConfig;

@@ -3,14 +3,13 @@ import type { ReactNode } from "react";
 interface SectionProps {
   children: ReactNode;
   className?: string;
-  background?: "white" | "gray" | "gradient";
+  background?: "white" | "gray";
   padding?: "sm" | "md" | "lg" | "xl";
 }
 
 const backgrounds = {
   white: "bg-white",
   gray: "bg-gray-50",
-  gradient: "bg-gradient-to-br from-blue-50 to-purple-50",
 };
 
 const paddings = {

@@ -44,7 +44,7 @@ const ContactComponent = () => {
   });
 
   const [errorData, setErrorData] = useState<FormErrors>({});
-  const [status, setStatus] = useState<SubmissionStatus>("success");
+  const [status, setStatus] = useState<SubmissionStatus>("idle");
 
   const handleOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,

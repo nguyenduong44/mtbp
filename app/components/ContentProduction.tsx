@@ -1,5 +1,6 @@
 import Section from "./Section";
 import Container from "./Container";
+import { BadgeCheck } from "lucide-react";
 
 const steps = [
   {
@@ -46,8 +47,8 @@ export default function ContentProduction() {
             <div className="mt-8 space-y-6">
               {steps.map((item) => (
                 <div key={item.step} className="flex gap-4">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white text-sm font-semibold">
-                    {item.step}
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center text-primary text-sm font-semibold">
+                    <BadgeCheck />
                   </div>
 
                   <div>

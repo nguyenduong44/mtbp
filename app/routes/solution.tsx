@@ -7,6 +7,21 @@ import ContentProduction from "../components/ContentProduction";
 import Process from "../components/Process";
 import Accordions from "../components/Accordions";
 import ContactComponent from "../components/ContactComponent";
+import type { Route } from "./+types/solution";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    {
+      title: "Giải pháp & Dịch vụ Marketing | MTBP Agency",
+    },
+    {
+      name: "description",
+      content:
+        "MTBP Agency cung cấp giải pháp marketing tổng thể: chiến lược thương hiệu, social media, nội dung sáng tạo và sản xuất truyền thông, tập trung vào hiệu quả thực tế.",
+    },
+  ];
+}
+
 const Solution = () => {
   return (
     <>

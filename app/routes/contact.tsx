@@ -1,5 +1,6 @@
 import ContactComponent from "../components/ContactComponent";
 import Container from "../components/Container";
+import Map from "../components/Map";
 import Section from "../components/Section";
 import type { Route } from "./+types/contact";
 import { motion } from "framer-motion";
@@ -34,13 +35,14 @@ export default function Contact() {
               transition={{ delay: 0.1 }}
               className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl"
             >
-              Hãy dành ít phút cung cấp giúp GUDJOB một vài thông tin cơ bản về
+              Hãy dành ít phút cung cấp giúp MTBP một vài thông tin cơ bản về
               nhu cầu của bạn.
             </motion.p>
           </div>
         </Container>
       </Section>
       <ContactComponent />
+      <Map />
     </>
   );
 }

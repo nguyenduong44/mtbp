@@ -22,15 +22,15 @@ const Process = ({ hText }: ProcessProps) => {
           <h1 className="font-bold text-[45px] mb-4">Quy trình làm việc</h1>
         )}
         <div className="mt-20">
-          <ul className="">
+          <ul className="space-y-20">
             {processes.map((item) => (
               <motion.li
-                initial={{ opacity: 0, x: 100 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
                 viewport={{ once: true }}
                 key={item.id}
-                className=" p-5 pb-10 text-center mb-20 border border-2 border-black/10 rounded-xl"
+                className="p-5 pb-10 text-center border border-2 border-black/10 rounded-xl"
               >
                 <div className="flex flex-col items-center">
                   <div className="flex-shrink-0 relative top-0 -mt-16">
