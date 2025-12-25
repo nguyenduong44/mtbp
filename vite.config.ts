@@ -7,6 +7,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths(), devtoolsJson()],
+  base: process.env.VITE_BASE_PATH || "/mtbp",
   server: {
     watch: {
       usePolling: true,
