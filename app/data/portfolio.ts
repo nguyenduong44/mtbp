@@ -310,7 +310,7 @@ export const portfolioWorks: WorkPortfolio[] = [
     slug: "san-nha",
     category: "branding",
     thumbnail:
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1200",
+      "https://drive.google.com/file/d/18ZXPLkX4g2tQxHZVnDT3rF-SETONRObe/view?usp=drive_link",
 
     client: {
       id: "san-nha",

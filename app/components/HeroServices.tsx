@@ -36,8 +36,10 @@ const HeroServices = () => {
                 </ItemDescription>
               </ItemContent>
               <ItemFooter className="flex flex-col items-start">
-                {model.bullets.map((list) => (
-                  <Badge className="whitespace-nowrap">{list}</Badge>
+                {model.bullets.map((list, index) => (
+                  <Badge key={index} className="whitespace-nowrap">
+                    {list}
+                  </Badge>
                 ))}
               </ItemFooter>
             </Item>
