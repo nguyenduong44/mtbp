@@ -3,11 +3,10 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import devtoolsJson from "vite-plugin-devtools-json";
-import path from "path";
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths(), devtoolsJson()],
-  base: process.env.VITE_BASE_PATH || "/mtbp",
+  base: process.env.VITE_BASE_PATH || "/",
   server: {
     watch: {
       usePolling: true,

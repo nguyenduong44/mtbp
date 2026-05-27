@@ -1,89 +1,96 @@
-import type { ReactNode } from "react";
+// ============================================================
+// DATABASE ROW TYPES — khớp 100% với schema Supabase hiện tại
+// ============================================================
 
-//HEADER TYPE
-export type NavItem = {
-  label: string;
-  href: string;
-};
-
-// WORK TYPE
-export type WorkCategory = "all" | "smm" | "branding" | "kol" | "production";
-
-export type WorkPortfolio = {
-  //overview infos
+export type ClientRow = {
   id: number;
-  client: ClientInfo;
-  thumbnail: string;
-  slug: string;
-  category: WorkCategory;
-
-  //contents
-  overview: string;
-  scope: string[];
-  servicesUsed: WorkCategory[];
-  results: string[];
-
-  //MEDIA: IMAGES/VIDEOS
-  mediaSections: MediaSections[];
-
-  //SOCIAL LINKS
-  socialLinks: SocialLink[];
-
-  featured?: boolean;
-};
-
-//CLIENT INFORMATIONS
-export type ClientInfo = {
-  id: string;
   name: string;
-  industry: string;
-  logo?: string;
+  industry: string | null;
+  logo: string | null;
 };
 
-//MEDIA TYPE
-export type MediaType = "image" | "video";
-export type MediaItem = {
-  type: MediaType;
-  url: string;
-  caption?: string;
-};
-export type MediaSections = {
+export type ProjectRow = {
+  id: number;
   title: string;
-  items: MediaItem[];
+  slug: string;
+  thumbnail: string | null;
+  featured: boolean;
+  client_id: number | null;
+  overview: string | null;
+  scope: string[] | null;
+  results: string[] | null;
+  created_at: string;
+  updated_at: string;
 };
 
-//SOCIAL SECTIONS
-export type SocialLink = {
+export type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string | null;
+  bullets: string[] | null;
+  icon_url: string | null;
+  lucide_icon_name: string | null;
+  display_order: number;
+};
+
+export type MediaSectionRow = {
+  id: number;
+  project_id: number;
+  title: string | null;
+  display_order: number;
+};
+
+export type MediaItemRow = {
+  id: number;
+  section_id: number;
+  type: "image" | "video";
+  url: string;
+  caption: string | null;
+  display_order: number;
+};
+
+export type SocialLinkRow = {
+  id: number;
+  project_id: number;
   platform: "facebook" | "instagram" | "tiktok" | "youtube" | "other";
   url: string;
-  labels?: string;
+  label: string | null;
 };
 
-//HERO SECTION HOMEPAGE TYPE
-export type ServiceFeature = {
-  id: string;
-  title: string;
-  description: string;
-  bullets: string[];
-  icon?: string;
-  lucideIcon: ReactNode;
-};
-
-//PROCESS
-export type ProcessType = {
-  id: string;
-  step: string;
-  description: string;
-};
-
-//SPONSORS
-export type SponsorType = {
-  id: string;
+export type ContactSubmissionRow = {
+  id: number;
   name: string;
-  logo: string; //SVG
+  email: string;
+  phone: string;
+  company: string | null;
+  service: string | null;
+  message: string;
+  status: "new" | "read" | "replied";
+  created_at: string;
 };
 
-//Contact
+// ============================================================
+// JOIN TYPES — dùng trong queries có nhiều bảng
+// ============================================================
+
+// Dùng trong danh sách projects (admin list)
+export type ProjectWithClient = ProjectRow & {
+  clients: { name: string } | null;
+};
+
+// Dùng trong trang chi tiết project (admin edit + public detail)
+export type ProjectWithDetails = ProjectRow & {
+  clients: { name: string; logo: string | null; industry: string | null } | null;
+  categories: Category[];
+  media_sections: (MediaSectionRow & { media_items: MediaItemRow[] })[];
+  social_links: SocialLinkRow[];
+};
+
+// ============================================================
+// FORM / UI TYPES
+// ============================================================
+
 export type ContactFormData = {
   name: string;
   email: string;
@@ -94,4 +101,10 @@ export type ContactFormData = {
 };
 
 export type FormErrors = Partial<Record<keyof ContactFormData, string>>;
+
 export type SubmissionStatus = "idle" | "error" | "submitting" | "success";
+
+export type NavItem = {
+  label: string;
+  href: string;
+};

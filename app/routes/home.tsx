@@ -8,8 +8,15 @@ import ContactComponent from "../components/ContactComponent";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    {
+      title:
+        "MTBP Agency | Giải pháp Marketing, Thương hiệu & Sản xuất Nội dung sáng tạo",
+    },
+    {
+      name: "description",
+      content:
+        "MTBP Agency cung cấp giải pháp marketing tổng thể: chiến lược thương hiệu, social media, sản xuất nội dung và triển khai sáng tạo. Tập trung vào hiệu quả dài hạn, không làm marketing đại trà.",
+    },
   ];
 }
 

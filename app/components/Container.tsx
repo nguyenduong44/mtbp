@@ -10,6 +10,8 @@ const sizes = {
   sm: "max-w-3xl",
   md: "max-w-5xl",
   lg: "max-w-7xl",
+  xl: "max-w-[1440px]",
+  full: "max-w-full",
 };
 
 export default function Container({

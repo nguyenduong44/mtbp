@@ -1,10 +1,5 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import type {
-  ContactFormData,
-  FormErrors,
-  SubmissionStatus,
-  WorkCategory,
-} from "../types";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import type { ContactFormData, FormErrors, SubmissionStatus } from "../types";
 import Section from "./Section";
 import Container from "./Container";
 import {
@@ -15,23 +10,10 @@ import {
   MapPin,
   Phone,
 } from "lucide-react";
+import { supabase } from "../supabase-client";
 
 const SCRIPT_APP =
   "https://script.google.com/macros/s/AKfycbyvqyH4YMfm_Axw4sG_FL0SgZKRJGQ-RnjKEshnMLI6w51YnfgmZ3msXy9DIegbk_HQ/exec";
-
-const categories = [
-  { value: "all" as WorkCategory, label: "Tất cả" },
-  { value: "smm" as WorkCategory, label: "Truyền thông mạng xã hội" },
-  {
-    value: "branding" as WorkCategory,
-    label: "Thiết kế nhận diện thương hiệu",
-  },
-  { value: "kol" as WorkCategory, label: "Xây dựng thương hiệu cá nhân KOL" },
-  {
-    value: "production" as WorkCategory,
-    label: "Sản xuất nội dung",
-  },
-];
 
 const ContactComponent = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -45,6 +27,26 @@ const ContactComponent = () => {
 
   const [errorData, setErrorData] = useState<FormErrors>({});
   const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [categories, setCategories] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("slug, name")
+        .order("display_order", { ascending: true });
+      if (!error && data) {
+        setCategories(
+          data.map((cat) => ({ value: cat.slug, label: cat.name })),
+        );
+      }
+      setLoadingCategories(false);
+    };
+    fetchCategories();
+  }, []);
 
   const handleOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -89,23 +91,37 @@ const ContactComponent = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!validate()) return;
-
     setStatus("submitting");
 
+    // 1. Gửi lên Google Sheets (không chặn lỗi, chỉ log)
     try {
       await fetch(SCRIPT_APP, {
         method: "POST",
         mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+    } catch (err) {
+      console.error("Google Sheets error:", err);
+    }
 
+    // 2. Ghi vào Supabase (quan trọng cho admin)
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company || null,
+      service: formData.service,
+      message: formData.message,
+      status: "new",
+    });
+
+    if (error) {
+      console.error("Supabase error:", error);
+      setStatus("error");
+    } else {
       setStatus("success");
-
       setFormData({
         name: "",
         email: "",
@@ -114,9 +130,6 @@ const ContactComponent = () => {
         service: "",
         message: "",
       });
-    } catch (e) {
-      console.log("Error submitting form: ", e);
-      setStatus("error");
     }
   };
 
@@ -289,11 +302,13 @@ const ContactComponent = () => {
                         ? "border-red-500 focus:ring-red-500"
                         : "border-gray-300 focus:ring-primary"
                     }`}
-                    disabled={status === "submitting"}
+                    disabled={status === "submitting" || loadingCategories}
                   >
                     <option value="">-- Chọn dịch vụ --</option>
-                    {categories.slice(1).map((cat, index) => (
-                      <option value={cat.value}>{cat.label}</option>
+                    {categories.map((cat, index) => (
+                      <option key={index} value={cat.value}>
+                        {cat.label}
+                      </option>
                     ))}
                   </select>
                   {errorData.service && (
