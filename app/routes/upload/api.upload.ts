@@ -65,8 +65,6 @@ async function handleVideoUpload(
   const buffer = Buffer.from(await file.arrayBuffer());
   await writeFile(tempPath, buffer);
 
-  console.log("UPLOADS_ROOT:", process.env.UPLOADS_ROOT);
-  console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
   try {
     await processVideo(tempPath, finalPath);
   } finally {
