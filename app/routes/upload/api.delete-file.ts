@@ -5,6 +5,7 @@
 import { unlink, access } from "fs/promises";
 import path from "path";
 import type { ActionFunctionArgs } from "react-router";
+import "dotenv/config";
 
 export async function action({ request }: ActionFunctionArgs) {
   if (request.method !== "POST") {

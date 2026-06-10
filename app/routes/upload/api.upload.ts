@@ -8,6 +8,7 @@ import path from "path";
 import sharp from "sharp";
 import ffmpeg from "fluent-ffmpeg";
 import type { ActionFunctionArgs } from "react-router";
+import "dotenv/config";
 
 // ----------------------------------------------------------------
 // Helpers
