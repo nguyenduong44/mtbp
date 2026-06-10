@@ -34,12 +34,10 @@ jobs:
             echo "=== Build production ==="
             npm run build
 
-            pm2 stop mtbp || true
+            echo "=== Restart PM2 ==="
+            pm2 restart mtbp
 
-            pm2 start ecosystem.config.cjs --update-env
-
-            pm2 save
             echo "=== Kiểm tra trạng thái ==="
-            pm2 show mtbp
+            pm2 show mtbp | grep -E "status|restarts|uptime"
 
             echo "=== Deploy thành công ==="
