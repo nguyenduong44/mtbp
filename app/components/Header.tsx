@@ -10,6 +10,10 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
       href: "/",
     },
     {
+      label: "Về chúng tôi",
+      href: "/ve-chung-toi",
+    },
+    {
       label: "Dự án",
       href: "/du-an",
     },

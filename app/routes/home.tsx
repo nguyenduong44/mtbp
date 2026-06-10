@@ -5,6 +5,24 @@ import Process from "../components/Process";
 import Sponsors from "../components/Sponsors";
 import FeaturedWorks from "../components/FeaturedWorks";
 import ContactComponent from "../components/ContactComponent";
+import { useLoaderData } from "react-router";
+import { categoryService } from "../services/categoryService";
+import { clientService } from "../services/clientService";
+import { projectService } from "../services/projectService";
+
+export async function loader() {
+  const [categories, clients, featuredProjects] = await Promise.all([
+    categoryService.getAll({ limit: 100 }),
+    clientService.getAll({ limit: 6, sortBy: "name", sortOrder: "desc" }),
+    projectService.getAll({ featured: true, limit: 3 })
+  ]);
+
+  return {
+    categories: categories.data,
+    clients: clients.data,
+    featuredProjects: featuredProjects.data
+  };
+}
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -21,13 +39,15 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+  const { categories, clients, featuredProjects } = useLoaderData<typeof loader>();
+
   return (
     <>
       <HeroIntroduction />
-      <HeroServices />
+      <HeroServices initialData={categories} />
       <Process />
-      <Sponsors />
-      <FeaturedWorks />
+      <Sponsors initialData={clients} />
+      <FeaturedWorks initialData={featuredProjects} />
       <ContactComponent />
     </>
   );

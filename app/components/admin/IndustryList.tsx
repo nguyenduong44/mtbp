@@ -1,27 +1,27 @@
-// app/components/admin/CategoryList.tsx
+// app/components/admin/IndustryList.tsx
 import { useState } from "react";
 import { Link } from "react-router";
-import { useCategories, useDeleteCategory } from "../../hooks/useCategories";
-import { Plus, Edit, Trash2, GripVertical, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { useIndustries, useDeleteIndustry } from "../../hooks/useIndustries";
+import { Plus, Edit, Trash2, Briefcase, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 
-export default function CategoryList() {
+export default function IndustryList() {
   const [page, setPage] = useState(1);
   const limit = 10;
-  const { data: categoriesData, isLoading, error } = useCategories({
+  const { data: industriesData, isLoading, error } = useIndustries({
     page,
     limit
   });
-  const deleteCategory = useDeleteCategory();
+  const deleteIndustry = useDeleteIndustry();
 
-  const categories = categoriesData?.data || [];
-  const totalCount = categoriesData?.count || 0;
+  const industries = industriesData?.data || [];
+  const totalCount = industriesData?.count || 0;
   const totalPages = Math.ceil(totalCount / limit);
 
   if (error) {
     return (
       <div className="p-8 text-center bg-red-50 rounded-2xl border border-red-100">
-        <p className="text-red-600 font-medium">Lỗi khi tải danh mục: {error.message}</p>
+        <p className="text-red-600 font-medium">Lỗi khi tải ngành nghề: {error.message}</p>
       </div>
     );
   }
@@ -30,14 +30,14 @@ export default function CategoryList() {
     <div className="max-w-5xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 text-left">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Danh mục dự án</h1>
-          <p className="text-gray-500 mt-1">
-            Các loại hình dịch vụ / danh mục để phân loại project ({totalCount}).
+          <h1 className="text-3xl font-bold text-gray-900 text-left">Ngành nghề khách hàng</h1>
+          <p className="text-gray-500 mt-1 text-left">
+            Các lĩnh vực hoạt động của đối tác ({totalCount}).
           </p>
         </div>
-        <Button asChild className="rounded-xl shadow-lg shadow-gray-200">
-          <Link to="/admin/categories/new">
-            <Plus size={18} className="mr-2" /> Thêm danh mục
+        <Button asChild className="rounded-xl shadow-lg shadow-gray-200 font-bold">
+          <Link to="/admin/industries/new">
+            <Plus size={18} className="mr-2" /> Thêm ngành nghề
           </Link>
         </Button>
       </div>
@@ -50,49 +50,27 @@ export default function CategoryList() {
         )}
 
         <div className="space-y-4">
-          {categories.map((cat) => (
+          {industries.map((ind) => (
             <div
-              key={cat.id}
+              key={ind.id}
               className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300 text-left"
               style={{ transform: 'translateZ(0)', willChange: 'transform' }}
             >
               <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-100">
-                {cat.icon_url ? (
-                  <img 
-                    src={cat.icon_url} 
-                    className="w-8 h-8 object-contain" 
-                    loading="lazy"
-                  />
-                ) : (
-                  <GripVertical size={20} className="text-gray-400" />
-                )}
+                <Briefcase size={20} className="text-gray-400" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-lg text-gray-900">{cat.name}</h3>
-                  <span className="text-[10px] font-mono text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full border border-gray-100">/{cat.slug}</span>
+                  <h3 className="font-bold text-lg text-gray-900">{ind.name}</h3>
+                  <span className="text-[10px] font-mono text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full border border-gray-100">/{ind.slug}</span>
                 </div>
                 <p className="text-sm text-gray-500 line-clamp-1 mt-0.5">
-                  {cat.description || "Chưa có mô tả cho danh mục này."}
+                  {ind.description || "Chưa có mô tả cho ngành nghề này."}
                 </p>
-                {cat.bullets && cat.bullets.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {cat.bullets.slice(0, 3).map((bullet, i) => (
-                      <span key={i} className="text-[10px] bg-gray-50 text-gray-400 border border-gray-100 px-2 py-0.5 rounded-lg font-medium uppercase tracking-wider">
-                        {bullet}
-                      </span>
-                    ))}
-                    {cat.bullets.length > 3 && (
-                      <span className="text-[10px] text-gray-300 font-bold">
-                        +{cat.bullets.length - 3}
-                      </span>
-                    )}
-                  </div>
-                )}
               </div>
               <div className="flex gap-2">
                 <Button variant="ghost" size="icon" asChild title="Chỉnh sửa" className="h-10 w-10 rounded-xl hover:bg-gray-50">
-                  <Link to={`/admin/categories/${cat.id}/edit`}>
+                  <Link to={`/admin/industries/${ind.id}/edit`}>
                     <Edit size={18} className="text-gray-600" />
                   </Link>
                 </Button>
@@ -100,7 +78,7 @@ export default function CategoryList() {
                   variant="ghost"
                   size="icon"
                   onClick={() => {
-                    if(confirm("Xóa danh mục này?")) deleteCategory.mutate(cat.id);
+                    if(confirm("Xóa ngành nghề này?")) deleteIndustry.mutate(ind.id);
                   }}
                   title="Xóa"
                   className="h-10 w-10 rounded-xl hover:bg-red-50 text-gray-400 hover:text-red-500"
@@ -110,9 +88,9 @@ export default function CategoryList() {
               </div>
             </div>
           ))}
-          {!isLoading && categories.length === 0 && (
+          {!isLoading && industries.length === 0 && (
             <div className="py-20 text-center bg-gray-50 border-2 border-dashed border-gray-200 rounded-[2rem]">
-              <p className="text-gray-500 font-medium">Chưa có danh mục nào được tạo.</p>
+              <p className="text-gray-500 font-medium">Chưa có ngành nghề nào được tạo.</p>
             </div>
           )}
         </div>

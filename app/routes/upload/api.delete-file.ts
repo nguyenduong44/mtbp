@@ -29,10 +29,14 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ success: false, error: "URL không hợp lệ" }, 400);
   }
 
-  const filePath = path.join(process.cwd(), "public", url.replace(/^\//, ""));
+  const UPLOADS_ROOT =
+    process.env.UPLOADS_ROOT || path.join(process.cwd(), "public", "uploads");
+  const relativePath = url.replace(/^\/uploads\//, "");
+
+  const filePath = path.join(UPLOADS_ROOT, relativePath);
 
   // Đảm bảo file nằm trong public/uploads/ (thêm lớp bảo vệ)
-  const uploadsRoot = path.join(process.cwd(), "public", "uploads");
+  const uploadsRoot = UPLOADS_ROOT;
   if (!filePath.startsWith(uploadsRoot)) {
     return json({ success: false, error: "Không được phép xóa file này" }, 403);
   }

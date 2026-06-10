@@ -1,16 +1,42 @@
 import { Link } from "react-router";
-import { getWorkByFeatured } from "../data/portfolio";
+import { useProjects } from "../hooks/useProjects";
 import Container from "./Container";
 import Section from "./Section";
 import WorkCard from "./WorkCards";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
-const FeaturedWorks = () => {
-  const featuredWorks = getWorkByFeatured().slice(0, 4);
+interface FeaturedWorksProps {
+  initialData?: any[];
+}
+
+const FeaturedWorks = ({ initialData }: FeaturedWorksProps) => {
+  const { data, isLoading: queryLoading } = useProjects(
+    {
+      featured: true,
+      limit: 3,
+    },
+    { enabled: !initialData },
+  );
+
+  const featuredWorks = initialData || data?.data || [];
+  const isLoading = !initialData && queryLoading;
+
+  if (isLoading && featuredWorks.length === 0) {
+    return (
+      <Section padding="lg" background="gray">
+        <Container className="flex justify-center py-20">
+          <Loader2 className="animate-spin text-gray-400" size={40} />
+        </Container>
+      </Section>
+    );
+  }
+
   return (
     <Section padding="lg" background="gray">
       <Container>
-        <h1 className="font-bold text-[45px] mb-4">Các dự án tiêu biểu</h1>
+        <h1 className="font-bold text-[45px] mb-4 text-left">
+          Các dự án tiêu biểu
+        </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {featuredWorks.map((work, index) => (
             <WorkCard key={work.id} work={work} index={index} />

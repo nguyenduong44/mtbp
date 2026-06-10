@@ -1,7 +1,7 @@
 // app/services/projectService.ts
 
 import { supabase } from "../supabase-client";
-import type { ProjectRow, ProjectWithClient, ProjectWithDetails } from "../types";
+import type { ProjectRow, ProjectWithDetails } from "../types";
 import { uploadService } from "./uploadService";
 
 // ----------------------------------------------------------------
@@ -49,12 +49,29 @@ type UpdateProjectArgs = {
   socialLinks: SocialLinkInput[];
 };
 
+type GetProjectsParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  clientId?: number | null;
+  categoryId?: number | null;
+  categorySlug?: string | null;
+  featured?: boolean | null;
+  sortBy?: "created_at" | "title";
+  sortOrder?: "asc" | "desc";
+  industryId?: number | null;
+  industrySlug?: string | null;
+};
+
 // ----------------------------------------------------------------
 // Helpers
 // ----------------------------------------------------------------
 
 /** Upload ảnh nếu có file mới, ngược lại giữ URL cũ */
-async function resolveImageUrl(file?: File | null, existingUrl?: string | null): Promise<string | null> {
+async function resolveImageUrl(
+  file?: File | null,
+  existingUrl?: string | null,
+): Promise<string | null> {
   if (file) return uploadService.uploadFile(file, "image");
   return existingUrl ?? null;
 }
@@ -66,17 +83,26 @@ async function resolveImageUrl(file?: File | null, existingUrl?: string | null):
 async function prepareItemsForInsert(
   sectionId: number,
   items: MediaItemInput[],
-): Promise<Array<{ section_id: number; type: string; url: string; caption: string | null; display_order: number }>> {
+): Promise<
+  Array<{
+    section_id: number;
+    type: string;
+    url: string;
+    caption: string | null;
+    display_order: number;
+  }>
+> {
   return Promise.all(
     items.map(async (item, idx) => {
       let url = item.url ?? "";
       if (item.type === "image" && item.file) {
         url = await uploadService.uploadFile(item.file, "image");
       }
+      // Đối với video, user nhập link embed nên không cần upload file nữa
       return {
         section_id: sectionId,
         type: item.type,
-        url,
+        url: url.trim(),
         caption: item.caption ?? null,
         display_order: idx,
       };
@@ -91,32 +117,100 @@ async function prepareItemsForInsert(
 export const projectService = {
   // ------ READ ------
 
-  /** Lấy danh sách projects có phân trang, kèm tên client */
-  getAll: async (page = 1, limit = 10): Promise<{ data: ProjectWithClient[]; count: number }> => {
+  getAll: async ({
+    page = 1,
+    limit = 10,
+    search = "",
+    clientId,
+    categoryId,
+    categorySlug,
+    industrySlug,
+    featured,
+    sortBy = "created_at",
+    sortOrder = "desc",
+  }: GetProjectsParams = {}): Promise<{
+    data: any[];
+    count: number;
+  }> => {
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
-    const { data, error, count } = await supabase
-      .from("projects")
-      .select("*, clients(name)", { count: "exact" })
-      .order("created_at", { ascending: false })
+    // Logic xây dựng select string linh hoạt để hỗ trợ inner join khi lọc
+    let clientsPart = "clients(name, industries:industry_id(name, slug))";
+    let categoriesPart = "project_categories(categories(name, slug))";
+
+    // Nếu lọc theo industry, ép kiểu inner join cho cả client và industry
+    if (industrySlug && industrySlug !== "all") {
+      // Khi lọc, ta dùng tên relation chuẩn là industries để PostgREST hiểu đường dẫn lọc
+      clientsPart = "clients!inner(name, industries!inner(name, slug))";
+    }
+
+    // Nếu lọc theo category, ép kiểu inner join cho bảng trung gian và bảng categories
+    if (categoryId || (categorySlug && categorySlug !== "all")) {
+      const catInner = categorySlug && categorySlug !== "all" ? "!inner" : "";
+      categoriesPart = `project_categories!inner(category_id, categories${catInner}(name, slug))`;
+    }
+
+    const selectStr = `*, ${clientsPart}, ${categoriesPart}`;
+
+    let query = supabase.from("projects").select(selectStr, { count: "exact" });
+
+    // Tìm kiếm theo tên dự án (ilike)
+    if (search) {
+      query = query.ilike("title", `%${search}%`);
+    }
+
+    // Lọc theo client
+    if (clientId) {
+      query = query.eq("client_id", clientId);
+    }
+
+    // Lọc theo category
+    if (categoryId) {
+      query = query.eq("project_categories.category_id", categoryId);
+    }
+    if (categorySlug && categorySlug !== "all") {
+      query = query.eq("project_categories.categories.slug", categorySlug);
+    }
+
+    // Lọc theo industry - dùng đường dẫn relation chuẩn (industries)
+    if (industrySlug && industrySlug !== "all") {
+      query = query.eq("clients.industries.slug", industrySlug);
+    }
+
+    // Lọc theo featured
+    if (featured !== undefined && featured !== null) {
+      query = query.eq("featured", featured);
+    }
+
+    const { data, error, count } = await query
+      .order(sortBy, { ascending: sortOrder === "asc" })
       .range(from, to);
 
     if (error) throw error;
-    return { data: data ?? [], count: count ?? 0 };
+
+    // Reshape data to flatten categories
+    const projects = (data as any[]).map((p) => ({
+      ...p,
+      categories: p.project_categories?.map((pc: any) => pc.categories) || [],
+    }));
+
+    return { data: projects, count: count ?? 0 };
   },
 
   /** Lấy chi tiết 1 project bằng ID (dùng trong admin edit) */
   getById: async (id: number): Promise<ProjectWithDetails> => {
     const { data, error } = await supabase
       .from("projects")
-      .select(`
+      .select(
+        `
         *,
-        clients(name, logo, industry),
+        clients(name, logo, industry_id, industries:industry_id(name, slug)),
         project_categories(categories(*)),
         media_sections(id, title, display_order, media_items(*)),
         social_links(*)
-      `)
+      `,
+      )
       .eq("id", id)
       .single();
 
@@ -124,10 +218,13 @@ export const projectService = {
 
     return {
       ...data,
-      categories: data.project_categories?.map((pc: any) => pc.categories) ?? [],
+      categories:
+        data.project_categories?.map((pc: any) => pc.categories) ?? [],
       media_sections: (data.media_sections ?? []).map((s: any) => ({
         ...s,
-        media_items: (s.media_items ?? []).sort((a: any, b: any) => a.display_order - b.display_order),
+        media_items: (s.media_items ?? []).sort(
+          (a: any, b: any) => a.display_order - b.display_order,
+        ),
       })),
       social_links: data.social_links ?? [],
     };
@@ -137,13 +234,15 @@ export const projectService = {
   getBySlug: async (slug: string): Promise<ProjectWithDetails> => {
     const { data, error } = await supabase
       .from("projects")
-      .select(`
+      .select(
+        `
         *,
-        clients(name, logo, industry),
+        clients(name, logo, industry_id, industries:industry_id(name, slug)),
         project_categories(categories(*)),
         media_sections(id, title, display_order, media_items(*)),
         social_links(*)
-      `)
+      `,
+      )
       .eq("slug", slug)
       .single();
 
@@ -151,26 +250,33 @@ export const projectService = {
 
     return {
       ...data,
-      categories: data.project_categories?.map((pc: any) => pc.categories) ?? [],
+      categories:
+        data.project_categories?.map((pc: any) => pc.categories) ?? [],
       media_sections: (data.media_sections ?? []).map((s: any) => ({
         ...s,
-        media_items: (s.media_items ?? []).sort((a: any, b: any) => a.display_order - b.display_order),
+        media_items: (s.media_items ?? []).sort(
+          (a: any, b: any) => a.display_order - b.display_order,
+        ),
       })),
       social_links: data.social_links ?? [],
     };
   },
 
   /** Lấy danh sách projects cho public (có filter theo category slug) */
-  getPublicList: async (categorySlug?: string): Promise<ProjectWithDetails[]> => {
+  getPublicList: async (
+    categorySlug?: string,
+  ): Promise<ProjectWithDetails[]> => {
     let query = supabase
       .from("projects")
-      .select(`
+      .select(
+        `
         *,
-        clients(name, logo, industry),
+        clients(name, logo, industry_id, industries:industry_id(name, slug)),
         project_categories(categories(*)),
         media_sections(id, title, display_order, media_items(*)),
         social_links(*)
-      `)
+      `,
+      )
       .order("created_at", { ascending: false });
 
     const { data, error } = await query;
@@ -199,7 +305,10 @@ export const projectService = {
     const { project, categoryIds, mediaSections, socialLinks } = args;
 
     // 1. Upload thumbnail nếu có
-    const thumbnail = await resolveImageUrl(project.thumbnailFile, project.thumbnail);
+    const thumbnail = await resolveImageUrl(
+      project.thumbnailFile,
+      project.thumbnail,
+    );
 
     // 2. Insert project
     const { data: newProject, error: projErr } = await supabase
@@ -209,6 +318,7 @@ export const projectService = {
         slug: project.slug,
         client_id: project.client_id ?? null,
         overview: project.overview ?? null,
+        solution: project.solution ?? null,
         scope: project.scope ?? null,
         results: project.results ?? null,
         featured: project.featured ?? false,
@@ -222,10 +332,16 @@ export const projectService = {
 
     // 3. Insert categories (batch)
     if (categoryIds.length > 0) {
-      const { error: catErr } = await supabase.from("project_categories").insert(
-        categoryIds.map((catId) => ({ project_id: projectId, category_id: catId })),
-      );
-      if (catErr) console.warn("[createFull] Category insert error:", catErr.message);
+      const { error: catErr } = await supabase
+        .from("project_categories")
+        .insert(
+          categoryIds.map((catId) => ({
+            project_id: projectId,
+            category_id: catId,
+          })),
+        );
+      if (catErr)
+        console.warn("[createFull] Category insert error:", catErr.message);
     }
 
     // 4. Insert media sections + items
@@ -234,7 +350,11 @@ export const projectService = {
 
       const { data: sectionRow, error: secErr } = await supabase
         .from("media_sections")
-        .insert({ project_id: projectId, title: section.title, display_order: secIdx })
+        .insert({
+          project_id: projectId,
+          title: section.title,
+          display_order: secIdx,
+        })
         .select()
         .single();
 
@@ -244,10 +364,16 @@ export const projectService = {
       }
 
       // Upload song song + batch insert toàn bộ items của section
-      const itemsPayload = await prepareItemsForInsert(sectionRow.id, section.items);
+      const itemsPayload = await prepareItemsForInsert(
+        sectionRow.id,
+        section.items,
+      );
       if (itemsPayload.length > 0) {
-        const { error: itemsErr } = await supabase.from("media_items").insert(itemsPayload);
-        if (itemsErr) console.warn("[createFull] Items insert error:", itemsErr.message);
+        const { error: itemsErr } = await supabase
+          .from("media_items")
+          .insert(itemsPayload);
+        if (itemsErr)
+          console.warn("[createFull] Items insert error:", itemsErr.message);
       }
     }
 
@@ -280,10 +406,17 @@ export const projectService = {
       .single();
 
     // 2. Upload thumbnail mới nếu có
-    const thumbnail = await resolveImageUrl(project.thumbnailFile, project.thumbnail);
+    const thumbnail = await resolveImageUrl(
+      project.thumbnailFile,
+      project.thumbnail,
+    );
 
     // Xóa thumbnail cũ nếu đã thay đổi
-    if (project.thumbnailFile && oldProject?.thumbnail && oldProject.thumbnail !== thumbnail) {
+    if (
+      project.thumbnailFile &&
+      oldProject?.thumbnail &&
+      oldProject.thumbnail !== thumbnail
+    ) {
       await uploadService.deleteFile(oldProject.thumbnail);
     }
 
@@ -295,6 +428,7 @@ export const projectService = {
         slug: project.slug,
         client_id: project.client_id ?? null,
         overview: project.overview ?? null,
+        solution: project.solution ?? null,
         scope: project.scope ?? null,
         results: project.results ?? null,
         featured: project.featured ?? false,
@@ -308,9 +442,11 @@ export const projectService = {
     // 4. Categories: xóa hết rồi insert lại (đơn giản, ít record)
     await supabase.from("project_categories").delete().eq("project_id", id);
     if (categoryIds.length > 0) {
-      await supabase.from("project_categories").insert(
-        categoryIds.map((catId) => ({ project_id: id, category_id: catId })),
-      );
+      await supabase
+        .from("project_categories")
+        .insert(
+          categoryIds.map((catId) => ({ project_id: id, category_id: catId })),
+        );
     }
 
     // 5. Media sections & items
@@ -360,7 +496,10 @@ export const projectService = {
 // Private helpers cho updateFull
 // ----------------------------------------------------------------
 
-async function updateMediaSections(projectId: number, inputSections: MediaSectionInput[]) {
+async function updateMediaSections(
+  projectId: number,
+  inputSections: MediaSectionInput[],
+) {
   // Lấy danh sách section IDs hiện tại trong DB
   const { data: dbSections } = await supabase
     .from("media_sections")
@@ -384,7 +523,11 @@ async function updateMediaSections(projectId: number, inputSections: MediaSectio
       // --- Section mới: insert section + batch insert items ---
       const { data: newSection, error: secErr } = await supabase
         .from("media_sections")
-        .insert({ project_id: projectId, title: section.title, display_order: 0 })
+        .insert({
+          project_id: projectId,
+          title: section.title,
+          display_order: 0,
+        })
         .select()
         .single();
 
@@ -395,7 +538,10 @@ async function updateMediaSections(projectId: number, inputSections: MediaSectio
 
       keptSectionIds.push(newSection.id);
 
-      const itemsPayload = await prepareItemsForInsert(newSection.id, section.items.filter((i) => !i._deleted));
+      const itemsPayload = await prepareItemsForInsert(
+        newSection.id,
+        section.items.filter((i) => !i._deleted),
+      );
       if (itemsPayload.length > 0) {
         await supabase.from("media_items").insert(itemsPayload);
       }
@@ -403,13 +549,18 @@ async function updateMediaSections(projectId: number, inputSections: MediaSectio
   }
 
   // Xóa các sections đã bị loại khỏi form (kèm xóa file)
-  const toDeleteSectionIds = dbSectionIds.filter((sid) => !keptSectionIds.includes(sid));
+  const toDeleteSectionIds = dbSectionIds.filter(
+    (sid) => !keptSectionIds.includes(sid),
+  );
   if (toDeleteSectionIds.length > 0) {
     await deleteSectionsWithFiles(toDeleteSectionIds);
   }
 }
 
-async function updateItemsInSection(sectionId: number, inputItems: MediaItemInput[]) {
+async function updateItemsInSection(
+  sectionId: number,
+  inputItems: MediaItemInput[],
+) {
   // Lấy items hiện tại trong DB
   const { data: dbItems } = await supabase
     .from("media_items")
@@ -426,10 +577,14 @@ async function updateItemsInSection(sectionId: number, inputItems: MediaItemInpu
     if (item._deleted) continue;
 
     if (item.id && dbItemMap.has(item.id)) {
-      // Item cũ còn giữ lại: chỉ update caption/order
+      // Item cũ còn giữ lại: update url (cho video link), caption và order
       await supabase
         .from("media_items")
-        .update({ caption: item.caption ?? null, display_order: idx })
+        .update({
+          url: item.url,
+          caption: item.caption ?? null,
+          display_order: idx,
+        })
         .eq("id", item.id);
       keptItemIds.push(item.id);
     } else {
@@ -442,7 +597,10 @@ async function updateItemsInSection(sectionId: number, inputItems: MediaItemInpu
   if (newItems.length > 0) {
     const itemsPayload = await prepareItemsForInsert(
       sectionId,
-      newItems.map(({ item, displayOrder }) => ({ ...item, display_order: displayOrder })),
+      newItems.map(({ item, displayOrder }) => ({
+        ...item,
+        display_order: displayOrder,
+      })),
     );
     if (itemsPayload.length > 0) {
       await supabase.from("media_items").insert(itemsPayload);
@@ -450,7 +608,9 @@ async function updateItemsInSection(sectionId: number, inputItems: MediaItemInpu
   }
 
   // Xóa items bị loại khỏi form (kèm xóa file local)
-  const toDeleteIds = Array.from(dbItemMap.keys()).filter((id) => !keptItemIds.includes(id));
+  const toDeleteIds = Array.from(dbItemMap.keys()).filter(
+    (id) => !keptItemIds.includes(id),
+  );
   if (toDeleteIds.length > 0) {
     const urlsToDelete = toDeleteIds.map((id) => dbItemMap.get(id)!);
     await uploadService.deleteFiles(urlsToDelete);
@@ -472,7 +632,10 @@ async function deleteSectionsWithFiles(sectionIds: number[]) {
   await supabase.from("media_sections").delete().in("id", sectionIds);
 }
 
-async function updateSocialLinks(projectId: number, inputLinks: SocialLinkInput[]) {
+async function updateSocialLinks(
+  projectId: number,
+  inputLinks: SocialLinkInput[],
+) {
   const { data: dbLinks } = await supabase
     .from("social_links")
     .select("id")
@@ -488,14 +651,23 @@ async function updateSocialLinks(projectId: number, inputLinks: SocialLinkInput[
       // Cập nhật link cũ
       await supabase
         .from("social_links")
-        .update({ platform: link.platform, url: link.url, label: link.label ?? null })
+        .update({
+          platform: link.platform,
+          url: link.url,
+          label: link.label ?? null,
+        })
         .eq("id", link.id);
       keptIds.push(link.id);
     } else {
       // Thêm link mới
       const { data: newLink } = await supabase
         .from("social_links")
-        .insert({ project_id: projectId, platform: link.platform, url: link.url, label: link.label ?? null })
+        .insert({
+          project_id: projectId,
+          platform: link.platform,
+          url: link.url,
+          label: link.label ?? null,
+        })
         .select()
         .single();
       if (newLink) keptIds.push(newLink.id);

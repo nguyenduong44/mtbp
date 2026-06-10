@@ -13,6 +13,10 @@ export function meta({}: Route.MetaArgs) {
       content:
         "Liên hệ MTBP Agency để được tư vấn chiến lược marketing, xây dựng thương hiệu, social media và sản xuất nội dung. Phản hồi nhanh – tư vấn miễn phí.",
     },
+    {
+      property: "og:type",
+      content: "website",
+    },
   ];
 }
 

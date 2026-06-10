@@ -2,8 +2,16 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { categoryService } from "../services/categoryService";
 import type { Category } from "../types";
 
-export const useCategories = () =>
-  useQuery({ queryKey: ["categories"], queryFn: categoryService.getAll });
+export const useCategories = (
+  params?: Parameters<typeof categoryService.getAll>[0],
+  options?: { enabled?: boolean }
+) => {
+  return useQuery({
+    queryKey: ["categories", params],
+    queryFn: () => categoryService.getAll(params),
+    enabled: options?.enabled ?? true,
+  });
+};
 
 export const useCategory = (id: number) =>
   useQuery({

@@ -1,0 +1,43 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # cho phép chạy thủ công từ GitHub UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          # Build trên VPS để tránh vấn đề native modules (sharp)
+          # public/uploads/ không bị xóa vì nằm trong .gitignore
+          script: |
+            set -e  # dừng ngay nếu bất kỳ lệnh nào fail
+
+            cd /var/www/mtbp-agency
+
+            echo "=== Pull code mới ==="
+            git pull origin main
+
+            echo "=== Cài dependencies ==="
+            npm ci --omit=dev
+
+            echo "=== Build production ==="
+            npm run build
+
+            echo "=== Restart PM2 ==="
+            pm2 restart mtbp
+
+            echo "=== Kiểm tra trạng thái ==="
+            pm2 show mtbp | grep -E "status|restarts|uptime"
+
+            echo "=== Deploy thành công ==="

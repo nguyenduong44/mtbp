@@ -5,8 +5,17 @@
 export type ClientRow = {
   id: number;
   name: string;
-  industry: string | null;
+  industry_id: number | null;
   logo: string | null;
+};
+
+export type IndustryRow = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string | null;
+  display_order: number;
+  created_at: string;
 };
 
 export type ProjectRow = {
@@ -17,6 +26,7 @@ export type ProjectRow = {
   featured: boolean;
   client_id: number | null;
   overview: string | null;
+  solution: string | null;
   scope: string[] | null;
   results: string[] | null;
   created_at: string;
@@ -81,7 +91,12 @@ export type ProjectWithClient = ProjectRow & {
 
 // Dùng trong trang chi tiết project (admin edit + public detail)
 export type ProjectWithDetails = ProjectRow & {
-  clients: { name: string; logo: string | null; industry: string | null } | null;
+  clients: {
+    name: string;
+    logo: string | null;
+    industry_id: number | null;
+    industries?: { name: string } | null;
+  } | null;
   categories: Category[];
   media_sections: (MediaSectionRow & { media_items: MediaItemRow[] })[];
   social_links: SocialLinkRow[];

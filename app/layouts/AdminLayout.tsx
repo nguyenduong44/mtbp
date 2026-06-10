@@ -6,6 +6,7 @@ import {
   Palette,
   Building2,
   Settings2,
+  Briefcase,
   Mail,
   LogOut,
   Menu,
@@ -16,6 +17,7 @@ const navItems = [
   { href: "/admin", label: "Bảng điều khiển", icon: LayoutDashboard },
   { href: "/admin/projects", label: "Dự án", icon: Palette },
   { href: "/admin/clients", label: "Khách hàng", icon: Building2 },
+  { href: "/admin/industries", label: "Ngành nghề", icon: Briefcase },
   { href: "/admin/categories", label: "Dịch vụ", icon: Settings2 },
   { href: "/admin/contacts", label: "Liên hệ", icon: Mail },
 ];

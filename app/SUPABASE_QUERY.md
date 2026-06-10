@@ -149,6 +149,9 @@ WITH CHECK (auth.role() = 'authenticated');
 CREATE POLICY "Enable read for public" ON clients
 FOR SELECT USING (true);
 
+ALTER TABLE projects
+ADD COLUMN solution TEXT;
+
 -- Thêm cột title (bắt buộc)
 ALTER TABLE projects ADD COLUMN title TEXT NOT NULL DEFAULT '';
 
@@ -242,3 +245,110 @@ ALTER TABLE projects DROP COLUMN IF EXISTS category;
 
 -- Xoá cột services_used (vì thay bằng categories)
 ALTER TABLE projects DROP COLUMN IF EXISTS services_used;
+
+CREATE INDEX idx_projects_client_id
+ON projects(client_id);
+
+CREATE INDEX idx_media_sections_project_id
+ON media_sections(project_id);
+
+CREATE INDEX idx_media_items_section_id
+ON media_items(section_id);
+
+CREATE INDEX idx_social_links_project_id
+ON social_links(project_id);
+
+CREATE INDEX idx_project_categories_project_id
+ON project_categories(project_id);
+
+CREATE INDEX idx_project_categories_category_id
+ON project_categories(category_id);
+
+CREATE INDEX idx_projects_created_at ON projects(created_at DESC);
+CREATE INDEX idx_contact_submissions_created_at ON contact_submissions(created_at DESC);
+CREATE INDEX idx_categories_display_order ON categories(display_order);
+
+DROP TABLE IF EXISTS processes CASCADE;
+DROP TABLE IF EXISTS site_settings CASCADE;
+
+FROM information_schema.tables
+WHERE table_schema = 'public'
+ORDER BY table_name;
+
+CREATE INDEX IF NOT EXISTS idx_projects_title
+ON projects(title);
+
+CREATE INDEX IF NOT EXISTS idx_projects_slug
+ON projects(slug);
+
+CREATE INDEX IF NOT EXISTS idx_projects_created_at
+ON projects(created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_projects_featured
+ON projects(featured);
+
+CREATE INDEX IF NOT EXISTS idx_projects_client_id
+ON projects(client_id);
+
+CREATE INDEX IF NOT EXISTS idx_clients_name
+ON clients(name);
+
+CREATE INDEX IF NOT EXISTS idx_clients_industry
+ON clients(industry);
+
+CREATE INDEX IF NOT EXISTS idx_categories_name
+ON categories(name);
+
+CREATE INDEX IF NOT EXISTS idx_categories_slug
+ON categories(slug);
+
+CREATE INDEX IF NOT EXISTS idx_project_categories_project
+ON project_categories(project_id);
+
+CREATE INDEX IF NOT EXISTS idx_project_categories_category
+ON project_categories(category_id);
+
+-- 1. Xóa ràng buộc cũ
+ALTER TABLE projects DROP CONSTRAINT projects_client_id_fkey;
+
+-- 2. Thêm ràng buộc mới với ON DELETE SET NULL
+ALTER TABLE projects ADD CONSTRAINT projects_client_id_fkey
+FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE SET NULL;
+
+SELECT
+conname,
+confdeltype
+FROM pg_constraint
+WHERE conname = 'projects_client_id_fkey';
+
+-- Tạo bảng industries
+CREATE TABLE industries (
+id BIGSERIAL PRIMARY KEY,
+name TEXT NOT NULL UNIQUE,
+slug TEXT NOT NULL UNIQUE,
+description TEXT,
+display_order INT DEFAULT 0,
+created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Thêm cột industry_id vào clients, xóa cột industry cũ
+ALTER TABLE clients ADD COLUMN industry_id BIGINT REFERENCES industries(id) ON DELETE SET NULL;
+ALTER TABLE clients DROP COLUMN industry;
+
+-- Index cho industries
+CREATE INDEX idx_industries_name ON industries(name);
+CREATE INDEX idx_industries_slug ON industries(slug);
+CREATE INDEX idx_industries_display_order ON industries(display_order);
+CREATE INDEX idx_clients_industry_id ON clients(industry_id);
+
+-- RLS cho industries
+CREATE POLICY "Enable all for authenticated" ON industries
+FOR ALL USING (auth.role() = 'authenticated')
+WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Enable read for public" ON industries
+FOR SELECT USING (true);
+
+-- Cập nhật RLS cho clients (đã có)
+-- Cập nhật RLS cho projects (giữ nguyên, thêm cột solution không ảnh hưởng)
+

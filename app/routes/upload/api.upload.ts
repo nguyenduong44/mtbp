@@ -103,8 +103,11 @@ export async function action({ request }: ActionFunctionArgs) {
     return new Response("Chỉ chấp nhận file video", { status: 400 });
   }
 
+  const UPLOADS_ROOT =
+    process.env.UPLOADS_ROOT || path.join(process.cwd(), "public", "uploads");
+
   const subDir = type === "image" ? "images" : "videos";
-  const uploadDir = path.join(process.cwd(), "public", "uploads", subDir);
+  const uploadDir = path.join(UPLOADS_ROOT, subDir);
   await mkdir(uploadDir, { recursive: true });
 
   try {

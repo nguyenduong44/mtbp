@@ -186,8 +186,8 @@ export default function CategoryForm({
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-gray-400 uppercase ml-1">Mô tả danh mục</label>
                   <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    defaultValue={description}
+                    onBlur={(e) => setDescription(e.target.value)}
                     rows={4}
                     placeholder="Mô tả tóm tắt về danh mục này..."
                     className="w-full px-4 py-3 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-gray-900 transition-all outline-none shadow-inner"
@@ -207,8 +207,8 @@ export default function CategoryForm({
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-gray-400 uppercase ml-1">Điểm nhấn dịch vụ (mỗi dòng 1 mục)</label>
                 <textarea
-                  value={bulletsText}
-                  onChange={(e) => setBulletsText(e.target.value)}
+                  defaultValue={bulletsText}
+                  onBlur={(e) => setBulletsText(e.target.value)}
                   rows={6}
                   placeholder="VD:&#10;Chiến lược nội dung&#10;Thiết kế & video ngắn"
                   className="w-full px-4 py-3 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-gray-900 transition-all outline-none shadow-inner leading-relaxed"
@@ -226,7 +226,10 @@ export default function CategoryForm({
                   <ImageIcon size={14} className="text-gray-300" />
                 </div>
                 
-                <div className="aspect-square bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 relative overflow-hidden group hover:border-gray-900 hover:shadow-xl transition-all duration-300 cursor-pointer flex items-center justify-center p-6">
+                <div 
+                  className="aspect-square bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 relative overflow-hidden group hover:border-gray-900 hover:shadow-xl transition-all duration-300 cursor-pointer flex items-center justify-center p-6"
+                  style={{ transform: 'translateZ(0)' }}
+                >
                   <ImagePreview file={iconFile} fallback={existingIcon} />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-4">
                     <Upload size={24} className="mb-2" />

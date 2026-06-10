@@ -167,7 +167,9 @@ const ContactComponent = () => {
                     <p className="text-xs text-blue-200 uppercase font-bold">
                       Email
                     </p>
-                    <p className="font-semibold text-lg">contact@mtbp.vn</p>
+                    <p className="font-semibold text-lg">
+                      mtbpagency@gmail.com
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -178,7 +180,9 @@ const ContactComponent = () => {
                     <p className="text-xs text-blue-200 uppercase font-bold">
                       Địa chỉ
                     </p>
-                    <p className="font-semibold text-lg">Vincom Tây Ninh</p>
+                    <p className="font-semibold text-lg">
+                      63 Trương Tùng Quân, Tây Ninh, Vietnam
+                    </p>
                   </div>
                 </div>
               </div>

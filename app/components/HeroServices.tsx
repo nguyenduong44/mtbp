@@ -11,27 +11,23 @@ import { Badge } from "components/ui/badge";
 import { motion } from "framer-motion";
 import Section from "./Section";
 import Container from "./Container";
-import { heroServices } from "../data/heroServices";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Loader2 } from "lucide-react";
 import { Link } from "react-router";
-import { useEffect, useState } from "react";
-import { supabase } from "../supabase-client";
+import { useCategories } from "../hooks/useCategories";
 import type { Category } from "../types";
 
-const HeroServices = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+interface HeroServicesProps {
+  initialData?: Category[];
+}
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const { data } = await supabase
-        .from("categories")
-        .select("*")
-        .order("display_order", { ascending: true });
-      setCategories(data || []);
-    };
-    fetchCategories();
-  }, []);
+const HeroServices = ({ initialData }: HeroServicesProps) => {
+  const { data: queryData, isLoading: queryLoading } = useCategories(
+    { limit: 100 },
+    { enabled: !initialData }
+  );
+  
+  const categories = initialData || queryData?.data || [];
+
   return (
     <Section background="gray" padding="lg">
       <Container>
@@ -42,7 +38,7 @@ const HeroServices = () => {
               <ItemHeader>
                 <div className="aspect-square w-full rounded-sm object-cover">
                   {cat.icon_url && (
-                    <DotLottieReact src={cat.icon_url} autoplay loop />
+                    <img src={cat.icon_url}  />
                   )}
                 </div>
               </ItemHeader>

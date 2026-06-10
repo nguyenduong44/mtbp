@@ -15,6 +15,10 @@ export function meta({}: Route.MetaArgs) {
       content:
         "Khám phá cơ hội nghề nghiệp tại MTBP Agency. Môi trường sáng tạo, tôn trọng cá tính, tập trung vào chất lượng công việc và sự phát triển dài hạn của mỗi cá nhân.",
     },
+    {
+      property: "og:title",
+      content: "Tuyển dụng MTBP Agency"
+    }
   ];
 }
 const Career = () => {

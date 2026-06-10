@@ -14,7 +14,7 @@ export const heroServices: ServiceFeature[] = [
       "Chiến dịch truyền thông",
       "Tối ưu hiệu suất",
     ],
-    icon: "https://lottie.host/ad0c7e1c-5c24-484c-a241-8b8a787d4ebe/0oJNLLzUsk.lottie",
+    icon: "/uploads/images/service-social.webp",
     lucideIcon: <Activity />,
   },
   {
@@ -29,7 +29,7 @@ export const heroServices: ServiceFeature[] = [
       "Packaging",
       "Bảng hiệu & ấn phẩm",
     ],
-    icon: "https://lottie.host/b1e97d42-72fd-4313-b647-d85a32f88bb3/cXHUJ4sV5X.lottie",
+    icon: "/uploads/images/service-brand.webp",
     lucideIcon: <Paintbrush />,
   },
   {
@@ -44,7 +44,7 @@ export const heroServices: ServiceFeature[] = [
       "Tối ưu social profile",
       "Media production",
     ],
-    icon: "https://lottie.host/bcbcbfd0-f800-442e-849e-8d53a9991f5b/qGjxILcN3P.lottie",
+    icon: "/uploads/images/service-personal.webp",
     lucideIcon: <PersonStanding />,
   },
 ];

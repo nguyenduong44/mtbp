@@ -14,27 +14,30 @@ export default function Footer() {
           </Link>
 
           <p className="mt-6 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            MTBP tin rằng mỗi thương hiệu đều có một câu chuyện riêng và xứng
+            đáng được thể hiện theo cách tốt hơn. Chúng mình ở đây để lắng nghe,
+            đồng hành và cùng thương hiệu tạo ra những hình ảnh, nội dung và
+            giải pháp marketing vừa đúng với thực tế, vừa có giá trị lâu dài.
           </p>
         </div>
         <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
           <div>
-            <h2 className="font-semibold mb-5">Về doanh nghiệp</h2>
-            <ul className="text-sm space-y-2">
+            <h2 className="font-semibold mb-5 uppercase tracking-wider text-xs">Doanh nghiệp</h2>
+            <ul className="text-sm space-y-3">
               <li>
-                <a href="#">Dự án</a>
+                <Link to="/ve-chung-toi" className="hover:text-primary transition-colors">Về chúng tôi</Link>
               </li>
               <li>
-                <a href="#">Giải pháp</a>
+                <Link to="/du-an" className="hover:text-primary transition-colors">Dự án</Link>
               </li>
               <li>
-                <a href="#">Tuyển dụng</a>
+                <Link to="/giai-phap" className="hover:text-primary transition-colors">Giải pháp</Link>
               </li>
               <li>
-                <a href="#">Liên hệ</a>
+                <Link to="/tuyen-dung" className="hover:text-primary transition-colors">Tuyển dụng</Link>
+              </li>
+              <li>
+                <Link to="/lien-he" className="hover:text-primary transition-colors">Liên hệ</Link>
               </li>
             </ul>
           </div>
@@ -42,8 +45,8 @@ export default function Footer() {
             <h2 className="font-semibold mb-5">Văn phòng</h2>
             <div className="text-sm space-y-2">
               <p>09123213213</p>
-              <p>hr@mtbp.vn</p>
-              <p>63 Vincom Tây Ninh</p>
+              <p>mtbpagency@gmail.com</p>
+              <p>63 Trương Tùng Quân, Tây Ninh, Vietnam</p>
             </div>
           </div>
         </div>

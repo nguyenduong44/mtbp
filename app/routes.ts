@@ -13,6 +13,7 @@ export default [
     index("./routes/home.tsx"),
     route("du-an", "./routes/works.tsx"),
     route("du-an/:slug", "./routes/works.$slug.tsx"),
+    route("ve-chung-toi", "./routes/about.tsx"),
     route("lien-he", "./routes/contact.tsx"),
     route("giai-phap", "./routes/solution.tsx"),
     route("tuyen-dung", "./routes/career.tsx"),
@@ -36,6 +37,12 @@ export default [
     route("admin/clients/:id/edit", "./routes/admin.clients.$id.edit.tsx"),
     route("admin/categories", "./routes/admin.categories._index.tsx"),
     route("admin/categories/new", "./routes/admin.categories.new.tsx"),
+    route("admin/industries", "./routes/admin.industries._index.tsx"),
+    route("admin/industries/new", "./routes/admin.industries.new.tsx"),
+    route(
+      "admin/industries/:id/edit",
+      "./routes/admin.industries.$id.edit.tsx",
+    ),
     route(
       "admin/categories/:id/edit",
       "./routes/admin.categories.$id.edit.tsx",

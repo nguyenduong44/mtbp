@@ -2,10 +2,14 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { clientService } from "../services/clientService";
 import type { ClientRow } from "../types";
 
-export const useClients = () => {
+export const useClients = (
+  params?: Parameters<typeof clientService.getAll>[0],
+  options?: { enabled?: boolean },
+) => {
   return useQuery({
-    queryKey: ["clients"],
-    queryFn: clientService.getAll,
+    queryKey: ["clients", params],
+    queryFn: () => clientService.getAll(params),
+    enabled: options?.enabled ?? true,
   });
 };
 
