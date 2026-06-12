@@ -11,7 +11,7 @@ export default function Footer() {
             to={"/"}
             className="flex-shrink-0 flex items-center gap-2 cursor-pointer text-primary text-lg font-bold"
           >
-            <img src="/public/logo_3.png" />
+            <img src="/logo_3.png" />
           </Link>
 
           <p className="mt-6 text-md text-center text-justify">

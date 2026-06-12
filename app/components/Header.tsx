@@ -52,7 +52,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
             to={"/"}
             className="flex items-center gap-2 h-full cursor-pointer text-primary text-lg font-bold"
           >
-            <img src="/public/logo_1.png" className="h-full object-contain" />
+            <img src="/logo_1.png" className="h-full object-contain" />
           </Link>
 
           {/* DESKTOP LAYOUT */}
