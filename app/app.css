@@ -15,7 +15,8 @@
 
   /* ===== MAIN COLORS ===== */
   --color-primary: var(--color-brand-blue);
-  --color-secondary: var(--color-brand-purple);
+  --color-secondary: #cbe8f7;
+  --color-backup: #003c9b;
   --color-accent: var(--color-brand-orange);
   --color-success: var(--color-brand-green);
 }

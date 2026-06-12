@@ -47,16 +47,16 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
       className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || !isHome ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-transparent py-4"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 text-lg">
+        <div className="flex justify-between items-center h-20 text-lg">
           <Link
             to={"/"}
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer text-primary text-lg font-bold"
+            className="flex items-center gap-2 h-full cursor-pointer text-primary text-lg font-bold"
           >
-            MTBP
+            <img src="/public/logo_1.png" className="h-full object-contain" />
           </Link>
 
           {/* DESKTOP LAYOUT */}
-          <div className="hidden md:flex space-x-8 items-center">
+          <div className="hidden lg:flex space-x-8 items-center">
             {navItem.map((item) => (
               <Link
                 key={item.label}
@@ -81,7 +81,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
           </div>
 
           {/* MOBILE LAYOUT */}
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpened(!isOpened)}
               className="cursor-pointer hover:text-primary"
@@ -96,7 +96,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
         </div>
       </div>
       {isOpened && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg h-screen absolute w-full">
+        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg h-screen absolute w-full">
           <div className="px-4 pt-2 pb-6">
             {navItem.map((item, index) => (
               <Link

@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import Container from "./Container";
+import { Facebook, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -10,10 +11,10 @@ export default function Footer() {
             to={"/"}
             className="flex-shrink-0 flex items-center gap-2 cursor-pointer text-primary text-lg font-bold"
           >
-            MTBP
+            <img src="/public/logo_3.png" />
           </Link>
 
-          <p className="mt-6 text-sm">
+          <p className="mt-6 text-md text-center text-justify">
             MTBP tin rằng mỗi thương hiệu đều có một câu chuyện riêng và xứng
             đáng được thể hiện theo cách tốt hơn. Chúng mình ở đây để lắng nghe,
             đồng hành và cùng thương hiệu tạo ra những hình ảnh, nội dung và
@@ -22,31 +23,68 @@ export default function Footer() {
         </div>
         <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
           <div>
-            <h2 className="font-semibold mb-5 uppercase tracking-wider text-xs">Doanh nghiệp</h2>
-            <ul className="text-sm space-y-3">
+            <h2 className="font-semibold mb-5 uppercase tracking-wider text-xs">
+              Doanh nghiệp
+            </h2>
+            <ul className="text-md space-y-3">
               <li>
-                <Link to="/ve-chung-toi" className="hover:text-primary transition-colors">Về chúng tôi</Link>
+                <Link
+                  to="/ve-chung-toi"
+                  className="hover:text-primary transition-colors"
+                >
+                  Về chúng tôi
+                </Link>
               </li>
               <li>
-                <Link to="/du-an" className="hover:text-primary transition-colors">Dự án</Link>
+                <Link
+                  to="/du-an"
+                  className="hover:text-primary transition-colors"
+                >
+                  Dự án
+                </Link>
               </li>
               <li>
-                <Link to="/giai-phap" className="hover:text-primary transition-colors">Giải pháp</Link>
+                <Link
+                  to="/giai-phap"
+                  className="hover:text-primary transition-colors"
+                >
+                  Giải pháp
+                </Link>
               </li>
               <li>
-                <Link to="/tuyen-dung" className="hover:text-primary transition-colors">Tuyển dụng</Link>
+                <Link
+                  to="/tuyen-dung"
+                  className="hover:text-primary transition-colors"
+                >
+                  Tuyển dụng
+                </Link>
               </li>
               <li>
-                <Link to="/lien-he" className="hover:text-primary transition-colors">Liên hệ</Link>
+                <Link
+                  to="/lien-he"
+                  className="hover:text-primary transition-colors"
+                >
+                  Liên hệ
+                </Link>
               </li>
             </ul>
           </div>
           <div>
             <h2 className="font-semibold mb-5">Văn phòng</h2>
-            <div className="text-sm space-y-2">
-              <p>09123213213</p>
-              <p>mtbpagency@gmail.com</p>
-              <p>63 Trương Tùng Quân, Tây Ninh, Vietnam</p>
+            <div className="text-md flex flex-col gap-4 justify-between w-full h-full">
+              <div className="flex gap-4">
+                <Facebook size={25} />
+                <Instagram size={25} />
+              </div>
+              <a
+                href="mailto:mtbpagency@gmail.com"
+                className="w-fit relative group hover:text-backup transition-all duration-300 ease-out"
+              >
+                mtbpagency@gmail.com
+                <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-[1px] bg-backup group-hover:w-3/6 duration-300 ease-out"></span>
+                <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-[1px] bg-backup group-hover:w-3/6 duration-300 ease-out"></span>
+              </a>
+              <p className="">63 Trương Tùng Quân, Tây Ninh, Vietnam</p>
             </div>
           </div>
         </div>
