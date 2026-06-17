@@ -23,7 +23,7 @@ export default function Section({
   children,
   className = "",
   background = "white",
-  padding = "md",
+  padding = "sm",
 }: SectionProps) {
   return (
     <section

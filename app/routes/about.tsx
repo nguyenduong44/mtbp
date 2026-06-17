@@ -75,10 +75,10 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl text-left"
           >
-            <h1 className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-6">
+            <h1 className="text-sm uppercase tracking-[0.3em] text-primary mb-6">
               Về chúng tôi
             </h1>
-            <h2 className="text-5xl md:text-7xl font-black text-gray-900 leading-tight mb-8">
+            <h2 className="text-5xl md:text-7xl font-bold text-gray-900 leading-tight mb-8">
               Make Tây Ninh <br />
               <span className="text-primary italic">Better Place.</span>
             </h2>
@@ -99,7 +99,7 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-3xl font-black text-gray-900 mb-8 uppercase tracking-tighter text-left">
+              <h3 className="text-3xl font-bold text-gray-900 mb-8 uppercase text-left">
                 Câu chuyện MTBP ra đời
               </h3>
               <div className="space-y-6 text-gray-600 text-lg leading-relaxed text-left">
@@ -167,7 +167,7 @@ export default function About() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-8 text-left">
             {values.map((v, i) => (
               <motion.div
                 key={i}
@@ -196,46 +196,46 @@ export default function About() {
       </Section>
 
       {/* Team Section */}
-      <Section background="gray" padding="lg">
-        <Container>
-          <div className="text-left mb-16">
-            <h3 className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-4">
-              Con người tại MTBP
-            </h3>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 uppercase tracking-tighter">
-              Gặp gỡ đội ngũ
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
-            {team.map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center"
-              >
-                <div className="aspect-square rounded-3xl bg-white border border-gray-100 mb-4 flex items-center justify-center shadow-sm hover:shadow-xl transition-all duration-500 group overflow-hidden">
-                  <div className="text-3xl font-black text-gray-100 group-hover:text-primary transition-colors duration-500 group-hover:scale-150 uppercase">
-                    {member.name[0]}
-                  </div>
-                </div>
-                <h4 className="font-bold text-gray-900">{member.name}</h4>
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">
-                  {member.role}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </Container>
-      </Section>
+      {/* <Section background="gray" padding="lg"> */}
+      {/*   <Container> */}
+      {/*     <div className="text-left mb-16"> */}
+      {/*       <h3 className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-4"> */}
+      {/*         Con người tại MTBP */}
+      {/*       </h3> */}
+      {/*       <h2 className="text-4xl md:text-5xl font-black text-gray-900 uppercase tracking-tighter"> */}
+      {/*         Gặp gỡ đội ngũ */}
+      {/*       </h2> */}
+      {/*     </div> */}
+      {/**/}
+      {/*     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center"> */}
+      {/*       {team.map((member, i) => ( */}
+      {/*         <motion.div */}
+      {/*           key={i} */}
+      {/*           initial={{ opacity: 0, scale: 0.9 }} */}
+      {/*           whileInView={{ opacity: 1, scale: 1 }} */}
+      {/*           viewport={{ once: true }} */}
+      {/*           transition={{ delay: i * 0.1 }} */}
+      {/*           className="text-center" */}
+      {/*         > */}
+      {/*           <div className="aspect-square rounded-3xl bg-white border border-gray-100 mb-4 flex items-center justify-center shadow-sm hover:shadow-xl transition-all duration-500 group overflow-hidden"> */}
+      {/*             <div className="text-3xl font-black text-gray-100 group-hover:text-primary transition-colors duration-500 group-hover:scale-150 uppercase"> */}
+      {/*               {member.name[0]} */}
+      {/*             </div> */}
+      {/*           </div> */}
+      {/*           <h4 className="font-bold text-gray-900">{member.name}</h4> */}
+      {/*           <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1"> */}
+      {/*             {member.role} */}
+      {/*           </p> */}
+      {/*         </motion.div> */}
+      {/*       ))} */}
+      {/*     </div> */}
+      {/*   </Container> */}
+      {/* </Section> */}
 
       {/* Closing Section */}
       <Section background="white" padding="xl">
         <Container>
-          <div className="bg-gray-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="bg-secondary rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] rounded-full" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full" />
 
@@ -245,9 +245,10 @@ export default function About() {
               viewport={{ once: true }}
               className="relative z-10"
             >
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-8 uppercase tracking-tighter">
+              <h2 className="text-3xl md:text-5xl font-black text-black mb-8 uppercase tracking-tighter">
                 Cùng nhau làm cho <br />
-                thương hiệu của bạn <span className="text-primary italic">tốt hơn</span>
+                thương hiệu của bạn{" "}
+                <span className="text-primary italic">tốt hơn</span>
               </h2>
               <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto font-medium">
                 Tụi mình luôn sẵn sàng lắng nghe và đồng hành cùng bạn trên hành

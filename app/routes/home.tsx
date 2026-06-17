@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <>
-      <HeroIntroduction />
+      <HeroIntroduction initialCategories={categories} />
       <HeroServices initialData={categories} />
       <Process />
       <Sponsors initialData={clients} />

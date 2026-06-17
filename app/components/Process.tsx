@@ -7,7 +7,7 @@ type ProcessProps = {
 };
 const Process = ({ hText }: ProcessProps) => {
   return (
-    <Section padding="lg" background="gray">
+    <Section background="gray">
       <Container>
         {hText ? (
           <>

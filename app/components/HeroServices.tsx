@@ -23,13 +23,13 @@ interface HeroServicesProps {
 const HeroServices = ({ initialData }: HeroServicesProps) => {
   const { data: queryData, isLoading: queryLoading } = useCategories(
     { limit: 100 },
-    { enabled: !initialData }
+    { enabled: !initialData },
   );
-  
+
   const categories = initialData || queryData?.data || [];
 
   return (
-    <Section background="gray" padding="lg">
+    <Section background="gray">
       <Container>
         <h1 className="font-bold text-[45px] mb-4">Dịch vụ</h1>
         <ItemGroup className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
@@ -37,9 +37,7 @@ const HeroServices = ({ initialData }: HeroServicesProps) => {
             <Item key={cat.id} variant="outline">
               <ItemHeader>
                 <div className="aspect-square w-full rounded-sm object-cover">
-                  {cat.icon_url && (
-                    <img src={cat.icon_url}  />
-                  )}
+                  {cat.icon_url && <img src={cat.icon_url} />}
                 </div>
               </ItemHeader>
               <ItemContent>
