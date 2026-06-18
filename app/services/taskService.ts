@@ -12,6 +12,15 @@ export const taskService = {
     return data || [];
   },
 
+  getAll: async (): Promise<TaskRow[]> => {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .order("deadline", { ascending: true });
+    if (error) throw error;
+    return data || [];
+  },
+
   create: async (
     task: Omit<
       TaskRow,

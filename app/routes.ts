@@ -48,8 +48,12 @@ export default [
       "./routes/admin.categories.$id.edit.tsx",
     ),
     route("admin/contacts", "./routes/admin.contacts._index.tsx"),
-    route("admin/clients", "./routes/admin.clients._index.tsx"), // danh sách
-    route("admin/clients/:id", "./routes/admin.clients.$id.tsx"), // detail
+  ]),
+
+  // --- CRM SECTION (DEDICATED LAYOUT) ---
+  layout("./layouts/CrmLayout.tsx", [
+    route("admin/crm", "./routes/admin.crm._index.tsx"),
+    route("admin/crm/:id", "./routes/admin.crm.$id.tsx"),
   ]),
 
   // ----------------------------------------------------------------

@@ -10,6 +10,13 @@ export const useTasks = (clientId: number) => {
   });
 };
 
+export const useAllTasks = () => {
+  return useQuery({
+    queryKey: ["tasks", "all"],
+    queryFn: () => taskService.getAll(),
+  });
+};
+
 export const useCreateTask = () => {
   const qc = useQueryClient();
   return useMutation({

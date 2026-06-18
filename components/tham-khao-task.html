@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTBP Agency — Client Dashboard</title>
+  <style>
+    :root {
+      --navy: #1A3C6E;
+      --navy-light: #2A5298;
+      --navy-dark: #0F2447;
+      --gold: #C8963E;
+      --gold-light: #E8B05E;
+      --bg: #F0F4F8;
+      --surface: #FFFFFF;
+      --surface2: #F8FAFC;
+      --text: #1A2B3C;
+      --text-muted: #6B7280;
+      --border: #E2E8F0;
+      --red: #DC2626;
+      --red-bg: #FEF2F2;
+      --yellow: #D97706;
+      --yellow-bg: #FFFBEB;
+      --green: #059669;
+      --green-bg: #ECFDF5;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+      --r: 8px;
+      --r-lg: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ---- HEADER ---- */
+    .header {
+      background: var(--navy);
+      padding: 0 28px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: var(--gold);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 15px; color: white;
+      flex-shrink: 0;
+    }
+    .logo-name { font-weight: 700; font-size: 18px; color: white; }
+    .logo-sub { font-size: 11px; color: rgba(255,255,255,0.55); }
+    .header-date { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+    /* ---- MAIN ---- */
+    .main { max-width: 1440px; margin: 0 auto; padding: 28px 24px; }
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ---- SUMMARY BAR ---- */
+    .summary-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .stat-icon {
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .stat-icon.blue { background: #EFF6FF; }
+    .stat-icon.gold { background: #FFF7ED; }
+    .stat-icon.red  { background: #FFF1F2; }
+    .stat-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+    .stat-value { font-size: 26px; font-weight: 800; color: var(--navy); line-height: 1; }
+    .stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+    /* ---- TOOLBAR ---- */
+    .toolbar {
+      display: flex; gap: 12px; margin-bottom: 22px;
+      align-items: center; flex-wrap: wrap;
+    }
+    .search-wrap { flex: 1; min-width: 200px; position: relative; }
+    .search-wrap input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      font-size: 14px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      font-family: inherit;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .search-wrap input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,60,110,.1); }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+
+    /* ---- BUTTONS ---- */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px;
+      border-radius: var(--r);
+      font-size: 14px; font-weight: 600;
+      cursor: pointer; border: none;
+      transition: background .15s, transform .1s, box-shadow .15s;
+      text-decoration: none; white-space: nowrap; font-family: inherit;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--navy); color: white; }
+    .btn-primary:hover { background: var(--navy-light); }
+    .btn-gold { background: var(--gold); color: white; box-shadow: 0 2px 8px rgba(200,150,62,.3); }
+    .btn-gold:hover { background: var(--gold-light); box-shadow: 0 4px 12px rgba(200,150,62,.4); }
+    .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--navy); color: var(--navy); background: #F8FAFC; }
+    .btn-danger { background: var(--red-bg); color: var(--red); border: 1px solid #FECACA; }
+    .btn-danger:hover { background: #FEE2E2; }
+    .btn-sm { padding: 7px 14px; font-size: 13px; }
+    .btn-icon { width: 34px; height: 34px; padding: 0; justify-content: center; }
+
+    /* ---- SELECT ---- */
+    select {
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      font-size: 14px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color .15s;
+    }
+    select:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,60,110,.1); }
+
+    /* ---- CLIENT GRID ---- */
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .client-card {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .client-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--navy);
+    }
+    .card-head {
+      background: var(--navy);
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .card-name { font-weight: 700; font-size: 16px; color: white; line-height: 1.3; }
+    .type-badge {
+      background: rgba(200,150,62,.25);
+      color: var(--gold-light);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      border: 1px solid rgba(200,150,62,.35);
+      flex-shrink: 0;
+    }
+    .card-body { padding: 16px 18px; }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 9px;
+      font-size: 13px;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-label { color: var(--text-muted); font-weight: 500; }
+    .info-value { font-weight: 600; color: var(--text); text-align: right; }
+    .pkg-tag {
+      background: #EFF6FF;
+      color: var(--navy);
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .card-foot {
+      padding: 11px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dl-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .dl-badge.overdue { background: var(--red-bg); color: var(--red); }
+    .dl-badge.soon    { background: var(--yellow-bg); color: var(--yellow); }
+    .dl-badge.ok      { background: var(--green-bg); color: var(--green); }
+    .dl-badge.none    { background: var(--bg); color: var(--text-muted); }
+    .task-tally { font-size: 12px; color: var(--text-muted); }
+
+    /* ---- EMPTY STATE ---- */
+    .empty { grid-column: 1/-1; text-align: center; padding: 80px 20px; color: var(--text-muted); }
+    .empty .empty-icon { font-size: 60px; opacity: 0.25; margin-bottom: 16px; }
+    .empty h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .empty p { max-width: 300px; margin: 0 auto 24px; font-size: 14px; }
+
+    /* ---- MODAL ---- */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(15,36,71,.55);
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(3px);
+    }
+    .overlay.hidden { display: none; }
+    .modal {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      width: 100%;
+      max-width: 560px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.28);
+    }
+    .modal-sm { max-width: 460px; }
+    .modal-head {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0;
+      background: var(--surface);
+      z-index: 1;
+    }
+    .modal-title { font-size: 18px; font-weight: 700; color: var(--navy); }
+    .modal-body { padding: 24px; }
+    .modal-foot {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex; gap: 10px; justify-content: flex-end;
+    }
+
+    /* ---- FORM ---- */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+    .fg.full { grid-column: 1/-1; }
+    .fg label { font-size: 13px; font-weight: 600; color: var(--text); }
+    .req { color: var(--red); margin-left: 2px; }
+    .fg input, .fg select, .fg textarea {
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      background: var(--surface);
+      font-family: inherit;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(26,60,110,.1);
+    }
+    .fg input.err, .fg select.err, .fg textarea.err { border-color: var(--red); }
+    .err-msg { font-size: 12px; color: var(--red); min-height: 16px; }
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* ---- DETAIL VIEW ---- */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      color: var(--navy); font-weight: 600; font-size: 14px;
+      cursor: pointer; padding: 6px 0; margin-bottom: 18px;
+      background: none; border: none; font-family: inherit;
+      transition: color .15s;
+    }
+    .back-btn:hover { color: var(--navy-light); }
+    .detail-head {
+      background: var(--navy);
+      border-radius: var(--r-lg);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      color: white;
+    }
+    .detail-head-top {
+      display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; gap: 12px;
+    }
+    .detail-client-name { font-size: 26px; font-weight: 800; line-height: 1.2; }
+    .detail-type {
+      display: inline-block;
+      background: rgba(200,150,62,.25);
+      color: var(--gold-light);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 13px; font-weight: 600;
+      border: 1px solid rgba(200,150,62,.35);
+      margin-top: 8px;
+    }
+    .detail-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .meta-label { font-size: 11px; color: rgba(255,255,255,.55); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .meta-val { font-size: 15px; font-weight: 600; color: white; }
+
+    /* ---- KANBAN ---- */
+    .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .k-col {
+      background: var(--surface2);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .k-head {
+      padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface);
+      border-bottom: 3px solid transparent;
+    }
+    .k-head.todo  { border-color: #94A3B8; }
+    .k-head.doing { border-color: var(--gold); }
+    .k-head.done  { border-color: var(--green); }
+    .k-title { font-weight: 700; font-size: 14px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .k-count {
+      background: var(--border); color: var(--text-muted);
+      padding: 2px 8px; border-radius: 12px;
+      font-size: 12px; font-weight: 600;
+    }
+    .k-body {
+      padding: 12px;
+      min-height: 320px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: background .15s;
+    }
+    .k-body.drag-over { background: rgba(26,60,110,.06); }
+
+    /* ---- TICKET ---- */
+    .ticket {
+      background: var(--surface);
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      padding: 13px 14px;
+      cursor: grab;
+      box-shadow: var(--shadow);
+      transition: border-color .15s, box-shadow .15s, opacity .15s;
+      position: relative;
+    }
+    .ticket:hover { border-color: var(--navy); box-shadow: var(--shadow-md); }
+    .ticket.dragging { opacity: .4; cursor: grabbing; }
+    .t-priority { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+    .p-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .p-dot.high   { background: var(--red); }
+    .p-dot.medium { background: var(--yellow); }
+    .p-dot.low    { background: var(--green); }
+    .p-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .p-label.high   { color: var(--red); }
+    .p-label.medium { color: var(--yellow); }
+    .p-label.low    { color: var(--green); }
+    .t-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+    .t-desc {
+      font-size: 12px; color: var(--text-muted);
+      margin-bottom: 9px; line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .t-foot { display: flex; align-items: center; justify-content: space-between; }
+    .t-dl { font-size: 12px; font-weight: 500; }
+    .t-actions { display: flex; gap: 4px; opacity: 0; transition: opacity .15s; }
+    .ticket:hover .t-actions { opacity: 1; }
+    .t-btn {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      transition: all .15s;
+    }
+    .t-btn:hover { background: var(--bg); border-color: var(--navy); }
+    .t-btn.del:hover { background: var(--red-bg); border-color: var(--red); }
+    .add-ticket {
+      width: 100%;
+      padding: 10px;
+      border: 2px dashed var(--border);
+      border-radius: var(--r);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px; font-weight: 500;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .add-ticket:hover { border-color: var(--navy); color: var(--navy); background: rgba(26,60,110,.03); }
+
+    /* ---- TOAST ---- */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--navy); color: white;
+      padding: 12px 20px;
+      border-radius: var(--r);
+      font-size: 14px; font-weight: 500;
+      z-index: 9999;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform .3s ease, opacity .3s ease;
+      max-width: 340px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ---- SCROLLBAR ---- */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .summary-bar { grid-template-columns: 1fr; }
+      .detail-meta { grid-template-columns: repeat(2, 1fr); }
+      .kanban { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .clients-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .fg.full { grid-column: 1; }
+      .main { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════ HEADER ════════ -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">M</div>
+    <div>
+      <div class="logo-name">MTBP Agency</div>
+      <div class="logo-sub">Client Management Dashboard</div>
+    </div>
+  </div>
+  <div class="header-date" id="hDate"></div>
+</header>
+
+<main class="main">
+
+  <!-- ════════ DASHBOARD VIEW ════════ -->
+  <div id="v-dash" class="view active">
+
+    <div class="summary-bar">
+      <div class="stat-card">
+        <div class="stat-icon blue">👥</div>
+        <div>
+          <div class="stat-label">Tổng khách hàng</div>
+          <div class="stat-value" id="s-total">0</div>
+          <div class="stat-sub">đang hợp tác</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon gold">💰</div>
+        <div>
+          <div class="stat-label">Doanh thu hàng tháng</div>
+          <div class="stat-value" id="s-rev">—</div>
+          <div class="stat-sub">tổng giá trị hợp đồng</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon red">⏰</div>
+        <div>
+          <div class="stat-label">Deadline trong tuần</div>
+          <div class="stat-value" id="s-dl">0</div>
+          <div class="stat-sub">công việc sắp đến hạn</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="q" placeholder="Tìm kiếm theo tên khách hàng..." oninput="applyFilter()">
+      </div>
+      <select id="sortBy" onchange="applyFilter()">
+        <option value="deadline">Deadline gần nhất</option>
+        <option value="name">Tên A → Z</option>
+        <option value="added">Mới thêm nhất</option>
+        <option value="revenue">Doanh thu cao nhất</option>
+      </select>
+      <button class="btn btn-gold" onclick="openClientModal()">＋ Thêm khách hàng mới</button>
+    </div>
+
+    <div class="clients-grid" id="grid"></div>
+  </div>
+
+  <!-- ════════ DETAIL VIEW ════════ -->
+  <div id="v-detail" class="view">
+    <button class="back-btn" onclick="goBack()">← Quay lại Dashboard</button>
+
+    <div class="detail-head">
+      <div class="detail-head-top">
+        <div>
+          <div class="detail-client-name" id="d-name"></div>
+          <div class="detail-type" id="d-type"></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)" onclick="openEditClient()">✏️ Sửa</button>
+          <button class="btn btn-danger" onclick="deleteClient()">🗑️ Xóa</button>
+        </div>
+      </div>
+      <div class="detail-meta" id="d-meta"></div>
+    </div>
+
+    <div class="kanban" id="kanban">
+      <!-- col: todo -->
+      <div class="k-col">
+        <div class="k-head todo">
+          <div class="k-title">📋 Cần làm <span class="k-count" id="cnt-todo">0</span></div>
+          <button class="btn btn-sm btn-outline" onclick="openAddTask('todo')">＋ Thêm</button>
+        </div>
+        <div class="k-body" id="b-todo"
+          ondragover="dOver(event,'todo')" ondragleave="dLeave(event)" ondrop="dDrop(event,'todo')"></div>
+      </div>
+      <!-- col: doing -->
+      <div class="k-col">
+        <div class="k-head doing">
+          <div class="k-title">🔄 Đang làm <span class="k-count" id="cnt-doing">0</span></div>
+          <button class="btn btn-sm btn-outline" onclick="openAddTask('doing')">＋ Thêm</button>
+        </div>
+        <div class="k-body" id="b-doing"
+          ondragover="dOver(event,'doing')" ondragleave="dLeave(event)" ondrop="dDrop(event,'doing')"></div>
+      </div>
+      <!-- col: done -->
+      <div class="k-col">
+        <div class="k-head done">
+          <div class="k-title">✅ Đã hoàn thành <span class="k-count" id="cnt-done">0</span></div>
+          <button class="btn btn-sm btn-outline" onclick="openAddTask('done')">＋ Thêm</button>
+        </div>
+        <div class="k-body" id="b-done"
+          ondragover="dOver(event,'done')" ondragleave="dLeave(event)" ondrop="dDrop(event,'done')"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ════════ CLIENT MODAL ════════ -->
+<div class="overlay hidden" id="m-client">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="m-client-title">Thêm khách hàng mới</div>
+      <button class="btn btn-icon btn-outline" onclick="closeClientModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg full">
+          <label>Tên khách hàng <span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="VD: Café Xoài, Spa Bình An…">
+          <div class="err-msg" id="e-name"></div>
+        </div>
+        <div class="fg">
+          <label>Loại hình kinh doanh <span class="req">*</span></label>
+          <select id="f-type">
+            <option value="">— Chọn loại hình —</option>
+            <option value="F&B">F&B (Ẩm thực)</option>
+            <option value="Spa & Wellness">Spa & Wellness</option>
+            <option value="Retail">Retail (Bán lẻ)</option>
+            <option value="Thời trang">Thời trang</option>
+            <option value="Làm đẹp">Làm đẹp</option>
+            <option value="Bất động sản">Bất động sản</option>
+            <option value="Giáo dục">Giáo dục</option>
+            <option value="Y tế">Y tế & Sức khỏe</option>
+            <option value="Khách sạn">Khách sạn & Du lịch</option>
+            <option value="Khác">Khác</option>
+          </select>
+          <div class="err-msg" id="e-type"></div>
+        </div>
+        <div class="fg">
+          <label>Gói dịch vụ <span class="req">*</span></label>
+          <select id="f-pkg">
+            <option value="">— Chọn gói —</option>
+            <option value="Cơ bản">Cơ bản</option>
+            <option value="Tiêu chuẩn">Tiêu chuẩn</option>
+            <option value="Cao cấp">Cao cấp</option>
+            <option value="TikTok Basic">TikTok Basic</option>
+            <option value="TikTok Pro">TikTok Pro</option>
+            <option value="Content Full">Content Full Package</option>
+            <option value="Social Media">Social Media Management</option>
+            <option value="Tùy chỉnh">Tùy chỉnh</option>
+          </select>
+          <div class="err-msg" id="e-pkg"></div>
+        </div>
+        <div class="fg">
+          <label>Người liên hệ <span class="req">*</span></label>
+          <input type="text" id="f-contact" placeholder="Tên người liên hệ">
+          <div class="err-msg" id="e-contact"></div>
+        </div>
+        <div class="fg">
+          <label>Số điện thoại / Zalo</label>
+          <input type="tel" id="f-phone" placeholder="0912 345 678">
+        </div>
+        <div class="fg">
+          <label>Chi phí hàng tháng (VND) <span class="req">*</span></label>
+          <input type="number" id="f-cost" placeholder="5000000" min="0" step="500000">
+          <div class="err-msg" id="e-cost"></div>
+        </div>
+        <div class="fg">
+          <label>Ngày bắt đầu hợp đồng</label>
+          <input type="date" id="f-start">
+        </div>
+        <div class="fg full">
+          <label>Ghi chú</label>
+          <textarea id="f-notes" placeholder="Mục tiêu, yêu cầu đặc biệt, lịch sử làm việc…"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeClientModal()">Hủy</button>
+      <button class="btn btn-primary" onclick="saveClient()">💾 Lưu khách hàng</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ TASK MODAL ════════ -->
+<div class="overlay hidden" id="m-task">
+  <div class="modal modal-sm">
+    <div class="modal-head">
+      <div class="modal-title" id="m-task-title">Thêm công việc</div>
+      <button class="btn btn-icon btn-outline" onclick="closeTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="grid-template-columns:1fr">
+        <div class="fg">
+          <label>Tiêu đề công việc <span class="req">*</span></label>
+          <input type="text" id="t-title" placeholder="VD: Chụp ảnh sản phẩm mới tháng 6">
+          <div class="err-msg" id="e-ttitle"></div>
+        </div>
+        <div class="fg">
+          <label>Mô tả ngắn</label>
+          <textarea id="t-desc" placeholder="Chi tiết thêm về công việc này…" style="min-height:68px"></textarea>
+        </div>
+        <div class="fg">
+          <label>Ngày deadline</label>
+          <input type="date" id="t-dl">
+        </div>
+        <div class="fg">
+          <label>Mức độ ưu tiên</label>
+          <select id="t-pri">
+            <option value="high">🔴 Cao</option>
+            <option value="medium" selected>🟡 Trung bình</option>
+            <option value="low">🟢 Thấp</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeTaskModal()">Hủy</button>
+      <button class="btn btn-primary" onclick="saveTask()">💾 Lưu công việc</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════
+   DATA
+════════════════════════════════ */
+const CK = 'mtbp_clients';
+const TK = 'mtbp_tasks';
+
+const getClients  = () => JSON.parse(localStorage.getItem(CK) || '[]');
+const putClients  = d  => localStorage.setItem(CK, JSON.stringify(d));
+const getAllTasks  = () => JSON.parse(localStorage.getItem(TK) || '{}');
+const getTasks    = id => (getAllTasks()[id] || { todo: [], doing: [], done: [] });
+const putTasks    = (id, t) => { const a = getAllTasks(); a[id] = t; localStorage.setItem(TK, JSON.stringify(a)); };
+const delTasks    = id => { const a = getAllTasks(); delete a[id]; localStorage.setItem(TK, JSON.stringify(a)); };
+
+/* ════════════════════════════════
+   STATE
+════════════════════════════════ */
+let curClientId = null;   // client in detail view
+let editClientId = null;  // client being edited
+let editTaskId   = null;  // task being edited
+let editTaskCol  = null;  // column of task being edited
+let newTaskCol   = null;  // column for new task
+let dragId  = null;
+let dragCol = null;
+
+/* ════════════════════════════════
+   ROUTING
+════════════════════════════════ */
+function goBack() {
+  curClientId = null;
+  document.getElementById('v-dash').classList.add('active');
+  document.getElementById('v-detail').classList.remove('active');
+  renderDash();
+}
+
+function goDetail(id) {
+  curClientId = id;
+  document.getElementById('v-dash').classList.remove('active');
+  document.getElementById('v-detail').classList.add('active');
+  renderDetail();
+}
+
+/* ════════════════════════════════
+   DASHBOARD
+════════════════════════════════ */
+function renderDash() {
+  const clients = getClients();
+  renderStats(clients);
+  applyFilter();
+}
+
+function renderStats(clients) {
+  const rev = clients.reduce((s, c) => s + (parseFloat(c.cost) || 0), 0);
+  const now = new Date(); now.setHours(0,0,0,0);
+  const week = new Date(now); week.setDate(week.getDate() + 7);
+  const allT = getAllTasks();
+  let dlCount = 0;
+  clients.forEach(c => {
+    const t = allT[c.id] || {};
+    ['todo','doing'].forEach(col => (t[col]||[]).forEach(tk => {
+      if (tk.deadline) {
+        const d = new Date(tk.deadline); d.setHours(0,0,0,0);
+        if (d >= now && d <= week) dlCount++;
+      }
+    }));
+  });
+  document.getElementById('s-total').textContent = clients.length;
+  document.getElementById('s-rev').textContent = fmtCurrency(rev);
+  document.getElementById('s-dl').textContent = dlCount;
+}
+
+function applyFilter() {
+  let list = getClients();
+  const q = (document.getElementById('q').value||'').toLowerCase().trim();
+  if (q) list = list.filter(c => c.name.toLowerCase().includes(q));
+  const sort = document.getElementById('sortBy').value;
+  list.sort((a,b) => {
+    if (sort === 'name')    return a.name.localeCompare(b.name, 'vi');
+    if (sort === 'revenue') return (parseFloat(b.cost)||0) - (parseFloat(a.cost)||0);
+    if (sort === 'added')   return new Date(b.addedAt) - new Date(a.addedAt);
+    // deadline
+    const dA = nearestDl(a.id), dB = nearestDl(b.id);
+    if (!dA && !dB) return 0;
+    if (!dA) return 1;
+    if (!dB) return -1;
+    return dA - dB;
+  });
+  renderGrid(list);
+}
+
+function nearestDl(clientId) {
+  const t = getTasks(clientId);
+  let nearest = null;
+  ['todo','doing'].forEach(col => (t[col]||[]).forEach(tk => {
+    if (tk.deadline) {
+      const d = new Date(tk.deadline);
+      if (!nearest || d < nearest) nearest = d;
+    }
+  }));
+  return nearest;
+}
+
+function dlStatus(clientId) {
+  const d = nearestDl(clientId);
+  if (!d) return null;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const dc = new Date(d); dc.setHours(0,0,0,0);
+  const diff = Math.ceil((dc - now) / 864e5);
+  if (diff < 0)  return { cls:'overdue', icon:'🔴', txt:`Quá hạn ${Math.abs(diff)} ngày` };
+  if (diff === 0) return { cls:'soon',   icon:'🟡', txt:'Hôm nay' };
+  if (diff <= 3)  return { cls:'soon',   icon:'🟡', txt:`Còn ${diff} ngày` };
+  return             { cls:'ok',     icon:'🟢', txt:`Còn ${diff} ngày` };
+}
+
+function renderGrid(clients) {
+  const grid = document.getElementById('grid');
+  if (!clients.length) {
+    grid.innerHTML = `<div class="empty">
+      <div class="empty-icon">📋</div>
+      <h3>Chưa có khách hàng nào</h3>
+      <p>Thêm khách hàng đầu tiên để bắt đầu quản lý công việc.</p>
+      <button class="btn btn-gold" onclick="openClientModal()">＋ Thêm khách hàng mới</button>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = clients.map(c => {
+    const dl = dlStatus(c.id);
+    const t  = getTasks(c.id);
+    const total = (t.todo||[]).length + (t.doing||[]).length + (t.done||[]).length;
+    const done  = (t.done||[]).length;
+    const dlHtml = dl
+      ? `<span class="dl-badge ${dl.cls}">${dl.icon} ${dl.txt}</span>`
+      : `<span class="dl-badge none">📅 Chưa có deadline</span>`;
+    return `<div class="client-card" onclick="goDetail('${c.id}')">
+      <div class="card-head">
+        <div class="card-name">${esc(c.name)}</div>
+        <div class="type-badge">${esc(c.type)}</div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Gói dịch vụ</span><span class="pkg-tag">${esc(c.pkg)}</span></div>
+        <div class="info-row"><span class="info-label">Chi phí / tháng</span><span class="info-value" style="color:var(--gold)">${fmtCurrency(c.cost)}</span></div>
+        <div class="info-row"><span class="info-label">Liên hệ</span><span class="info-value">${esc(c.contact)}</span></div>
+      </div>
+      <div class="card-foot">${dlHtml}<span class="task-tally">${done}/${total} xong</span></div>
+    </div>`;
+  }).join('');
+}
+
+/* ════════════════════════════════
+   CLIENT DETAIL
+════════════════════════════════ */
+function renderDetail() {
+  const client = getClients().find(c => c.id === curClientId);
+  if (!client) { goBack(); return; }
+  document.getElementById('d-name').textContent = client.name;
+  document.getElementById('d-type').textContent = client.type;
+  document.getElementById('d-meta').innerHTML = `
+    <div><div class="meta-label">Người liên hệ</div><div class="meta-val">${esc(client.contact)}</div></div>
+    <div><div class="meta-label">Điện thoại / Zalo</div><div class="meta-val">${esc(client.phone||'—')}</div></div>
+    <div><div class="meta-label">Gói dịch vụ</div><div class="meta-val">${esc(client.pkg)}</div></div>
+    <div><div class="meta-label">Chi phí / tháng</div><div class="meta-val" style="color:var(--gold-light)">${fmtCurrency(client.cost)}</div></div>
+    ${client.notes ? `<div style="grid-column:1/-1;margin-top:8px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)"><div class="meta-label">Ghi chú</div><div class="meta-val" style="font-size:13px;font-weight:400;white-space:pre-wrap">${esc(client.notes)}</div></div>` : ''}
+  `;
+  renderKanban();
+}
+
+function openEditClient() {
+  const c = getClients().find(c => c.id === curClientId);
+  if (c) { populateClientForm(c); document.getElementById('m-client').classList.remove('hidden'); }
+}
+
+function deleteClient() {
+  const c = getClients().find(c => c.id === curClientId);
+  if (!c) return;
+  if (!confirm(`Xóa khách hàng "${c.name}"?\nTất cả công việc liên quan cũng sẽ bị xóa.`)) return;
+  putClients(getClients().filter(x => x.id !== curClientId));
+  delTasks(curClientId);
+  toast(`Đã xóa ${c.name}`);
+  goBack();
+}
+
+/* ════════════════════════════════
+   KANBAN
+════════════════════════════════ */
+const PMAP = { high:'Cao', medium:'Trung bình', low:'Thấp' };
+
+function renderKanban() {
+  const tasks = getTasks(curClientId);
+  ['todo','doing','done'].forEach(col => {
+    const list = tasks[col] || [];
+    document.getElementById(`cnt-${col}`).textContent = list.length;
+    const body = document.getElementById(`b-${col}`);
+    body.innerHTML = list.map(tk => {
+      const now = new Date(); now.setHours(0,0,0,0);
+      let dlHtml = '';
+      if (tk.deadline) {
+        const d = new Date(tk.deadline); d.setHours(0,0,0,0);
+        const diff = Math.ceil((d - now) / 864e5);
+        const cls  = diff < 0 ? 'overdue' : diff <= 3 ? 'soon' : 'ok';
+        const ico  = diff < 0 ? '🔴' : diff <= 3 ? '🟡' : '🟢';
+        dlHtml = `<span class="t-dl dl-badge ${cls}" style="padding:2px 8px;font-size:11px">${ico} ${fmtDate(tk.deadline)}</span>`;
+      }
+      return `<div class="ticket" draggable="true" id="tk-${tk.id}"
+          ondragstart="dStart(event,'${tk.id}','${col}')"
+          ondragend="dEnd(event)">
+        <div class="t-priority">
+          <div class="p-dot ${tk.priority}"></div>
+          <span class="p-label ${tk.priority}">${PMAP[tk.priority]||tk.priority}</span>
+        </div>
+        <div class="t-title">${esc(tk.title)}</div>
+        ${tk.desc ? `<div class="t-desc">${esc(tk.desc)}</div>` : ''}
+        <div class="t-foot">
+          ${dlHtml}
+          <div class="t-actions">
+            <button class="t-btn" onclick="openEditTask('${col}','${tk.id}')" title="Chỉnh sửa">✏️</button>
+            <button class="t-btn del" onclick="doDeleteTask('${col}','${tk.id}')" title="Xóa">🗑️</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('') + `<button class="add-ticket" onclick="openAddTask('${col}')">＋ Thêm công việc</button>`;
+  });
+}
+
+/* ════════════════════════════════
+   DRAG & DROP
+════════════════════════════════ */
+function dStart(e, id, col) {
+  dragId  = id;
+  dragCol = col;
+  e.target.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function dEnd(e) {
+  e.target.classList.remove('dragging');
+  document.querySelectorAll('.k-body').forEach(b => b.classList.remove('drag-over'));
+}
+function dOver(e, col) {
+  e.preventDefault();
+  document.querySelectorAll('.k-body').forEach(b => b.classList.remove('drag-over'));
+  document.getElementById(`b-${col}`).classList.add('drag-over');
+}
+function dLeave(e) {
+  if (!e.currentTarget.contains(e.relatedTarget)) e.currentTarget.classList.remove('drag-over');
+}
+function dDrop(e, toCol) {
+  e.preventDefault();
+  document.querySelectorAll('.k-body').forEach(b => b.classList.remove('drag-over'));
+  if (!dragId || dragCol === toCol) return;
+  const tasks = getTasks(curClientId);
+  const fromList = tasks[dragCol] || [];
+  const idx = fromList.findIndex(t => t.id === dragId);
+  if (idx === -1) return;
+  const [moved] = fromList.splice(idx, 1);
+  tasks[dragCol] = fromList;
+  tasks[toCol]   = [...(tasks[toCol]||[]), moved];
+  putTasks(curClientId, tasks);
+  renderKanban();
+  toast(`Đã chuyển "${moved.title}"`);
+  dragId = dragCol = null;
+}
+
+/* ════════════════════════════════
+   CLIENT MODAL
+════════════════════════════════ */
+function openClientModal() {
+  editClientId = null;
+  document.getElementById('m-client-title').textContent = 'Thêm khách hàng mới';
+  clearClientForm();
+  document.getElementById('m-client').classList.remove('hidden');
+}
+function populateClientForm(c) {
+  editClientId = c.id;
+  document.getElementById('m-client-title').textContent = 'Chỉnh sửa khách hàng';
+  document.getElementById('f-name').value    = c.name;
+  document.getElementById('f-type').value    = c.type;
+  document.getElementById('f-pkg').value     = c.pkg;
+  document.getElementById('f-contact').value = c.contact;
+  document.getElementById('f-phone').value   = c.phone   || '';
+  document.getElementById('f-cost').value    = c.cost    || '';
+  document.getElementById('f-start').value   = c.start   || '';
+  document.getElementById('f-notes').value   = c.notes   || '';
+}
+function clearClientForm() {
+  ['f-name','f-type','f-pkg','f-contact','f-phone','f-cost','f-start','f-notes'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  ['e-name','e-type','e-pkg','e-contact','e-cost'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.textContent = '';
+  });
+  ['f-name','f-type','f-pkg','f-contact','f-cost'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.remove('err');
+  });
+}
+function closeClientModal() {
+  document.getElementById('m-client').classList.add('hidden');
+  clearClientForm();
+}
+function saveClient() {
+  const name    = document.getElementById('f-name').value.trim();
+  const type    = document.getElementById('f-type').value;
+  const pkg     = document.getElementById('f-pkg').value;
+  const contact = document.getElementById('f-contact').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const cost    = document.getElementById('f-cost').value;
+  const start   = document.getElementById('f-start').value;
+  const notes   = document.getElementById('f-notes').value.trim();
+
+  let ok = true;
+  const setV = (fId, eId, msg) => {
+    document.getElementById(fId).classList.toggle('err', !!msg);
+    document.getElementById(eId).textContent = msg || '';
+    if (msg) ok = false;
+  };
+  setV('f-name',    'e-name',    name    ? '' : 'Vui lòng nhập tên khách hàng');
+  setV('f-type',    'e-type',    type    ? '' : 'Vui lòng chọn loại hình kinh doanh');
+  setV('f-pkg',     'e-pkg',     pkg     ? '' : 'Vui lòng chọn gói dịch vụ');
+  setV('f-contact', 'e-contact', contact ? '' : 'Vui lòng nhập người liên hệ');
+  setV('f-cost',    'e-cost',    cost    ? '' : 'Vui lòng nhập chi phí hàng tháng');
+  if (!ok) return;
+
+  const clients = getClients();
+  if (editClientId) {
+    const i = clients.findIndex(c => c.id === editClientId);
+    if (i >= 0) clients[i] = { ...clients[i], name, type, pkg, contact, phone, cost: parseFloat(cost), start, notes };
+    putClients(clients);
+    closeClientModal();
+    toast('Đã cập nhật khách hàng');
+    if (curClientId === editClientId) renderDetail(); else renderDash();
+  } else {
+    clients.unshift({
+      id: uid('c'), name, type, pkg, contact, phone,
+      cost: parseFloat(cost), start, notes,
+      addedAt: new Date().toISOString()
+    });
+    putClients(clients);
+    closeClientModal();
+    toast(`Đã thêm "${name}"`);
+    renderDash();
+  }
+}
+
+/* ════════════════════════════════
+   TASK MODAL
+════════════════════════════════ */
+function openAddTask(col) {
+  editTaskId = editTaskCol = null;
+  newTaskCol = col;
+  document.getElementById('m-task-title').textContent = 'Thêm công việc mới';
+  clearTaskForm();
+  document.getElementById('m-task').classList.remove('hidden');
+}
+function openEditTask(col, id) {
+  const t = (getTasks(curClientId)[col]||[]).find(x => x.id === id);
+  if (!t) return;
+  editTaskId  = id;
+  editTaskCol = col;
+  newTaskCol  = col;
+  document.getElementById('m-task-title').textContent = 'Chỉnh sửa công việc';
+  document.getElementById('t-title').value = t.title;
+  document.getElementById('t-desc').value  = t.desc || '';
+  document.getElementById('t-dl').value    = t.deadline || '';
+  document.getElementById('t-pri').value   = t.priority || 'medium';
+  document.getElementById('m-task').classList.remove('hidden');
+}
+function closeTaskModal() {
+  document.getElementById('m-task').classList.add('hidden');
+  clearTaskForm();
+  editTaskId = editTaskCol = null;
+}
+function clearTaskForm() {
+  document.getElementById('t-title').value = '';
+  document.getElementById('t-desc').value  = '';
+  document.getElementById('t-dl').value    = '';
+  document.getElementById('t-pri').value   = 'medium';
+  document.getElementById('t-title').classList.remove('err');
+  document.getElementById('e-ttitle').textContent = '';
+}
+function saveTask() {
+  const title = document.getElementById('t-title').value.trim();
+  if (!title) {
+    document.getElementById('t-title').classList.add('err');
+    document.getElementById('e-ttitle').textContent = 'Vui lòng nhập tiêu đề công việc';
+    return;
+  }
+  document.getElementById('t-title').classList.remove('err');
+  document.getElementById('e-ttitle').textContent = '';
+
+  const desc     = document.getElementById('t-desc').value.trim();
+  const deadline = document.getElementById('t-dl').value;
+  const priority = document.getElementById('t-pri').value;
+  const tasks    = getTasks(curClientId);
+  const col      = newTaskCol;
+
+  if (editTaskId) {
+    const i = (tasks[col]||[]).findIndex(t => t.id === editTaskId);
+    if (i >= 0) tasks[col][i] = { ...tasks[col][i], title, desc, deadline, priority };
+    toast('Đã cập nhật công việc');
+  } else {
+    tasks[col] = [...(tasks[col]||[]), { id: uid('t'), title, desc, deadline, priority, addedAt: new Date().toISOString() }];
+    toast(`Đã thêm "${title}"`);
+  }
+  putTasks(curClientId, tasks);
+  closeTaskModal();
+  renderKanban();
+}
+function doDeleteTask(col, id) {
+  const t = (getTasks(curClientId)[col]||[]).find(x => x.id === id);
+  if (!t || !confirm(`Xóa công việc "${t.title}"?`)) return;
+  const tasks = getTasks(curClientId);
+  tasks[col]  = (tasks[col]||[]).filter(x => x.id !== id);
+  putTasks(curClientId, tasks);
+  renderKanban();
+  toast('Đã xóa công việc');
+}
+
+/* ════════════════════════════════
+   UTILITIES
+════════════════════════════════ */
+function fmtCurrency(v) {
+  const n = parseFloat(v) || 0;
+  if (n >= 1e6) return (n/1e6).toLocaleString('vi-VN', {maximumFractionDigits:1}) + ' triệu ₫';
+  return n.toLocaleString('vi-VN') + ' ₫';
+}
+function fmtDate(s) {
+  if (!s) return '';
+  const d = new Date(s);
+  return d.toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit' });
+}
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function uid(prefix) {
+  return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2,7)}`;
+}
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+/* close overlay on backdrop click */
+['m-client','m-task'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    if (e.target === e.currentTarget) {
+      if (id === 'm-client') closeClientModal();
+      else closeTaskModal();
+    }
+  });
+});
+
+/* Escape key */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeClientModal(); closeTaskModal(); }
+});
+
+/* ════════════════════════════════
+   INIT
+════════════════════════════════ */
+(function init() {
+  const now = new Date();
+  document.getElementById('hDate').textContent =
+    now.toLocaleDateString('vi-VN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  renderDash();
+})();
+</script>
+</body>
+</html>

@@ -11,10 +11,12 @@ import {
   LogOut,
   Menu,
   X,
+  CheckSquare,
 } from "lucide-react";
 
 const navItems = [
   { href: "/admin", label: "Bảng điều khiển", icon: LayoutDashboard },
+  { href: "/admin/crm", label: "Quản lý Task", icon: CheckSquare },
   { href: "/admin/projects", label: "Dự án", icon: Palette },
   { href: "/admin/clients", label: "Khách hàng", icon: Building2 },
   { href: "/admin/industries", label: "Ngành nghề", icon: Briefcase },
