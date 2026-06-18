@@ -92,7 +92,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
   };
 
   return (
-    <section className="relative overflow-hidden min-h-screen bg-white pb-20">
+    <section className="relative overflow-hidden min-h-screen bg-white pb-10 sm:pb-20">
       {/* Background trái - Mờ dần khi vào giữa */}
       <div className="absolute left-0 top-0 h-full w-[50%] z-0">
         <img
@@ -118,14 +118,14 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
 
       {/* Main Content */}
       <div className="relative z-10 w-full flex flex-col items-center">
-        <main className="flex flex-col items-center justify-center text-center px-4 max-w-7xl w-full pt-8 pb-12 sm:pt-12">
-          <div className="mb-8 rounded-full border bg-white/70 px-6 py-3 backdrop-blur-sm">
-            <img src="/logo_3.png" alt="MTBP" className="h-24 w-auto" />
+        <main className="flex flex-col items-center justify-center text-center px-4 max-w-7xl w-full pt-4 pb-8 sm:pt-12 sm:pb-12">
+          <div className="mb-4 sm:mb-8 rounded-full border bg-white/70 px-6 py-3 backdrop-blur-sm">
+            <img src="/logo_3.png" alt="MTBP" className="h-16 sm:h-24 w-auto" />
           </div>
 
-          <h1 className="mx-auto max-w-4xl font-display text-5xl font-black tracking-tight text-slate-900 sm:text-7xl md:text-8xl leading-[1.05] mb-8">
+          <h1 className="mx-auto max-w-4xl font-display text-4xl sm:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-8">
             <span className="block">Hãy để MTBP tối ưu</span>
-            <span className="relative whitespace-nowrap text-primary inline-block">
+            <span className="relative text-primary inline-block">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 418 42"
@@ -138,17 +138,17 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
                 chiến dịch Marketing
               </span>
             </span>
-            <span className="block mt-2">của bạn</span>
+            <span className="block mt-1 sm:mt-2">của bạn</span>
           </h1>
 
-          <p className="mx-auto max-w-2xl text-lg md:text-xl text-slate-500 leading-relaxed font-medium mb-12">
+          <p className="mx-auto max-w-2xl text-base sm:text-lg md:text-xl text-slate-500 leading-relaxed font-medium mb-6 sm:mb-12">
             Hãy nói lên điều bạn nghĩ. Chúng tôi tin rằng công việc và các mối
             quan hệ sẽ trở nên tốt đẹp hơn khi chúng ta có thể chia sẻ cảm xúc,
             suy nghĩ của mình một cách cởi mở và mang tính xây dựng.
           </p>
 
           <a
-            className="bg-black hover:bg-gray-800 text-white font-bold px-12 py-5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-xl shadow-gray-200 text-lg mb-20"
+            className="bg-black hover:bg-gray-800 text-white font-bold px-8 py-4 sm:px-12 sm:py-5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-xl shadow-gray-200 text-base sm:text-lg mb-10 sm:mb-30"
             href="/lien-he"
           >
             Liên hệ ngay

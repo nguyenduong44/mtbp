@@ -21,7 +21,7 @@ export default function Footer() {
             giải pháp marketing vừa đúng với thực tế, vừa có giá trị lâu dài.
           </p>
         </div>
-        <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
+        <div className="flex-1 flex flex-col md:flex-row items-start md:justify-end gap-10 md:gap-20 md:gap-40">
           <div>
             <h2 className="font-semibold mb-5 uppercase tracking-wider text-xs">
               Doanh nghiệp
@@ -72,10 +72,8 @@ export default function Footer() {
           <div>
             <h2 className="font-semibold mb-5">Văn phòng</h2>
             <div className="text-md flex flex-col gap-4 justify-between w-full h-full">
-              <div className="flex gap-4">
-                <Facebook size={25} />
-                <Instagram size={25} />
-              </div>
+              <p className="">63 Trương Tùng Quân, Tây Ninh, Vietnam</p>
+
               <a
                 href="mailto:mtbpagency@gmail.com"
                 className="w-fit relative group hover:text-backup transition-all duration-300 ease-out"
@@ -84,7 +82,22 @@ export default function Footer() {
                 <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-[1px] bg-backup group-hover:w-3/6 duration-300 ease-out"></span>
                 <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-[1px] bg-backup group-hover:w-3/6 duration-300 ease-out"></span>
               </a>
-              <p className="">63 Trương Tùng Quân, Tây Ninh, Vietnam</p>
+              <div className="flex gap-4">
+                <Link
+                  to={"https://www.facebook.com/MTBPAGENCY"}
+                  className="p-2 border border-2 transition-all duration-300 ease-out border-transparent hover:text-primary hover:border-primary rounded-xl"
+                >
+                  <Facebook size={25} />
+                </Link>
+                <Link
+                  to={
+                    "https://www.instagram.com/mtbpagency?fbclid=IwY2xjawSgPehleHRuA2FlbQIxMABicmlkETFGZ3hFdzhKOUI0ZVBad01Dc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHl6OqzCZl9TQ0F13LyLwGe3ItzOKNHYhN7m-5t_vXzsgQ3G5qkzgXoYVKsdv_aem_5jD9sIoQDWuKHyhmKNWzyg"
+                  }
+                  className="p-2 border border-2 transition-all duration-300 ease-out border-transparent hover:text-primary hover:border-primary rounded-xl"
+                >
+                  <Instagram size={25} />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
