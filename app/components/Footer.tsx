@@ -72,7 +72,9 @@ export default function Footer() {
           <div>
             <h2 className="font-semibold mb-5">Văn phòng</h2>
             <div className="text-md flex flex-col gap-4 justify-between w-full h-full">
-              <p className="">63 Trương Tùng Quân, Tây Ninh, Vietnam</p>
+              <p className="">
+                63 Trương Tùng Quân, Tân Ninh, Tây Ninh, Vietnam
+              </p>
 
               <a
                 href="mailto:mtbpagency@gmail.com"
