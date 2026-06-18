@@ -352,3 +352,169 @@ FOR SELECT USING (true);
 -- Cập nhật RLS cho clients (đã có)
 -- Cập nhật RLS cho projects (giữ nguyên, thêm cột solution không ảnh hưởng)
 
+-- ============================================================
+-- Bảng lookup: Loại hình kinh doanh
+-- ============================================================
+CREATE TABLE IF NOT EXISTS business_types (
+id BIGSERIAL PRIMARY KEY,
+name TEXT NOT NULL UNIQUE,
+slug TEXT NOT NULL UNIQUE,
+display_order INT DEFAULT 0,
+created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- ============================================================
+-- Bảng lookup: Gói dịch vụ
+-- ============================================================
+CREATE TABLE IF NOT EXISTS service_packages (
+id BIGSERIAL PRIMARY KEY,
+name TEXT NOT NULL UNIQUE,
+slug TEXT NOT NULL UNIQUE,
+description TEXT,
+monthly_price NUMERIC(12,2) DEFAULT 0,
+display_order INT DEFAULT 0,
+created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- ============================================================
+-- Mở rộng bảng clients (thêm cột)
+-- ============================================================
+ALTER TABLE clients
+ADD COLUMN IF NOT EXISTS business_type_id BIGINT REFERENCES business_types(id) ON DELETE SET NULL,
+ADD COLUMN IF NOT EXISTS package_id BIGINT REFERENCES service_packages(id) ON DELETE SET NULL,
+ADD COLUMN IF NOT EXISTS contact_person TEXT,
+ADD COLUMN IF NOT EXISTS phone TEXT,
+ADD COLUMN IF NOT EXISTS monthly_cost NUMERIC(12,2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS contract_start_date DATE,
+ADD COLUMN IF NOT EXISTS notes TEXT,
+ADD COLUMN IF NOT EXISTS assigned_to TEXT,
+ADD COLUMN IF NOT EXISTS added_at TIMESTAMPTZ DEFAULT NOW(),
+ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+
+-- ============================================================
+-- Bảng tasks (Kanban)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS tasks (
+id BIGSERIAL PRIMARY KEY,
+client_id BIGINT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+title TEXT NOT NULL,
+description TEXT,
+deadline DATE,
+assigned_to TEXT,
+priority TEXT CHECK (priority IN ('high','medium','low')) DEFAULT 'medium',
+status TEXT CHECK (status IN ('todo','doing','done')) DEFAULT 'todo',
+sort_order INT DEFAULT 0,
+completed_at TIMESTAMPTZ,
+created_at TIMESTAMPTZ DEFAULT NOW(),
+updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- ============================================================
+-- Indexes
+-- ============================================================
+CREATE INDEX idx_tasks_client_id ON tasks(client_id);
+CREATE INDEX idx_tasks_status ON tasks(status);
+CREATE INDEX idx_tasks_deadline ON tasks(deadline);
+CREATE INDEX idx_clients_business_type ON clients(business_type_id);
+CREATE INDEX idx_clients_package ON clients(package_id);
+
+-- ============================================================
+-- Triggers: tự động cập nhật updated_at
+-- ============================================================
+CREATE OR REPLACE FUNCTION fn_set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+NEW.updated_at = NOW();
+RETURN NEW;
+END;
+
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_clients_updated_at
+  BEFORE UPDATE ON clients
+  FOR EACH ROW EXECUTE FUNCTION fn_set_updated_at();
+
+CREATE TRIGGER trg_tasks_updated_at
+  BEFORE UPDATE ON tasks
+  FOR EACH ROW EXECUTE FUNCTION fn_set_updated_at();
+
+-- ============================================================
+-- Trigger: tự động ghi completed_at khi task chuyển sang 'done'
+-- ============================================================
+CREATE OR REPLACE FUNCTION fn_task_completed_at()
+RETURNS TRIGGER AS
+$$
+
+BEGIN
+IF NEW.status = 'done' AND OLD.status != 'done' THEN
+NEW.completed_at = NOW();
+ELSIF NEW.status != 'done' THEN
+NEW.completed_at = NULL;
+END IF;
+RETURN NEW;
+END;
+
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_tasks_completed_at
+  BEFORE UPDATE OF status ON tasks
+  FOR EACH ROW
+  EXECUTE FUNCTION fn_task_completed_at();
+
+-- ============================================================
+-- RLS Policies
+-- ============================================================
+-- Business types
+CREATE POLICY "Enable all for authenticated" ON business_types
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Enable read for public" ON business_types
+  FOR SELECT USING (true);
+
+-- Service packages
+CREATE POLICY "Enable all for authenticated" ON service_packages
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Enable read for public" ON service_packages
+  FOR SELECT USING (true);
+
+-- Clients (đã có policy, chỉ cần thêm cho các cột mới – không cần thay đổi vì policy dùng ALL)
+-- Tasks
+CREATE POLICY "Enable all for authenticated" ON tasks
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Enable read for public" ON tasks
+  FOR SELECT USING (true);
+
+-- ============================================================
+-- Seed dữ liệu mẫu (tuỳ chọn)
+-- ============================================================
+INSERT INTO business_types (name, slug, display_order) VALUES
+  ('F&B (Ẩm thực)', 'fb', 1),
+  ('Spa & Wellness', 'spa', 2),
+  ('Retail (Bán lẻ)', 'retail', 3),
+  ('Thời trang', 'thoi-trang', 4),
+  ('Làm đẹp', 'lam-dep', 5),
+  ('Bất động sản', 'bat-dong-san', 6),
+  ('Giáo dục', 'giao-duc', 7),
+  ('Y tế & Sức khỏe', 'yte', 8),
+  ('Khách sạn & Du lịch', 'khach-san', 9),
+  ('Khác', 'khac', 10)
+ON CONFLICT (name) DO NOTHING;
+
+INSERT INTO service_packages (name, slug, description, monthly_price, display_order) VALUES
+  ('Cơ bản', 'co-ban', 'Gói cơ bản', 5000000, 1),
+  ('Tiêu chuẩn', 'tieu-chuan', 'Gói tiêu chuẩn', 10000000, 2),
+  ('Cao cấp', 'cao-cap', 'Gói cao cấp', 20000000, 3),
+  ('TikTok Basic', 'tiktok-basic', 'Quản lý TikTok cơ bản', 8000000, 4),
+  ('TikTok Pro', 'tiktok-pro', 'Quản lý TikTok nâng cao', 15000000, 5),
+  ('Content Full', 'content-full', 'Trọn gói nội dung', 18000000, 6),
+  ('Social Media', 'social-media', 'Quản lý mạng xã hội toàn diện', 12000000, 7),
+  ('Tùy chỉnh', 'tuy-chinh', 'Gói tùy chỉnh', 0, 99)
+ON CONFLICT (name) DO NOTHING;
+$$

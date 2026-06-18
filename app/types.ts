@@ -7,6 +7,19 @@ export type ClientRow = {
   name: string;
   industry_id: number | null;
   logo: string | null;
+  business_type_id: number | null;
+  package_id: number | null;
+  contact_person: string | null;
+  phone: string | null;
+  monthly_cost: number | null;
+  contract_start_date: string | null;
+  notes: string | null;
+  assigned_to: string | null;
+  added_at: string;
+  updated_at: string;
+  // join fields
+  business_types?: BusinessType;
+  service_packages?: ServicePackage;
 };
 
 export type IndustryRow = {
@@ -122,4 +135,71 @@ export type SubmissionStatus = "idle" | "error" | "submitting" | "success";
 export type NavItem = {
   label: string;
   href: string;
+};
+
+// ============================================================
+// Bảng lookup: Loại hình kinh doanh
+// ============================================================
+export type BusinessType = {
+  id: number;
+  name: string;
+  slug: string;
+  display_order: number;
+  created_at: string;
+};
+
+// ============================================================
+// Bảng lookup: Gói dịch vụ
+// ============================================================
+export type ServicePackage = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string | null;
+  monthly_price: number;
+  display_order: number;
+  created_at: string;
+};
+
+// ============================================================
+// Bảng tasks (Kanban)
+// ============================================================
+export type TaskRow = {
+  id: number;
+  client_id: number;
+  title: string;
+  description: string | null;
+  deadline: string | null;
+  assigned_to: string | null;
+  priority: "high" | "medium" | "low";
+  status: "todo" | "doing" | "done";
+  sort_order: number;
+  completed_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ClientWithTasks = ClientRow & {
+  tasks: TaskRow[];
+};
+
+export type ClientFormData = {
+  name: string;
+  business_type_id: number | null;
+  package_id: number | null;
+  contact_person: string | null;
+  phone: string | null;
+  monthly_cost: number | null;
+  contract_start_date: string | null;
+  notes: string | null;
+  assigned_to: string | null;
+};
+
+export type TaskFormData = {
+  title: string;
+  description: string | null;
+  deadline: string | null;
+  assigned_to: string | null;
+  priority: "high" | "medium" | "low";
+  status: "todo" | "doing" | "done";
 };

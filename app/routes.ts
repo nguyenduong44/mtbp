@@ -48,6 +48,8 @@ export default [
       "./routes/admin.categories.$id.edit.tsx",
     ),
     route("admin/contacts", "./routes/admin.contacts._index.tsx"),
+    route("admin/clients", "./routes/admin.clients._index.tsx"), // danh sách
+    route("admin/clients/:id", "./routes/admin.clients.$id.tsx"), // detail
   ]),
 
   // ----------------------------------------------------------------

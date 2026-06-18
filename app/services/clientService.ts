@@ -24,7 +24,9 @@ export const clientService = {
     let query = supabase.from("clients").select(
       `
       *,
-      industries:industry_id (name, slug)
+      industries:industry_id (name, slug),
+      business_types (id, name, slug),
+      service_packages (id, name, slug)
     `,
       { count: "exact" },
     );
@@ -52,7 +54,10 @@ export const clientService = {
       .select(
         `
       *,
-      industries:industry_id (name, slug)
+      industries:industry_id (name, slug),
+      business_types (*),
+      service_packages (*),
+      tasks (*)
     `,
       )
       .eq("id", id)
