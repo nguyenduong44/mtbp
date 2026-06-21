@@ -43,7 +43,7 @@ const Accordions = () => {
   return (
     <Section>
       <Container>
-        <h2 className="text-3xl font-semibold text-gray-900">
+        <h2 className="font-conthrax text-3xl font-semibold text-gray-900">
           Các câu hỏi thường gặp?
         </h2>
         <p className="mt-4 max-w-xl text-gray-600">

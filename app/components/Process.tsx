@@ -11,7 +11,7 @@ const Process = ({ hText }: ProcessProps) => {
       <Container>
         {hText ? (
           <>
-            <h2 className="text-3xl font-semibold text-gray-900">
+            <h2 className="font-conthrax text-3xl font-semibold text-gray-900">
               Cách tiếp cận
             </h2>
             <p className="mt-4 text-gray-600">
@@ -19,7 +19,9 @@ const Process = ({ hText }: ProcessProps) => {
             </p>
           </>
         ) : (
-          <h1 className="font-bold text-[45px] mb-4">Quy trình làm việc</h1>
+          <h1 className="font-bold text-[45px] mb-4 font-conthrax">
+            Quy trình làm việc
+          </h1>
         )}
         <div className="mt-20">
           <ul className="space-y-20">

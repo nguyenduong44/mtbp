@@ -48,7 +48,7 @@ export default function Works() {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-bold text-[45px] mb-4 text-left"
+              className="font-bold text-[45px] mb-4 text-left font-conthrax"
             >
               Dự án
             </motion.h1>
@@ -100,7 +100,7 @@ export default function Works() {
       <Section padding="md" background="gray">
         <Container>
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="font-conthrax text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Bạn đã sẵn sàng cho dự án tiếp theo?
             </h2>
             <p className="text-base sm:text-lg text-gray-600 mb-8">

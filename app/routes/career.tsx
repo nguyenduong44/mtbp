@@ -30,7 +30,7 @@ const Career = () => {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-bold text-[45px] mb-4"
+              className="font-conthrax font-bold text-[45px] mb-4"
             >
               Tuyển dụng
             </motion.h1>
@@ -53,7 +53,7 @@ const Career = () => {
             <img src="/tuyen_dung.webp" className="rounded-xl" />
           </div>
           <div className="flex flex-col gap-2 flex-1">
-            <h2 className="text-4xl font-semibold text-gray-900">
+            <h2 className="text-4xl font-conthrax font-semibold text-gray-900">
               MTBP là ai?
             </h2>
 
@@ -75,7 +75,7 @@ const Career = () => {
             </p>
             <div className="mt-4">
               <div className="border-t-3 border-primary p-8 text-center">
-                <h3 className="text-2xl font-semibold text-gray-900">
+                <h3 className="text-2xl font-semibold font-conthrax text-gray-900">
                   Chủ động liên hệ với chúng tôi để ứng tuyển.
                 </h3>
                 <a

@@ -31,7 +31,7 @@ const HeroServices = ({ initialData }: HeroServicesProps) => {
   return (
     <Section background="gray">
       <Container>
-        <h1 className="font-bold text-[45px] mb-4">Dịch vụ</h1>
+        <h1 className="font-bold font-conthrax text-[45px] mb-4">Dịch vụ</h1>
         <ItemGroup className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
           {categories.map((cat) => (
             <Item key={cat.id} variant="outline">
@@ -41,7 +41,9 @@ const HeroServices = ({ initialData }: HeroServicesProps) => {
                 </div>
               </ItemHeader>
               <ItemContent>
-                <ItemTitle className="text-[24px]">{cat.name}</ItemTitle>
+                <ItemTitle className="text-[24px] font-conthrax">
+                  {cat.name}
+                </ItemTitle>
                 <ItemDescription className="line-clamp-none md:line-clamp-2">
                   {cat.description}
                 </ItemDescription>

@@ -34,7 +34,7 @@ const FeaturedWorks = ({ initialData }: FeaturedWorksProps) => {
   return (
     <Section padding="lg" background="gray">
       <Container>
-        <h1 className="font-bold text-[45px] mb-4 text-left">
+        <h1 className="font-bold font-conthrax text-[45px] mb-4 text-left">
           Các dự án tiêu biểu
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">

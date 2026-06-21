@@ -70,9 +70,9 @@ export default function About() {
             <h1 className="text-sm uppercase tracking-[0.3em] text-primary mb-6">
               Về chúng tôi
             </h1>
-            <h2 className="text-5xl md:text-7xl font-bold text-gray-900 leading-tight mb-8">
+            <h2 className="text-5xl md:text-7xl font-conthrax font-bold text-gray-900 leading-tight mb-8">
               Make Tây Ninh <br />
-              <span className="text-primary italic">Better Place.</span>
+              <span className="text-primary italic">a Better Place.</span>
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed font-medium">
               Chúng mình bắt đầu từ một lý do đơn giản: Làm cho thương hiệu địa
@@ -91,7 +91,7 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-3xl font-bold text-gray-900 mb-8 uppercase text-left">
+              <h3 className="text-3xl font-bold text-gray-900 font-conthrax mb-8 uppercase text-left">
                 Câu chuyện MTBP ra đời
               </h3>
               <div className="space-y-6 text-gray-600 text-lg leading-relaxed text-left">
@@ -119,7 +119,7 @@ export default function About() {
               className="bg-white p-10 rounded-[3rem] shadow-xl shadow-gray-200 border border-gray-100 text-left"
             >
               <Target className="text-primary mb-6" size={40} />
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 font-conthrax">
                 Tầm nhìn của chúng mình
               </h3>
               <p className="text-gray-600 text-lg leading-relaxed">
@@ -154,7 +154,7 @@ export default function About() {
             <h3 className="text-sm font-black uppercase tracking-[0.3em] text-primary mb-4">
               Triết lý làm nghề
             </h3>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 uppercase tracking-tighter">
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 uppercase font-conthrax tracking-tighter">
               Giá trị cốt lõi
             </h2>
           </div>
@@ -175,7 +175,7 @@ export default function About() {
                     size={24}
                   />
                 </div>
-                <h4 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-white transition-colors leading-tight">
+                <h4 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-white font-conthrax transition-colors leading-tight">
                   {v.title}
                 </h4>
                 <p className="text-gray-500 group-hover:text-gray-400 transition-colors leading-relaxed">
@@ -237,7 +237,7 @@ export default function About() {
               viewport={{ once: true }}
               className="relative z-10"
             >
-              <h2 className="text-3xl md:text-5xl font-black text-black mb-8 uppercase tracking-tighter">
+              <h2 className="text-3xl md:text-5xl font-conthrax font-black text-black mb-8 uppercase tracking-tighter">
                 Cùng nhau làm cho <br />
                 thương hiệu của bạn{" "}
                 <span className="text-primary italic">tốt hơn</span>

@@ -44,7 +44,7 @@ const ProjectSection = memo(({ section, sectionIndex }: any) => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-10 text-left">
+        <h2 className="text-2xl font-conthrax md:text-3xl font-bold text-gray-900 mb-10 text-left">
           {section.title}
         </h2>
         <MediaGallery items={section.media_items} />
@@ -58,12 +58,12 @@ ProjectSection.displayName = "ProjectSection";
 export default function WorkDetail() {
   const { work: initialWork } = useLoaderData<typeof loader>();
   const { slug } = useParams();
-  
-  // Vẫn sử dụng hook để hỗ trợ hydration và cache của React Query, 
+
+  // Vẫn sử dụng hook để hỗ trợ hydration và cache của React Query,
   // nhưng truyền initialData từ loader để render ngay lập tức.
   const { data: work, isLoading } = useProjectBySlug(slug!);
-  
-  // Dự phòng nếu hook chưa trả về (dù đã có initialData trong cache nếu được setup đúng, 
+
+  // Dự phòng nếu hook chưa trả về (dù đã có initialData trong cache nếu được setup đúng,
   // nhưng ở đây ta ưu tiên dữ liệu từ loader để SEO)
   const displayWork = work || initialWork;
 
@@ -124,7 +124,7 @@ export default function WorkDetail() {
       <Section padding="sm" background="white">
         <Container>
           <Link
-            to="/works"
+            to="/du-an"
             className="inline-flex items-center text-gray-900 hover:text-primary transition font-bold mb-8"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
@@ -145,7 +145,7 @@ export default function WorkDetail() {
                 </div>
               )}
               <div>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 leading-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black font-conthrax text-gray-900 leading-tight">
                   {displayWork.title}
                 </h1>
                 <p className="text-gray-400 font-bold uppercase tracking-widest mt-2">
@@ -183,7 +183,7 @@ export default function WorkDetail() {
             viewport={{ once: true, margin: "-50px" }}
             className="text-left"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
               Tổng quan & vấn đề
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed max-w-4xl">
@@ -203,7 +203,7 @@ export default function WorkDetail() {
               viewport={{ once: true, margin: "-50px" }}
               className="text-left"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
                 Giải pháp thực hiện
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed max-w-4xl">
@@ -224,7 +224,7 @@ export default function WorkDetail() {
               viewport={{ once: true, margin: "-50px" }}
               className="text-left"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
                 Phạm vi công việc
               </h2>
               <ul className="space-y-4">
@@ -259,7 +259,7 @@ export default function WorkDetail() {
               viewport={{ once: true, margin: "-50px" }}
               className="text-left"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
                 Kết quả đạt được
               </h2>
               <ul className="space-y-4">
@@ -301,7 +301,7 @@ export default function WorkDetail() {
               viewport={{ once: true, margin: "-50px" }}
               className="text-center"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2 font-conthrax">
                 Các nền tảng của khách hàng
               </h2>
               <p className="text-gray-500 mb-10 font-medium">
@@ -335,7 +335,7 @@ export default function WorkDetail() {
       <Section padding="lg" background="white">
         <Container size="md">
           <div className="text-center bg-gray-900 rounded-[3rem] p-12 md:p-20 shadow-2xl shadow-gray-300">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6">
+            <h2 className=" font-conthrax text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6">
               Bạn muốn kết quả tương tự?
             </h2>
             <p className="text-lg text-gray-400 mb-10 font-medium">

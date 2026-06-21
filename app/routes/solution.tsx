@@ -31,7 +31,7 @@ const Solution = () => {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-bold text-[45px] mb-4"
+              className=" font-conthrax font-bold text-[45px] mb-4"
             >
               {" "}
               Giải pháp{" "}
@@ -50,7 +50,7 @@ const Solution = () => {
             {" "}
             <div className=" flex flex-col order-1">
               {" "}
-              <h1 className="text-4xl md:text-7xl font-bold text-gray-900 leading-[150%]">
+              <h1 className="text-4xl font-conthrax md:text-6xl font-bold text-gray-900 leading-[150%]">
                 BẠN KHÔNG BIẾT VỀ MARKETING?
               </h1>
               <p className="text-base text-gray-600 leading-full">

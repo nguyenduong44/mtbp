@@ -29,7 +29,7 @@ export default function Contact() {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-bold text-[45px] mb-4"
+              className="font-conthrax font-bold text-[45px] mb-4"
             >
               Liên hệ
             </motion.h1>

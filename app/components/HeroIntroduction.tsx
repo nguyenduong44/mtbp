@@ -70,16 +70,16 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
       bg: "bg-purple-50",
     },
     {
-      value: 300,
+      value: 1000,
       suffix: "+",
-      label: "Videos social đã sản xuất",
+      label: "Hình ảnh & video social được sản xuất",
       icon: <PlayCircle className="text-blue-600" size={20} />,
       bg: "bg-blue-50",
     },
     {
-      value: 100,
+      value: 200,
       suffix: "+",
-      label: "Hạng mục Online & Offline",
+      label: "Hạng mục Online & Offline đã thực hiện",
       icon: <Briefcase className="text-amber-600" size={20} />,
       bg: "bg-amber-50",
     },
@@ -94,7 +94,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
   return (
     <section className="relative overflow-hidden min-h-screen bg-white pb-10 sm:pb-20">
       {/* Background trái - Mờ dần khi vào giữa */}
-      <div className="absolute left-0 top-0 h-full w-[50%] z-0">
+      <div className="hidden md:block absolute left-0 top-0 h-full w-[50%] z-0">
         <img
           src="/hero_left.jpg"
           alt=""
@@ -104,11 +104,11 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
       </div>
 
       {/* Background phải - Mờ dần khi vào giữa */}
-      <div className="absolute right-0 top-0 h-full w-[50%] z-0">
+      <div className="absolute right-0 top-0 h-full w-full md:w-[50%] z-0">
         <img
           src="/hero_right.jpg"
           alt=""
-          className="h-full w-full object-cover object-[-300px] opacity-[0.6]"
+          className="h-full w-full object-cover object-[-1200px] md:object-[-300px] opacity-[0.6]"
         />
         <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/40 to-white" />
       </div>
@@ -123,7 +123,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
             <img src="/logo_3.png" alt="MTBP" className="h-16 sm:h-24 w-auto" />
           </div>
 
-          <h1 className="mx-auto max-w-4xl font-display text-4xl sm:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-8">
+          <h1 className="mx-auto max-w-4xl font-display font-conthrax text-4xl sm:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-8">
             <span className="block">Hãy để MTBP tối ưu</span>
             <span className="relative text-primary inline-block">
               <svg
@@ -188,7 +188,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
                     <CountUp value={stat.value} />
                     {stat.suffix}
                   </div>
-                  <div className="text-xs font-bold text-gray-400 uppercase tracking-widest leading-tight">
+                  <div className="text-xs font-bold text-gray-700 uppercase tracking-widest leading-tight">
                     {stat.label}
                   </div>
                 </div>

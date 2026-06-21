@@ -39,6 +39,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link rel="apple-touch-icon" sizes="180x180" href="/logo_4.png" />
         <Meta />
         <Links />
+        <script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-P4KJF84FW2"
+/>
+
+<script
+  suppressHydrationWarning
+  dangerouslySetInnerHTML={{
+    __html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P4KJF84FW2');
+    `,
+  }}
+/>
       </head>
       <body>
         <QueryClientProvider client={queryClient}>

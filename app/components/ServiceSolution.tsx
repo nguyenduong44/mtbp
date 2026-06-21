@@ -23,7 +23,7 @@ export default function ServiceSolution() {
     <Section background="white" padding="lg">
       <Container>
         <div className="mb-12 max-w-2xl">
-          <h2 className="text-3xl font-semibold text-gray-900 text-left">
+          <h2 className="font-conthrax text-3xl font-semibold text-gray-900 text-left">
             Dịch vụ chúng tôi cung cấp
           </h2>
           <p className="mt-4 text-gray-600 text-left">
@@ -35,8 +35,10 @@ export default function ServiceSolution() {
         <div className="flex flex-wrap justify-center gap-8">
           {categories.map((cat) => {
             // Lấy component icon động từ thư viện lucide-react
-            const IconComponent = (LucideIcons as any)[cat.lucide_icon_name || ""] || LucideIcons.Activity;
-            
+            const IconComponent =
+              (LucideIcons as any)[cat.lucide_icon_name || ""] ||
+              LucideIcons.Activity;
+
             return (
               <div
                 key={cat.id}
@@ -45,10 +47,12 @@ export default function ServiceSolution() {
                 <div className="mb-4 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
                   <IconComponent className="text-primary" size={24} />
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg">
+                <h3 className="font-bold font-conthrax text-gray-900 text-lg">
                   {cat.name}
                 </h3>
-                <p className="mt-2 text-sm text-gray-600 line-clamp-3">{cat.description}</p>
+                <p className="mt-2 text-sm text-gray-600 line-clamp-3">
+                  {cat.description}
+                </p>
                 <ul className="mt-4 space-y-2 text-sm text-gray-700">
                   {cat.bullets?.slice(0, 5).map((item) => (
                     <li key={item} className="flex items-center gap-2">

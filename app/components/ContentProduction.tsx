@@ -36,7 +36,7 @@ export default function ContentProduction() {
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           {/* Left: Process */}
           <div>
-            <h2 className="text-3xl font-semibold text-gray-900">
+            <h2 className="font-conthrax text-3xl font-semibold text-gray-900">
               Quy trình sản xuất nội dung
             </h2>
             <p className="mt-4 max-w-xl text-gray-600">

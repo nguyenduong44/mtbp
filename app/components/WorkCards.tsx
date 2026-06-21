@@ -16,7 +16,7 @@ const WorkCard = ({ work, index = 0 }: WorkCardProps) => {
       transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.1 }}
       className="group relative cursor-pointer"
     >
-      <Link to={`/du-an/${work.slug}`} className="block h-full" >
+      <Link to={`/du-an/${work.slug}`} className="block h-full">
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-gray-200 mb-4">
           <img
             src={work.thumbnail || ""}
@@ -28,7 +28,7 @@ const WorkCard = ({ work, index = 0 }: WorkCardProps) => {
 
         <div className="flex justify-between items-start gap-4">
           <div className="text-left">
-            <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors mb-2">
+            <h3 className="text-xl font-bold text-gray-900 font-conthrax group-hover:text-primary transition-colors mb-2">
               {work.clients?.name || "Client Name"}
               {work.clients?.industries?.name && (
                 <span className="block text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">

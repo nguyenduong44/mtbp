@@ -191,6 +191,7 @@
 @theme {
   /* ===== FONTS ===== */
   --font-sans: "TT_CommonPro", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-conthrax: "Conthrax", sans-serif;
 
   /* ===== MTBP BRAND COLORS ===== */
   --color-brand-blue: #001849; /* Blue 500 */
