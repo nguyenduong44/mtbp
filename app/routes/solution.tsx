@@ -61,11 +61,10 @@ const Solution = () => {
                 Nhận tư vấn & báo giá
               </a>
             </div>
-            <div className="aspect-square md:w-3/5 rounded-sm object-cover order-0 md:order-2">
-              <DotLottieReact
-                src="https://lottie.host/7cb906ec-d326-4e30-8fda-b27cdc9e2cb1/B9XWUctn1J.lottie"
-                loop
-                autoplay
+            <div className="md:w-3/5 order-0 md:order-2 py-4">
+              <img
+                src="/hero_giai_phap.png"
+                className="object-contain rounded-xl"
               />
             </div>
           </div>

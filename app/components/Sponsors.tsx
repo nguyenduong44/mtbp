@@ -43,7 +43,7 @@ const Sponsors = ({ initialData }: SponsorsProps) => {
                   <img
                     src={client.logo}
                     alt={client.name}
-                    className="max-w-full max-h-20 object-contain transition-all duration-300"
+                    className="w-auto h-20 object-contain transition-all duration-300"
                     loading="lazy"
                   />
                 ) : (

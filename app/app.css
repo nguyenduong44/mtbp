@@ -1,11 +1,196 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* ===== FONT FACE DECLARATIONS ===== */
+@font-face {
+  font-family: 'Conthrax';
+  src: url('/fonts/Conthrax-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Thin_Italic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_ExtraLight_Italic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Light_Italic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Normal.ttf') format('truetype');
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Normal_Italic.ttf') format('truetype');
+  font-weight: 350;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Medium_Italic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_DemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_DemiBold_Italic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Bold_Italic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_ExtraBold_Italic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_Black_Italic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_ExtraBlack.ttf') format('truetype');
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT_CommonPro';
+  src: url('/fonts/TT_Commons_Pro_Trial_Expanded_ExtraBlack_Italic.ttf') format('truetype');
+  font-weight: 950;
+  font-style: italic;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   /* ===== FONTS ===== */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "TT_CommonPro", "Inter", ui-sans-serif, system-ui, sans-serif;
 
   /* ===== MTBP BRAND COLORS ===== */
   --color-brand-blue: #001849; /* Blue 500 */
@@ -48,6 +233,7 @@
 html,
 body {
   @apply bg-gray-50 dark:bg-gray-950 text-gray-900 antialiased;
+  font-family: "TT_CommonPro", "Inter", sans-serif;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
@@ -165,6 +351,7 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "TT_CommonPro", "Inter", sans-serif;
   }
 }
 

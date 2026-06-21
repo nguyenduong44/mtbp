@@ -17,8 +17,8 @@ export function meta({}: Route.MetaArgs) {
     },
     {
       property: "og:title",
-      content: "Tuyển dụng MTBP Agency"
-    }
+      content: "Tuyển dụng MTBP Agency",
+    },
   ];
 }
 const Career = () => {
@@ -50,11 +50,7 @@ const Career = () => {
       <Section padding="sm" background="white">
         <Container className="flex flex-col md:flex-row items-center justify-center gap-8">
           <div className="aspect-square flex-1 object-cover p-4">
-            <DotLottieReact
-              src="https://lottie.host/183f1ee5-469a-4834-ade9-ab3a7960118a/pVUZsjQHLQ.lottie"
-              loop
-              autoplay
-            />
+            <img src="/tuyen_dung.webp" className="rounded-xl" />
           </div>
           <div className="flex flex-col gap-2 flex-1">
             <h2 className="text-4xl font-semibold text-gray-900">
@@ -83,10 +79,10 @@ const Career = () => {
                   Chủ động liên hệ với chúng tôi để ứng tuyển.
                 </h3>
                 <a
-                  href="mailto:hr@mtbp.vn"
+                  href="mailto:mtbpagency@gmail.com"
                   className="inline-block mt-6 text-primary font-semibold text-3xl underline"
                 >
-                  hr@mtbp.vn
+                  mtbpagency@gmail.com
                 </a>
 
                 <p className="mt-2 text-base text-gray-500">

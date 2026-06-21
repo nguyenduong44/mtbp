@@ -115,8 +115,7 @@ async function prepareItemsForInsert(
 // ----------------------------------------------------------------
 
 export const projectService = {
-  // ------ READ ------
-
+  /** Lấy danh sách tất cả các slug dự án (phục vụ SEO sitemap) */
   getAll: async ({
     page = 1,
     limit = 10,

@@ -7,8 +7,8 @@ import { useLoaderData } from "react-router";
 
 const stats = [
   { label: "Khách hàng tin tưởng", value: "30+" },
-  { label: "Video Social sản xuất", value: "300+" },
-  { label: "Hạng mục Online & Offline", value: "100+" },
+  { label: "Hình ảnh & video social được sản xuất", value: "1000+" },
+  { label: "Hạng mục Online & Offline đã thực hiện", value: "200+" },
 ];
 
 const team = [
@@ -22,24 +22,16 @@ const team = [
 
 const values = [
   {
-    title: "Không chỉ đẹp bên ngoài, mà còn vững từ bên trong",
-    desc: "Một thương hiệu tốt không nằm ở vẻ ngoài bắt mắt thôi, mà ở giá trị thật, sự chỉn chu và cách làm khiến khách hàng có thể tin lâu dài.",
+    title: "Thấu hiểu sâu sắc - Giải pháp chuẩn xác",
+    desc: "Với MTBP, một giải pháp đúng luôn bắt nguồn từ sự thấu hiểu doanh nghiệp, khách hàng và thị trường. Chúng tôi ưu tiên tính định hướng rõ ràng, bám sát vào thực tế kinh doanh để mỗi bước đi đều chuẩn xác và tối ưu.",
   },
   {
-    title: "Hiểu đúng để làm trúng",
-    desc: "Với MTBP, giải pháp đúng không bắt đầu từ ý tưởng thú vị, mà bắt đầu từ sự thấu hiểu doanh nghiệp, khách hàng và thị trường.",
+    title: "Hình ảnh chỉn chu - Giá trị vững vàng",
+    desc: "Từ một bài đăng nhỏ đến một chiến dịch lớn, MTBP luôn đặt sự chỉn chu và tính nhất quán lên hàng đầu. Một thương hiệu mạnh không chỉ thu hút bởi vẻ ngoài bắt mắt, mà còn phải chinh phục khách hàng bằng giá trị thật và cốt lõi vững vàng để tạo dựng lòng tin bền bỉ theo thời gian.",
   },
   {
-    title: "Rõ ràng và chỉn chu",
-    desc: "Từ bài post đến chiến dịch lớn, tụi mình luôn ưu tiên sự nhất quán, có định hướng và bám sát vào thực tế kinh doanh.",
-  },
-  {
-    title: "Đồng hành cùng thương hiệu",
-    desc: "MTBP không xem mỗi dự án là một đầu việc ngắn hạn. Tụi mình muốn trở thành một người đồng hành đủ hiểu để cùng đi đường dài.",
-  },
-  {
-    title: "Hiệu quả đi cùng niềm tin",
-    desc: "Marketing không chỉ để thu hút, mà còn để xây dựng sự tin tưởng. Một thương hiệu tốt là thương hiệu khiến khách hàng yên tâm.",
+    title: "Đồng hành và tin tưởng",
+    desc: "MTBP mong muốn trở thành một người bạn đồng hành cùng thương hiệu để mang lại những giải pháp marketing tối ưu. Mục tiêu cao nhất của chúng tôi không chỉ là tạo ra sức hút nhất thời, mà là mang lại hiệu quả thực tế và sự tin tưởng tuyệt đối cho thương hiệu.",
   },
 ];
 

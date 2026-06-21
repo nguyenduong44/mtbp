@@ -156,7 +156,9 @@ const ContactComponent = () => {
                     <p className="text-xs text-blue-200 uppercase font-bold">
                       Hotline
                     </p>
-                    <p className="font-semibold text-lg">0909 123 456</p>
+                    <a href="tel:0939030601" className="font-semibold text-lg">
+                      0939 030 601
+                    </a>
                   </div>
                 </div>
                 <div className="flex items-center">

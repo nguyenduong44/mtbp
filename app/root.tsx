@@ -31,6 +31,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:image" content="https://mtbp.vn/logo_3.png" />
+
+        <meta property="og:url" content="https://mtbp.vn" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/logo_4.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo_4.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo_4.png" />
         <Meta />
         <Links />
       </head>

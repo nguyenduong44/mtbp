@@ -96,9 +96,9 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
       {/* Background trái - Mờ dần khi vào giữa */}
       <div className="absolute left-0 top-0 h-full w-[50%] z-0">
         <img
-          src="/hero-left.jpg"
+          src="/hero_left.jpg"
           alt=""
-          className="h-full w-full object-cover opacity-[0.6]"
+          className="h-full w-full object-cover object-[-550px] opacity-[0.6]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-white" />
       </div>
@@ -106,9 +106,9 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
       {/* Background phải - Mờ dần khi vào giữa */}
       <div className="absolute right-0 top-0 h-full w-[50%] z-0">
         <img
-          src="/hero-right.jpg"
+          src="/hero_right.jpg"
           alt=""
-          className="h-full w-full object-cover opacity-[0.6]"
+          className="h-full w-full object-cover object-[-300px] opacity-[0.6]"
         />
         <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/40 to-white" />
       </div>

@@ -9,6 +9,7 @@ export default [
   // ----------------------------------------------------------------
   // Public routes
   // ----------------------------------------------------------------
+  route("sitemap.xml", "./routes/sitemap.xml.ts"),
   layout("./layouts/MainLayout.tsx", [
     index("./routes/home.tsx"),
     route("du-an", "./routes/works.tsx"),
