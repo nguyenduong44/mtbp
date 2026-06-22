@@ -24,7 +24,7 @@ export function meta({}: Route.MetaArgs) {
 const Career = () => {
   return (
     <>
-      <Section padding="sm" background="gray">
+      <Section background="gray">
         <Container>
           <div>
             <motion.h1
@@ -47,12 +47,12 @@ const Career = () => {
         </Container>
       </Section>
 
-      <Section padding="sm" background="white">
+      <Section background="white">
         <Container className="flex flex-col md:flex-row items-center justify-center gap-8">
           <div className="aspect-square flex-1 object-cover p-4">
             <img src="/tuyen_dung.webp" className="rounded-xl" />
           </div>
-          <div className="flex flex-col gap-2 flex-1">
+          <div className="w-full flex flex-col gap-2 flex-1">
             <h2 className="text-4xl font-conthrax font-semibold text-gray-900">
               MTBP là ai?
             </h2>
@@ -73,14 +73,14 @@ const Career = () => {
               Không có ý tưởng nào là điên rồ. Mọi sáng kiến đều được lắng nghe
               và thử nghiệm.
             </p>
-            <div className="mt-4">
+            <div className="mt-4 w-full">
               <div className="border-t-3 border-primary p-8 text-center">
                 <h3 className="text-2xl font-semibold font-conthrax text-gray-900">
                   Chủ động liên hệ với chúng tôi để ứng tuyển.
                 </h3>
                 <a
                   href="mailto:mtbpagency@gmail.com"
-                  className="inline-block mt-6 text-primary font-semibold text-3xl underline"
+                  className=" mt-6 text-primary font-semibold text-lg md:text-3xl underline"
                 >
                   mtbpagency@gmail.com
                 </a>
