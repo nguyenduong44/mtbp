@@ -1,6 +1,7 @@
 import Section from "./Section";
 import Container from "./Container";
 import { BadgeCheck } from "lucide-react";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -67,41 +68,18 @@ export default function ContentProduction() {
           {/* Right: Team Images */}
 
           <div className="flex items-center gap-2 w-full">
-            <div className="relative group flex-grow transition-all w-1/5 rounded-lg overflow-hidden h-[400px] duration-500 hover:w-full">
-              <img
-                className="h-full w-full object-cover object-center"
-                src="https://images.unsplash.com/photo-1649265825072-f7dd6942baed?q=80&h=800&w=800&auto=format&fit=crop"
-                alt="image"
-              />
-            </div>
-            <div className="relative group flex-grow transition-all w-1/5 rounded-lg overflow-hidden h-[400px] duration-500 hover:w-full">
-              <img
-                className="h-full w-full object-cover object-center"
-                src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?q=80&h=800&w=800&auto=format&fit=crop"
-                alt="image"
-              />
-            </div>
-            <div className="relative group flex-grow transition-all w-1/5 rounded-lg overflow-hidden h-[400px] duration-500 hover:w-full">
-              <img
-                className="h-full w-full object-cover object-center"
-                src="https://images.unsplash.com/photo-1729086046027-09979ade13fd?q=80&h=800&w=800&auto=format&fit=crop"
-                alt="image"
-              />
-            </div>
-            <div className="relative group flex-grow transition-all w-1/5 rounded-lg overflow-hidden h-[400px] duration-500 hover:w-full">
-              <img
-                className="h-full w-full object-cover object-center"
-                src="https://images.unsplash.com/photo-1601568494843-772eb04aca5d?q=80&h=800&w=800&auto=format&fit=crop"
-                alt="image"
-              />
-            </div>
-            <div className="relative group flex-grow transition-all w-1/5 rounded-lg overflow-hidden h-[400px] duration-500 hover:w-full">
-              <img
-                className="h-full w-full object-cover object-center"
-                src="https://images.unsplash.com/photo-1585687501004-615dfdfde7f1?q=80&h=800&w=800&auto=format&fit=crop"
-                alt="image"
-              />
-            </div>
+            {[1, 2, 4, 5, 6].map((i) => (
+              <div
+                key={i}
+                className=" bg-blue-500 relative group flex-grow transition-all w-1/5 rounded-lg overflow-hidden h-[400px] duration-500 hover:w-full"
+              >
+                <img
+                  className="h-full w-full object-cover object-center"
+                  src={`/ca-${i}.webp`}
+                  alt="image"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </Container>

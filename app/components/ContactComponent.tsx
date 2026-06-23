@@ -7,6 +7,7 @@ import {
   CheckCircle,
   Loader2,
   Mail,
+  Map,
   MapPin,
   Phone,
 } from "lucide-react";
@@ -148,7 +149,7 @@ const ContactComponent = () => {
               </p>
 
               <div className="space-y-6">
-                <div className="flex items-center">
+                <div className="flex items-start">
                   <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-4">
                     <Phone size={20} />
                   </div>
@@ -161,7 +162,7 @@ const ContactComponent = () => {
                     </a>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-start">
                   <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-4">
                     <Mail size={20} />
                   </div>
@@ -174,9 +175,9 @@ const ContactComponent = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-4">
-                    <MapPin size={20} />
+                <div className="flex items-start">
+                  <div className="w-10 h-10 rounded-full bg-blue-500 flex shrink-0 items-center justify-center mr-4">
+                    <Map size={20} />
                   </div>
                   <div>
                     <p className="text-xs text-blue-200 uppercase font-bold">

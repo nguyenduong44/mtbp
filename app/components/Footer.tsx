@@ -4,14 +4,14 @@ import { Facebook, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-primary text-secondary">
       <Container className="flex flex-col md:flex-row items-start justify-center md:justify-between gap-10 py-10 border-b border-gray-500/30">
         <div className="md:max-w-96">
           <Link
             to={"/"}
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer text-primary text-lg font-bold"
+            className="flex-shrink-0 flex items-center px-2 py-2 border border-2 border-secondary rounded-lg gap-2 cursor-pointer text-primary text-lg font-bold"
           >
-            <img src="/logo_3.png" />
+            <img src="/logo_4.png" />
           </Link>
 
           <p className="mt-6 text-md text-center text-justify">
@@ -28,42 +28,27 @@ export default function Footer() {
             </h2>
             <ul className="text-md space-y-3">
               <li>
-                <Link
-                  to="/ve-chung-toi"
-                  className="hover:text-primary transition-colors"
-                >
+                <Link to="/ve-chung-toi" className=" transition-colors">
                   Về chúng tôi
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/du-an"
-                  className="hover:text-primary transition-colors"
-                >
+                <Link to="/du-an" className="transition-colors">
                   Dự án
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/giai-phap"
-                  className="hover:text-primary transition-colors"
-                >
+                <Link to="/giai-phap" className="transition-colors">
                   Giải pháp
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/tuyen-dung"
-                  className="hover:text-primary transition-colors"
-                >
+                <Link to="/tuyen-dung" className=" transition-colors">
                   Tuyển dụng
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/lien-he"
-                  className="hover:text-primary transition-colors"
-                >
+                <Link to="/lien-he" className="transition-colors">
                   Liên hệ
                 </Link>
               </li>
@@ -78,16 +63,16 @@ export default function Footer() {
 
               <a
                 href="mailto:mtbpagency@gmail.com"
-                className="w-fit relative group hover:text-backup transition-all duration-300 ease-out"
+                className="w-fit relative group hover:text-secondary transition-all duration-300 ease-out"
               >
                 mtbpagency@gmail.com
-                <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-[1px] bg-backup group-hover:w-3/6 duration-300 ease-out"></span>
-                <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-[1px] bg-backup group-hover:w-3/6 duration-300 ease-out"></span>
+                <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-[1px] bg-secondary group-hover:w-3/6 duration-300 ease-out"></span>
+                <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-[1px] bg-secondary group-hover:w-3/6 duration-300 ease-out"></span>
               </a>
               <div className="flex gap-4">
                 <Link
                   to={"https://www.facebook.com/MTBPAGENCY"}
-                  className="p-2 border border-2 transition-all duration-300 ease-out border-transparent hover:text-primary hover:border-primary rounded-xl"
+                  className="p-2 border border-2 transition-all duration-300 ease-out border-transparent hover:scale-[1.2] rounded-xl"
                 >
                   <Facebook size={25} />
                 </Link>
@@ -95,7 +80,7 @@ export default function Footer() {
                   to={
                     "https://www.instagram.com/mtbpagency?fbclid=IwY2xjawSgPehleHRuA2FlbQIxMABicmlkETFGZ3hFdzhKOUI0ZVBad01Dc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHl6OqzCZl9TQ0F13LyLwGe3ItzOKNHYhN7m-5t_vXzsgQ3G5qkzgXoYVKsdv_aem_5jD9sIoQDWuKHyhmKNWzyg"
                   }
-                  className="p-2 border border-2 transition-all duration-300 ease-out border-transparent hover:text-primary hover:border-primary rounded-xl"
+                  className="p-2 border border-2 transition-all duration-300 ease-out border-transparent hover:scale-[1.2] rounded-xl"
                 >
                   <Instagram size={25} />
                 </Link>

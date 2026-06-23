@@ -58,8 +58,7 @@ export default function Works() {
               transition={{ delay: 0.1 }}
               className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl text-left"
             >
-              Case studies và dự án thực tế của chúng tôi phân loại theo lĩnh
-              vực
+              Case studies và dự án thực tế
             </motion.p>
           </div>
         </Container>

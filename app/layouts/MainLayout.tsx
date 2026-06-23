@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useEffect, useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
+import FloatingContact from "../components/FloatingContact";
 
 const MainLayout = () => {
   const headerRef = useRef<HTMLElement>(null);
@@ -20,13 +21,15 @@ const MainLayout = () => {
     <div className="min-h-screen flex flex-col bg-gray-49">
       <Header ref={headerRef} />
       <main className="" style={{ paddingTop: headerHeight }}>
-      {isLoading && (
-    <div className="fixed inset-0 z-[9999] bg-white/60 backdrop-blur-sm flex items-center justify-center">
-      <Loader2 className="animate-spin" />
-    </div>
-  )}
+        {isLoading && (
+          <div className="fixed inset-0 z-[9999] bg-white/60 backdrop-blur-sm flex items-center justify-center">
+            <Loader2 className="animate-spin" />
+          </div>
+        )}
         <Outlet />
       </main>
+
+      <FloatingContact />
       <Footer />
     </div>
   );

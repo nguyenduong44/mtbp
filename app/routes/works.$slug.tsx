@@ -334,8 +334,8 @@ export default function WorkDetail() {
       {/* CTA Section */}
       <Section padding="lg" background="white">
         <Container size="md">
-          <div className="text-center bg-gray-900 rounded-[3rem] p-12 md:p-20 shadow-2xl shadow-gray-300">
-            <h2 className=" font-conthrax text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6">
+          <div className="text-center bg-secondary rounded-[3rem] p-12 md:p-20 shadow-2xl shadow-gray-300">
+            <h2 className=" font-conthrax text-3xl sm:text-4xl md:text-5xl font-black text-primary mb-6">
               Bạn muốn kết quả tương tự?
             </h2>
             <p className="text-lg text-gray-400 mb-10 font-medium">
@@ -343,12 +343,12 @@ export default function WorkDetail() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/lien-he">
-                <button className="cursor-pointer px-10 py-5 bg-primary text-white rounded-full font-bold text-lg hover:bg-white hover:text-primary transition-all duration-300">
+                <button className="cursor-pointer px-10 py-5 bg-primary text-white rounded-full font-bold text-lg border border-2 hover:border-primary hover:bg-white hover:text-primary transition-all duration-300">
                   Bắt đầu dự án
                 </button>
               </Link>
               <Link to="/du-an">
-                <button className="cursor-pointer px-10 py-5 bg-white/10 text-white rounded-full font-bold text-lg hover:bg-white/20 transition-all">
+                <button className="cursor-pointer px-10 py-5 bg-white/10 text-primary border border-2 border-primary rounded-full font-bold text-lg hover:bg-primary hover:text-secondary transition-all">
                   Xem thêm case khác
                 </button>
               </Link>

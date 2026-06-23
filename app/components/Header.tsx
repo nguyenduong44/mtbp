@@ -74,7 +74,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
             ))}
             <Link
               to="/lien-he"
-              className="bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-full font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="bg-primary text-white px-5 py-2.5 rounded-full font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               Liên hệ ngay
             </Link>
