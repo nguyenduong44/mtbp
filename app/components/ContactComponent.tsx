@@ -13,8 +13,12 @@ import {
 } from "lucide-react";
 import { supabase } from "../supabase-client";
 
+// const SCRIPT_APP =
+//   "https://script.google.com/macros/s/AKfycbyvqyH4YMfm_Axw4sG_FL0SgZKRJGQ-RnjKEshnMLI6w51YnfgmZ3msXy9DIegbk_HQ/exec";
+//
+
 const SCRIPT_APP =
-  "https://script.google.com/macros/s/AKfycbyvqyH4YMfm_Axw4sG_FL0SgZKRJGQ-RnjKEshnMLI6w51YnfgmZ3msXy9DIegbk_HQ/exec";
+  "https://script.google.com/macros/s/AKfycbxKM_nq-FhXA_IWrozrokxrUAJZyBZpJt0VII3k8FpH1wRIcvO7uv5oHTfaru2hJz9O/exec";
 
 const ContactComponent = () => {
   const [formData, setFormData] = useState<ContactFormData>({
