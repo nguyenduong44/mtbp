@@ -34,27 +34,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta property="og:image" content="https://mtbp.vn/logo_3.png" />
 
         <meta property="og:url" content="https://mtbp.vn" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/logo_4.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/logo_4.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/logo_4.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
         <Meta />
         <Links />
         <script
-  async
-  src="https://www.googletagmanager.com/gtag/js?id=G-P4KJF84FW2"
-/>
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-P4KJF84FW2"
+        />
 
-<script
-  suppressHydrationWarning
-  dangerouslySetInnerHTML={{
-    __html: `
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-P4KJF84FW2');
     `,
-  }}
-/>
+          }}
+        />
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
