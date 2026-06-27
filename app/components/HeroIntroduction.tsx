@@ -108,7 +108,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
         <img
           src="/hero_right.jpg"
           alt=""
-          className="h-full w-full object-cover object-[-1200px] md:object-[-300px] opacity-[0.6]"
+          className="h-full w-full object-cover object-[-1200px] md:object-[-700px] opacity-[0.6]"
         />
         <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/40 to-white" />
       </div>
