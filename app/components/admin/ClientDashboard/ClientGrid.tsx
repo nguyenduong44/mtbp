@@ -1,6 +1,7 @@
 import type { ClientRow } from "@/app/types";
 import { Link, useNavigate } from "react-router";
 import { useAllTasks } from "@/app/hooks/useTasks";
+import { useCanViewRevenue } from "@/app/hooks/useCanViewRevenue";
 
 export default function ClientGrid({
   clients,
@@ -11,6 +12,7 @@ export default function ClientGrid({
 }) {
   const { data: allTasks } = useAllTasks();
   const navigate = useNavigate();
+  const canViewRevenue = useCanViewRevenue();
 
   const getNearestDl = (clientId: number) => {
     const tasks =
@@ -95,17 +97,19 @@ export default function ClientGrid({
                   {c.service_packages?.name || "N/A"}
                 </span>
               </div>
-              <div className="flex justify-between items-center mb-[9px] text-[13px]">
-                <span className="text-[var(--crm-text-muted)] font-[500]">
-                  Chi phí / tháng
-                </span>
-                <span className="font-[600] text-[var(--crm-gold)] text-right">
-                  {new Intl.NumberFormat("vi-VN").format(
-                    Number(c.monthly_cost) || 0,
-                  )}{" "}
-                  ₫
-                </span>
-              </div>
+              {canViewRevenue && (
+                <div className="flex justify-between items-center mb-[9px] text-[13px]">
+                  <span className="text-[var(--crm-text-muted)] font-[500]">
+                    Chi phí / tháng
+                  </span>
+                  <span className="font-[600] text-[var(--crm-gold)] text-right">
+                    {new Intl.NumberFormat("vi-VN").format(
+                      Number(c.monthly_cost) || 0,
+                    )}{" "}
+                    ₫
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between items-center text-[13px]">
                 <span className="text-[var(--crm-text-muted)] font-[500]">
                   Liên hệ

@@ -11,6 +11,7 @@ import { useCreateClient, useUpdateClient } from "@/app/hooks/useClients";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import type { ClientFormData } from "@/app/types";
+import { useCanViewRevenue } from "@/app/hooks/useCanViewRevenue";
 
 export default function ClientModal({
   isOpen,
@@ -29,6 +30,8 @@ export default function ClientModal({
   const { data: packages } = useServicePackages();
   const create = useCreateClient();
   const update = useUpdateClient();
+
+  const canViewRevenue = useCanViewRevenue();
 
   useEffect(() => {
     if (initialData) {
@@ -65,7 +68,12 @@ export default function ClientModal({
           <DialogTitle className="text-[18px] font-[700] text-[var(--crm-navy)]">
             {initialData ? "Chỉnh sửa khách hàng" : "Thêm khách hàng mới"}
           </DialogTitle>
-          <button onClick={onClose} className="w-[34px] h-[34px] flex items-center justify-center border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[var(--crm-text)] hover:border-[var(--crm-navy)] hover:text-[var(--crm-navy)] transition-all active:scale-[0.97]">✕</button>
+          <button
+            onClick={onClose}
+            className="w-[34px] h-[34px] flex items-center justify-center border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[var(--crm-text)] hover:border-[var(--crm-navy)] hover:text-[var(--crm-navy)] transition-all active:scale-[0.97]"
+          >
+            ✕
+          </button>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,7 +82,8 @@ export default function ClientModal({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
               <div className="md:col-span-2 flex flex-col gap-[5px]">
                 <label className="text-[13px] font-[600] text-[var(--crm-text)]">
-                  Tên khách hàng <span className="text-[var(--crm-red)] ml-[2px]">*</span>
+                  Tên khách hàng{" "}
+                  <span className="text-[var(--crm-red)] ml-[2px]">*</span>
                 </label>
                 <input
                   {...register("name", { required: true })}
@@ -84,7 +93,10 @@ export default function ClientModal({
               </div>
 
               <div className="flex flex-col gap-[5px]">
-                <label className="text-[13px] font-[600] text-[var(--crm-text)]">Ngành nghề / Loại hình <span className="text-[var(--crm-red)] ml-[2px]">*</span></label>
+                <label className="text-[13px] font-[600] text-[var(--crm-text)]">
+                  Ngành nghề / Loại hình{" "}
+                  <span className="text-[var(--crm-red)] ml-[2px]">*</span>
+                </label>
                 <select
                   {...register("industry_id", { required: true })}
                   className="p-[10px_13px] border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[14px] text-[var(--crm-text)] outline-none cursor-pointer focus:border-[var(--crm-navy)] focus:ring-[3px] focus:ring-[rgba(26,60,110,0.1)] transition-all"
@@ -99,7 +111,10 @@ export default function ClientModal({
               </div>
 
               <div className="flex flex-col gap-[5px]">
-                <label className="text-[13px] font-[600] text-[var(--crm-text)]">Gói dịch vụ <span className="text-[var(--crm-red)] ml-[2px]">*</span></label>
+                <label className="text-[13px] font-[600] text-[var(--crm-text)]">
+                  Gói dịch vụ{" "}
+                  <span className="text-[var(--crm-red)] ml-[2px]">*</span>
+                </label>
                 <select
                   {...register("package_id", { required: true })}
                   className="p-[10px_13px] border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[14px] text-[var(--crm-text)] outline-none cursor-pointer focus:border-[var(--crm-navy)] focus:ring-[3px] focus:ring-[rgba(26,60,110,0.1)] transition-all"
@@ -114,7 +129,10 @@ export default function ClientModal({
               </div>
 
               <div className="flex flex-col gap-[5px]">
-                <label className="text-[13px] font-[600] text-[var(--crm-text)]">Người liên hệ <span className="text-[var(--crm-red)] ml-[2px]">*</span></label>
+                <label className="text-[13px] font-[600] text-[var(--crm-text)]">
+                  Người liên hệ{" "}
+                  <span className="text-[var(--crm-red)] ml-[2px]">*</span>
+                </label>
                 <input
                   {...register("contact_person", { required: true })}
                   placeholder="Tên người liên hệ"
@@ -123,7 +141,9 @@ export default function ClientModal({
               </div>
 
               <div className="flex flex-col gap-[5px]">
-                <label className="text-[13px] font-[600] text-[var(--crm-text)]">Số điện thoại / Zalo</label>
+                <label className="text-[13px] font-[600] text-[var(--crm-text)]">
+                  Số điện thoại / Zalo
+                </label>
                 <input
                   {...register("phone")}
                   placeholder="0912 345 678"
@@ -131,19 +151,26 @@ export default function ClientModal({
                 />
               </div>
 
-              <div className="flex flex-col gap-[5px]">
-                <label className="text-[13px] font-[600] text-[var(--crm-text)]">Chi phí hàng tháng (VND) <span className="text-[var(--crm-red)] ml-[2px]">*</span></label>
-                <input
-                  type="number"
-                  {...register("monthly_cost", { required: true })}
-                  placeholder="5000000"
-                  className="p-[10px_13px] border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[14px] text-[var(--crm-text)] outline-none focus:border-[var(--crm-navy)] focus:ring-[3px] focus:ring-[rgba(26,60,110,0.1)] transition-all"
-                  step="500000"
-                />
-              </div>
+              {canViewRevenue && (
+                <div className="flex flex-col gap-[5px]">
+                  <label className="text-[13px] font-[600] text-[var(--crm-text)]">
+                    Chi phí hàng tháng (VND){" "}
+                    <span className="text-[var(--crm-red)] ml-[2px]">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    {...register("monthly_cost", { required: true })}
+                    placeholder="5000000"
+                    className="p-[10px_13px] border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[14px] text-[var(--crm-text)] outline-none focus:border-[var(--crm-navy)] focus:ring-[3px] focus:ring-[rgba(26,60,110,0.1)] transition-all"
+                    step="500000"
+                  />
+                </div>
+              )}
 
               <div className="flex flex-col gap-[5px]">
-                <label className="text-[13px] font-[600] text-[var(--crm-text)]">Ngày bắt đầu hợp đồng</label>
+                <label className="text-[13px] font-[600] text-[var(--crm-text)]">
+                  Ngày bắt đầu hợp đồng
+                </label>
                 <input
                   type="date"
                   {...register("contract_start_date")}
@@ -152,7 +179,9 @@ export default function ClientModal({
               </div>
 
               <div className="md:col-span-2 flex flex-col gap-[5px]">
-                <label className="text-[13px] font-[600] text-[var(--crm-text)]">Ghi chú</label>
+                <label className="text-[13px] font-[600] text-[var(--crm-text)]">
+                  Ghi chú
+                </label>
                 <textarea
                   {...register("notes")}
                   rows={3}
@@ -165,7 +194,11 @@ export default function ClientModal({
 
           {/* modal-foot */}
           <div className="p-[16px_24px] border-t border-[var(--crm-border)] flex gap-[10px] justify-end">
-            <button type="button" onClick={onClose} className="px-[20px] py-[10px] border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[14px] font-[600] bg-white hover:border-[var(--crm-navy)] hover:text-[var(--crm-navy)] transition-all active:scale-[0.97]">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-[20px] py-[10px] border border-[var(--crm-border)] rounded-[var(--crm-r)] text-[14px] font-[600] bg-white hover:border-[var(--crm-navy)] hover:text-[var(--crm-navy)] transition-all active:scale-[0.97]"
+            >
               Hủy
             </button>
             <button
@@ -173,12 +206,13 @@ export default function ClientModal({
               disabled={create.isPending || update.isPending}
               className="bg-[var(--crm-navy)] hover:bg-[var(--crm-navy-light)] text-white px-[20px] py-[10px] rounded-[var(--crm-r)] text-[14px] font-[600] transition-all active:scale-[0.97]"
             >
-              {create.isPending || update.isPending ? "Đang lưu..." : "💾 Lưu khách hàng"}
+              {create.isPending || update.isPending
+                ? "Đang lưu..."
+                : "💾 Lưu khách hàng"}
             </button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
-
   );
 }
