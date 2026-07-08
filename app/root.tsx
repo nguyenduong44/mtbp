@@ -34,8 +34,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta property="og:image" content="https://mtbp.vn/logo_3.png" />
 
         <meta property="og:url" content="https://mtbp.vn" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
         <Meta />
         <Links />
