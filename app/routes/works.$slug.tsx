@@ -119,7 +119,7 @@ export default function WorkDetail() {
   };
 
   return (
-    <div style={{ transform: "translateZ(0)" }}>
+    <div>
       {/* Header Section */}
       <Section padding="sm" background="white">
         <Container>
