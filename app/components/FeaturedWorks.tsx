@@ -4,6 +4,7 @@ import Container from "./Container";
 import Section from "./Section";
 import WorkCard from "./WorkCards";
 import { ArrowRight, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface FeaturedWorksProps {
   initialData?: any[];
@@ -32,15 +33,29 @@ const FeaturedWorks = ({ initialData }: FeaturedWorksProps) => {
   }
 
   return (
-    <Section padding="lg" background="gray">
+    <Section background="gray">
       <Container>
         <h1 className="font-bold font-conthrax text-[45px] mb-4 text-left">
           Các dự án tiêu biểu
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {featuredWorks.map((work, index) => (
-            <WorkCard key={work.id} work={work} index={index} />
-          ))}
+        <div className="overflow-hidden sm:overflow-visible">
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: -600, right: 0 }}
+            dragElastic={0.08}
+            dragMomentum={false}
+            className="
+              flex gap-6 mb-8
+              sm:grid sm:grid-cols-2
+              lg:grid-cols-3
+            "
+          >
+            {featuredWorks.map((work, index) => (
+              <div key={work.id} className="min-w-[85%] sm:min-w-0">
+                <WorkCard work={work} index={index} />
+              </div>
+            ))}
+          </motion.div>
         </div>
 
         <div className="text-center">

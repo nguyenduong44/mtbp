@@ -32,7 +32,7 @@ const HeroServices = ({ initialData }: HeroServicesProps) => {
     <Section background="gray">
       <Container>
         <h1 className="font-bold font-conthrax text-[45px] mb-4">Dịch vụ</h1>
-        <ItemGroup className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+        <ItemGroup className="grid grid-cols-2 sm:grid-cols-3 items-center gap-4">
           {categories.map((cat) => (
             <Item key={cat.id} variant="outline">
               <ItemHeader>
@@ -41,14 +41,14 @@ const HeroServices = ({ initialData }: HeroServicesProps) => {
                 </div>
               </ItemHeader>
               <ItemContent>
-                <ItemTitle className="text-[24px] font-conthrax">
+                <ItemTitle className="sm:text-[24px] font-conthrax">
                   {cat.name}
                 </ItemTitle>
                 <ItemDescription className="line-clamp-none md:line-clamp-2">
                   {cat.description}
                 </ItemDescription>
               </ItemContent>
-              <ItemFooter className="flex flex-col items-start">
+              <ItemFooter className="hidden sm:flex flex-col items-start">
                 {cat.bullets?.map((bullet, idx) => (
                   <Badge key={idx} className="whitespace-nowrap">
                     {bullet}
