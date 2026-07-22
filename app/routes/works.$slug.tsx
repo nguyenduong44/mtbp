@@ -7,7 +7,6 @@ import {
   Instagram,
   Youtube,
   Globe,
-  Loader2,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Section from "../components/Section";
@@ -17,6 +16,7 @@ import { useProjectBySlug } from "../hooks/useProjects";
 import { projectService } from "../services/projectService";
 import type { Route } from "./+types/works.$slug";
 import { memo } from "react";
+import MobileProjectContent from "../components/MobileProjectContent";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const work = await projectService.getBySlug(params.slug);
@@ -160,7 +160,7 @@ export default function WorkDetail() {
             </div>
 
             {/* Category Badges */}
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="flex flex-wrap gap-2">
               {displayWork.categories?.map((cat: any, i: number) => (
                 <div
                   key={i}
@@ -174,48 +174,12 @@ export default function WorkDetail() {
         </Container>
       </Section>
 
+      <div className="md:hidden">
+        <MobileProjectContent work={displayWork} />
+      </div>
+
       {/* Overview Section */}
-      <Section padding="md" background="gray">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            className="text-left"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
-              Tổng quan & vấn đề
-            </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-4xl">
-              {displayWork.overview}
-            </p>
-          </motion.div>
-        </Container>
-      </Section>
-
-      {/* Solution Section */}
-      {displayWork.solution && (
-        <Section padding="md" background="white">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              className="text-left"
-            >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
-                Giải pháp thực hiện
-              </h2>
-              <p className="text-lg text-gray-700 leading-relaxed max-w-4xl">
-                {displayWork.solution}
-              </p>
-            </motion.div>
-          </Container>
-        </Section>
-      )}
-
-      {/* Scope of Work */}
-      {displayWork.scope && displayWork.scope.length > 0 && (
+      <div className="hidden md:block">
         <Section padding="md" background="gray">
           <Container>
             <motion.div
@@ -225,71 +189,115 @@ export default function WorkDetail() {
               className="text-left"
             >
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
-                Phạm vi công việc
+                Tổng quan & vấn đề
               </h2>
-              <ul className="space-y-4">
-                {displayWork.scope.map((item: string, index: number) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-start text-gray-700 font-medium"
-                  >
-                    <span className="flex-shrink-0 w-6 h-6 bg-primary/10 text-primary rounded-full flex items-center justify-center mr-4 mt-0.5 font-bold text-xs">
-                      {index + 1}
-                    </span>
-                    <span className="text-lg">{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <p className="text-lg text-gray-700 leading-relaxed max-w-4xl">
+                {displayWork.overview}
+              </p>
             </motion.div>
           </Container>
         </Section>
-      )}
 
-      {/* Results */}
-      {displayWork.results && displayWork.results.length > 0 && (
-        <Section padding="md" background="white">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              className="text-left"
-            >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
-                Kết quả đạt được
-              </h2>
-              <ul className="space-y-4">
-                {displayWork.results.map((result: string, index: number) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-start text-gray-700 font-bold"
-                  >
-                    <CheckCircle className="flex-shrink-0 w-6 h-6 text-primary mr-4 mt-0.5" />
-                    <span className="text-lg">{result}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </Container>
-        </Section>
-      )}
+        {/* Solution Section */}
+        {displayWork.solution && (
+          <Section padding="md" background="white">
+            <Container>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="text-left"
+              >
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
+                  Giải pháp thực hiện
+                </h2>
+                <p className="text-lg text-gray-700 leading-relaxed max-w-4xl">
+                  {displayWork.solution}
+                </p>
+              </motion.div>
+            </Container>
+          </Section>
+        )}
 
-      {/* Media Sections */}
-      {displayWork.media_sections?.map((section: any, sectionIndex: number) => (
-        <ProjectSection
-          key={section.id || sectionIndex}
-          section={section}
-          sectionIndex={sectionIndex}
-        />
-      ))}
+        {/* Scope of Work */}
+        {displayWork.scope && displayWork.scope.length > 0 && (
+          <Section padding="md" background="gray">
+            <Container>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="text-left"
+              >
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
+                  Phạm vi công việc
+                </h2>
+                <ul className="space-y-4">
+                  {displayWork.scope.map((item: string, index: number) => (
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-start text-gray-700 font-medium"
+                    >
+                      <span className="flex-shrink-0 w-6 h-6 bg-primary/10 text-primary rounded-full flex items-center justify-center mr-4 mt-0.5 font-bold text-xs">
+                        {index + 1}
+                      </span>
+                      <span className="text-lg">{item}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            </Container>
+          </Section>
+        )}
+
+        {/* Results */}
+        {displayWork.results && displayWork.results.length > 0 && (
+          <Section padding="md" background="white">
+            <Container>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="text-left"
+              >
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 font-conthrax">
+                  Kết quả đạt được
+                </h2>
+                <ul className="space-y-4">
+                  {displayWork.results.map((result: string, index: number) => (
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-start text-gray-700 font-bold"
+                    >
+                      <CheckCircle className="flex-shrink-0 w-6 h-6 text-primary mr-4 mt-0.5" />
+                      <span className="text-lg">{result}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            </Container>
+          </Section>
+        )}
+
+        {/* Media Sections */}
+        {displayWork.media_sections?.map(
+          (section: any, sectionIndex: number) => (
+            <ProjectSection
+              key={section.id || sectionIndex}
+              section={section}
+              sectionIndex={sectionIndex}
+            />
+          ),
+        )}
+      </div>
 
       {/* Social Links */}
       {displayWork.social_links && displayWork.social_links.length > 0 && (

@@ -92,7 +92,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
   };
 
   return (
-    <section className="relative overflow-hidden min-h-screen bg-white pb-10 sm:pb-20">
+    <section className="relative overflow-hidden bg-white sm:pb-20">
       {/* Background trái - Mờ dần khi vào giữa */}
       <div className="hidden md:block absolute left-0 top-0 h-full w-[50%] z-0">
         <img
@@ -104,7 +104,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
       </div>
 
       {/* Background phải - Mờ dần khi vào giữa */}
-      <div className="absolute right-0 top-0 h-full w-full md:w-[50%] z-0">
+      <div className="hidden md:block absolute right-0 top-0 h-full w-full md:w-[50%] z-0">
         <img
           src="/hero_right.jpg"
           alt=""
@@ -118,12 +118,12 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
 
       {/* Main Content */}
       <div className="relative z-10 w-full flex flex-col items-center">
-        <main className="flex flex-col items-center justify-center text-center px-4 max-w-7xl w-full pt-4 pb-8 sm:pt-12 sm:pb-12">
+        <main className="flex flex-col items-center justify-center text-center px-4 max-w-7xl w-full sm:pt-12 sm:pb-12">
           <div className="mb-4 sm:mb-8 rounded-full border bg-white/70 px-6 py-3 backdrop-blur-sm">
             <img src="/logo_3.png" alt="MTBP" className="h-16 sm:h-24 w-auto" />
           </div>
 
-          <h1 className="mx-auto max-w-4xl font-display font-conthrax text-4xl sm:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] sm:leading-[110%] mb-4 sm:mb-8">
+          <h1 className="hidden sm:block mx-auto max-w-4xl font-display font-conthrax text-4xl sm:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] sm:leading-[110%] mb-4 sm:mb-8">
             <span className="block">Hãy để MTBP tối ưu</span>
             <span className="relative text-primary inline-block">
               {/* <svg */}
@@ -139,10 +139,19 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
             <span className="block">của bạn</span>
           </h1>
 
-          <p className="mx-auto max-w-2xl text-base sm:text-lg md:text-xl text-slate-500 leading-relaxed font-medium mb-6 sm:mb-12">
+          <h1 className="block sm:hidden text-left max-w-4xl text-xl font-black tracking-tight text-slate-900 leading-[1.1] mb-4">
+            Hãy để MTBP tối ưu chiến dịch Marketing của bạn
+          </h1>
+
+          <p className="mx-auto max-w-2xl text-base hidden sm:block sm:text-lg md:text-xl text-slate-500 leading-relaxed font-medium mb-6 sm:mb-12">
             Hãy nói lên điều bạn nghĩ. Chúng tôi tin rằng công việc và các mối
             quan hệ sẽ trở nên tốt đẹp hơn khi chúng ta có thể chia sẻ cảm xúc,
             suy nghĩ của mình một cách cởi mở và mang tính xây dựng.
+          </p>
+
+          <p className="text-left max-w-2xl text-base block sm:hidden text-slate-500 leading-relaxed font-medium mb-6">
+            Giải pháp marketing tổng thể cho doanh nghiệp Tây Ninh <br />{" "}
+            &#9472; Tập trung vào hiệu quả dài hạn
           </p>
 
           <a
@@ -153,7 +162,7 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
           </a>
 
           {/* Service Chips - Dữ liệu thực tế từ Categories */}
-          <div className="flex flex-wrap justify-center gap-3 mb-16 max-w-5xl px-4">
+          <div className="hidden sm:flex flex-wrap justify-center gap-3 mb-16 max-w-5xl px-4">
             {categories.map((cat) => (
               <div
                 key={cat.id}
@@ -170,23 +179,23 @@ const HeroIntroduction = ({ initialCategories }: HeroIntroductionProps) => {
           </div>
 
           {/* Stats Section - Số liệu yêu cầu & Animation chạy số */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl px-4">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-2 sm:gap-8 w-full max-w-5xl px-4">
             {stats.map((stat, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-6 text-left group"
+                className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-center sm:text-left group"
               >
                 <div
-                  className={`w-14 h-14 rounded-2xl ${stat.bg} flex items-center justify-center transition-transform group-hover:scale-110 duration-500`}
+                  className={`hidden sm:flex w-14 h-14 rounded-2xl ${stat.bg} items-center justify-center transition-transform group-hover:scale-110 duration-500`}
                 >
                   {stat.icon}
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-gray-900 leading-none mb-1">
+                  <div className="text-xl sm:text-3xl font-black text-gray-900 leading-none mb-1">
                     <CountUp value={stat.value} />
                     {stat.suffix}
                   </div>
-                  <div className="text-xs font-bold text-gray-700 uppercase tracking-widest leading-tight">
+                  <div className="text-[9px] sm:text-xs font-bold text-gray-700 uppercase tracking-wider sm:tracking-widest leading-tight">
                     {stat.label}
                   </div>
                 </div>

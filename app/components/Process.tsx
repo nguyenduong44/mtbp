@@ -23,7 +23,41 @@ const Process = ({ hText }: ProcessProps) => {
             Quy trình làm việc
           </h1>
         )}
-        <div className="mt-20">
+
+        {/* Mobile: carousel, chỉ hiện title */}
+        <div className="mt-10 overflow-hidden md:hidden">
+          <motion.ul
+            drag="x"
+            dragConstraints={{ left: -900, right: 0 }}
+            dragElastic={0.08}
+            dragMomentum={false}
+            className="flex gap-4 cursor-grab active:cursor-grabbing"
+          >
+            {processes.map((item) => (
+              <motion.li
+                key={item.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true }}
+                className="min-w-[48%] shrink-0 p-5 text-center border-2 border-black/10 rounded-xl bg-white"
+              >
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center h-14 w-14 rounded-full bg-primary text-white text-base font-semibold">
+                    {item.id}
+                  </div>
+
+                  <h4 className="mt-4 text-base leading-6 font-semibold text-gray-900">
+                    {item.step}
+                  </h4>
+                </div>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
+
+        {/* Tablet + desktop: giữ nguyên code và giao diện cũ */}
+        <div className="mt-20 hidden md:block">
           <ul className="space-y-20">
             {processes.map((item) => (
               <motion.li
@@ -40,10 +74,12 @@ const Process = ({ hText }: ProcessProps) => {
                       {item.id}
                     </div>
                   </div>
+
                   <div className="mt-4">
                     <h4 className="text-lg leading-6 font-semibold text-gray-900">
                       {item.step}
                     </h4>
+
                     <p className="mt-2 text-base leading-6 text-gray-500">
                       {item.description}
                     </p>

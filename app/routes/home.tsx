@@ -14,13 +14,13 @@ export async function loader() {
   const [categories, clients, featuredProjects] = await Promise.all([
     categoryService.getAll({ limit: 100 }),
     clientService.getAll({ limit: 6, sortBy: "name", sortOrder: "desc" }),
-    projectService.getAll({ featured: true, limit: 3 })
+    projectService.getAll({ featured: true, limit: 3 }),
   ]);
 
   return {
     categories: categories.data,
     clients: clients.data,
-    featuredProjects: featuredProjects.data
+    featuredProjects: featuredProjects.data,
   };
 }
 
@@ -39,15 +39,16 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const { categories, clients, featuredProjects } = useLoaderData<typeof loader>();
+  const { categories, clients, featuredProjects } =
+    useLoaderData<typeof loader>();
 
   return (
     <>
       <HeroIntroduction initialCategories={categories} />
+      <FeaturedWorks initialData={featuredProjects} />
       <HeroServices initialData={categories} />
       <Process />
       <Sponsors initialData={clients} />
-      <FeaturedWorks initialData={featuredProjects} />
       <ContactComponent />
     </>
   );
