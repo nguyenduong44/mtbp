@@ -77,7 +77,6 @@ export default function MobileProjectContent({
   const featuredMedia =
     allMediaItems.find((item: any) => item.type === "video") ||
     allMediaItems[0];
-
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [lightboxItem, setLightboxItem] = useState<any | null>(null);
 
@@ -93,22 +92,61 @@ export default function MobileProjectContent({
       <Container>
         {/* Video hoặc media đầu tiên */}
         {featuredMedia && (
-          <div className="mb-8 overflow-hidden rounded-[24px] bg-primary shadow-lg">
-            {featuredMedia.type === "video" ? (
-              <iframe
-                src={getEmbedUrl(featuredMedia.url)}
-                title={featuredMedia.caption || "Video dự án"}
-                className="aspect-[4/5] w-full border-0 bg-black"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            ) : (
-              <img
-                src={featuredMedia.url}
-                alt={featuredMedia.caption || work.title}
-                className="aspect-[4/5] w-full object-cover"
-              />
-            )}
+          <div className="mb-8">
+            <button
+              type="button"
+              onClick={() => setLightboxItem(featuredMedia)}
+              className="
+        relative mx-auto block
+        w-full
+        overflow-hidden rounded-[20px]
+        bg-primary text-left shadow-sm
+      "
+            >
+              {featuredMedia.type === "video" ? (
+                <>
+                  <img
+                    src={
+                      getVideoThumbnail(featuredMedia.url) ||
+                      "/placeholder-video.png"
+                    }
+                    alt={featuredMedia.caption || "Video nổi bật"}
+                    draggable={false}
+                    className="h-full w-full object-cover"
+                    onError={(event) => {
+                      event.currentTarget.src = "/placeholder-video.png";
+                    }}
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
+
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex size-12 items-center justify-center rounded-full bg-white text-primary shadow-lg">
+                      <Play className="ml-0.5 size-5 fill-primary" />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <img
+                    src={featuredMedia.url}
+                    alt={featuredMedia.caption || work.title}
+                    draggable={false}
+                    className="h-full w-full object-cover"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                </>
+              )}
+
+              {featuredMedia.caption && (
+                <div className="absolute inset-x-0 bottom-0 z-10 p-3">
+                  <p className="line-clamp-2 text-xs font-semibold leading-4 text-white">
+                    {featuredMedia.caption}
+                  </p>
+                </div>
+              )}
+            </button>
           </div>
         )}
 
